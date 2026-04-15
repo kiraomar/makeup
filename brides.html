@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>قسم العرائس | Makeup by Asoo</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Lemonada:wght@500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brand: { light: '#ffe4e6', DEFAULT: '#fb7185', dark: '#e11d48' } }, fontFamily: { 'cairo': ['Cairo', 'sans-serif'], 'lemonada': ['Lemonada', 'cursive'], 'dancing': ['Dancing Script', 'cursive'] } } } }
+    </script>
+    
+    <style>
+        html, body { overflow-x: hidden; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+        body { background: linear-gradient(-45deg, #fff1f2, #ffe4e6, #fce7f3, #fdf2f8); font-family: 'Cairo', sans-serif; min-height: 100vh; }
+        .fade-in { animation: fadeIn 0.6s ease forwards; opacity: 0; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        img { -webkit-user-drag: none; pointer-events: none; }
+        .image-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 4px 15px rgba(251, 113, 133, 0.1); }
+        .watermark { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 10; }
+        .watermark span { color: rgba(255, 255, 255, 0.6); font-size: 2.5rem; font-family: 'Dancing Script', cursive; transform: rotate(-35deg); text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
+    </style>
+</head>
+<body class="text-gray-800 flex flex-col items-center py-6 px-4 relative pb-20">
+
+    <div class="w-full max-w-md relative z-10">
+        <a href="index.html" class="inline-flex items-center gap-2 text-brand-dark font-bold mb-4 bg-white/70 backdrop-blur px-4 py-2 rounded-full shadow-sm">
+            <i class="fa-solid fa-arrow-right"></i> عودة للرئيسية
+        </a>
+        
+        <div class="text-center mb-6 fade-in">
+            <div class="w-20 h-20 bg-brand-light text-brand rounded-full flex items-center justify-center shadow-inner mx-auto mb-3">
+                <i class="fa-solid fa-crown text-3xl"></i>
+            </div>
+            <h1 class="text-2xl font-bold font-lemonada text-gray-900">قسم العرائس</h1>
+            <p class="text-xs text-gray-500 mt-1">تصفحي أعمالنا والأسعار</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 w-full">
+            <div class="image-card rounded-2xl p-2 flex flex-col items-center text-center fade-in" style="animation-delay: 0.1s;">
+                <div class="relative w-full aspect-square rounded-xl overflow-hidden mb-2 bg-pink-50">
+                    <img src="brides_pic1.jpg" alt="باقة ملكية" class="w-full h-full object-cover">
+                    <div class="watermark"><span>ASOO</span></div>
+                </div>
+                <h3 class="font-bold text-gray-800 text-sm mb-1 font-cairo leading-tight">باقة العروس الملكية</h3>
+                <span class="text-brand-dark font-black text-sm bg-brand-light/50 px-2 py-1 rounded-lg w-full">250,000 د.ع</span>
+            </div>
+
+            <div class="image-card rounded-2xl p-2 flex flex-col items-center text-center fade-in" style="animation-delay: 0.2s;">
+                <div class="relative w-full aspect-square rounded-xl overflow-hidden mb-2 bg-pink-50">
+                    <img src="brides_pic2.png" alt="جلسة بروفة" class="w-full h-full object-cover">
+                    <div class="watermark"><span>ASOO</span></div>
+                </div>
+                <h3 class="font-bold text-gray-800 text-sm mb-1 font-cairo leading-tight">جلسة بروفة قبل الزفاف</h3>
+                <span class="text-brand-dark font-black text-sm bg-brand-light/50 px-2 py-1 rounded-lg w-full">50,000 د.ع</span>
+            </div>
+
+            <div class="image-card rounded-2xl p-2 flex flex-col items-center text-center fade-in" style="animation-delay: 0.3s;">
+                <div class="relative w-full aspect-square rounded-xl overflow-hidden mb-2 bg-pink-50">
+                    <img src="brides_pic3.jpg" alt="تجهيز بشرة" class="w-full h-full object-cover">
+                    <div class="watermark"><span>ASOO</span></div>
+                </div>
+                <h3 class="font-bold text-gray-800 text-sm mb-1 font-cairo leading-tight">تجهيز بشرة وإشراقة</h3>
+                <span class="text-brand-dark font-black text-sm bg-brand-light/50 px-2 py-1 rounded-lg w-full">100,000 د.ع</span>
+            </div>
+
+            <div class="image-card rounded-2xl p-2 flex flex-col items-center text-center fade-in" style="animation-delay: 0.4s;">
+                <div class="relative w-full aspect-square rounded-xl overflow-hidden mb-2 bg-pink-50">
+                    <img src="brides_pic4.png" alt="مكياج يدوم" class="w-full h-full object-cover">
+                    <div class="watermark"><span>ASOO</span></div>
+                </div>
+                <h3 class="font-bold text-gray-800 text-sm mb-1 font-cairo leading-tight">مكياج ثابت 24 ساعة</h3>
+                <span class="text-brand-dark font-black text-sm bg-brand-light/50 px-2 py-1 rounded-lg w-full">150,000 د.ع</span>
+            </div>
+        </div>
+    </div>
+
+    <script> document.addEventListener('copy', e => e.preventDefault()); document.addEventListener('contextmenu', e => e.preventDefault()); document.addEventListener('keydown', e => { if (e.ctrlKey && ['c', 'x', 'u', 's', 'p'].includes(e.key.toLowerCase())) e.preventDefault(); }); </script>
+</body>
+</html>

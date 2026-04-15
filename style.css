@@ -1,0 +1,108 @@
+/* حماية الصفحة من التحديد والنسخ */
+html, body {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* منع سحب الصور */
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
+}
+
+/* خلفية الصفحة المتحركة */
+body {
+    background: linear-gradient(-45deg, #fff1f2, #ffe4e6, #fce7f3, #fff1f2);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    font-family: 'Cairo', sans-serif;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* تأثير البطاقات الزجاجية */
+.glass-card {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 32px 0 rgba(251, 113, 133, 0.1);
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 40px 0 rgba(251, 113, 133, 0.2);
+}
+
+.glass-card:hover .icon-wrapper {
+    transform: scale(1.1) rotate(-5deg);
+    background-color: #fb7185;
+    color: white;
+}
+
+.icon-wrapper {
+    transition: all 0.4s ease;
+}
+
+/* رموز المكياج العائمة */
+.bg-makeup-icon {
+    position: fixed;
+    font-size: 2rem;
+    opacity: 0.15;
+    z-index: 0;
+    pointer-events: none;
+    animation: float-up linear infinite;
+}
+
+@keyframes float-up {
+    0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; }
+    10% { opacity: 0.2; }
+    90% { opacity: 0.2; }
+    100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; }
+}
+
+/* حركة الطفو (Float) */
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* نافذة التنبيه المخصصة */
+#security-modal {
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+#security-modal.active {
+    visibility: visible;
+    opacity: 1;
+}
+#security-modal.active .modal-box {
+    transform: scale(1);
+}
+.modal-box {
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+/* تأثير التغبيش للحماية */
+.blurred-content {
+    filter: blur(15px);
+    pointer-events: none;
+    user-select: none;
+}

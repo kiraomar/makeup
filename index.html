@@ -1,101 +1,47 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Makeup by Asoo | الرئيسية</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Dancing+Script:wght@700&family=Lemonada:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: { brand: { light: '#ffe4e6', DEFAULT: '#fb7185', dark: '#e11d48' } },
-                    fontFamily: { 'cairo': ['Cairo', 'sans-serif'], 'lemonada': ['Lemonada', 'cursive'], 'dancing': ['Dancing Script', 'cursive'] }
-                }
-            }
-        }
-    </script>
-
+    <script>tailwind.config = { theme: { extend: { colors: { brand: { light: '#ffe4e6', DEFAULT: '#fb7185', dark: '#e11d48' } }, fontFamily: { 'cairo': ['Cairo', 'sans-serif'], 'lemonada': ['Lemonada', 'cursive'], 'dancing': ['Dancing Script', 'cursive'] } } } }</script>
     <style>
-        html, body {
-            overflow-x: hidden; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent;
-            -webkit-user-select: none; -ms-user-select: none; user-select: none; /* منع التحديد */
-        }
-        img { -webkit-user-drag: none; pointer-events: none; }
-        body {
-            background: linear-gradient(-45deg, #fff1f2, #ffe4e6, #fce7f3, #fdf2f8);
-            background-size: 400% 400%; animation: gradientBG 15s ease infinite; font-family: 'Cairo', sans-serif;
-        }
+        html, body { overflow-x: hidden; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+        body { background: linear-gradient(-45deg, #fff1f2, #ffe4e6, #fce7f3, #fdf2f8); background-size: 400% 400%; animation: gradientBG 15s ease infinite; font-family: 'Cairo', sans-serif; }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 10px 25px -5px rgba(251, 113, 133, 0.15); transition: transform 0.3s ease;
-            animation: fadeIn 0.8s ease forwards; opacity: 0;
-        }
-        .glass-card:active { transform: scale(0.98); background: rgba(255, 255, 255, 0.9); }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 10px 25px -5px rgba(251, 113, 133, 0.15); animation: fadeIn 0.8s ease forwards; opacity: 0; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .bg-makeup-icon { position: fixed; font-size: 1.8rem; opacity: 0.15; z-index: 0; pointer-events: none; animation: float-up linear infinite; }
         @keyframes float-up { 0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.3; } 90% { opacity: 0.3; } 100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; } }
-        .animate-float { animation: float 4s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="text-gray-800 min-h-screen relative flex flex-col justify-between">
-
-    <!-- رموز الخلفية -->
-    <div class="bg-makeup-icon" style="left: 10%; animation-duration: 12s; animation-delay: 0s;">💄</div>
-    <div class="bg-makeup-icon" style="left: 80%; animation-duration: 15s; animation-delay: 2s; font-size: 2.5rem;">💋</div>
-    <div class="bg-makeup-icon" style="left: 40%; animation-duration: 10s; animation-delay: 4s;">💅</div>
-    <div class="bg-makeup-icon" style="left: 70%; animation-duration: 18s; animation-delay: 1s; font-size: 2rem;">👑</div>
-    <div class="bg-makeup-icon" style="left: 20%; animation-duration: 14s; animation-delay: 3s;">✨</div>
+    <div class="bg-makeup-icon" style="left: 10%; animation-duration: 12s;">💄</div><div class="bg-makeup-icon" style="left: 80%; animation-duration: 15s;">💋</div><div class="bg-makeup-icon" style="left: 40%; animation-duration: 10s;">💅</div><div class="bg-makeup-icon" style="left: 70%; animation-duration: 18s;">👑</div>
 
     <main class="flex-grow w-full px-4 py-10 relative z-10 flex-col items-center">
-        <header class="text-center mb-10 w-full animate-float">
-            <p class="text-brand font-bold mb-1 tracking-widest text-xs uppercase opacity-80">Welcome to Beauty</p>
-            <h1 class="font-dancing text-6xl sm:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-dark via-brand to-pink-500 py-2 drop-shadow-sm">
-                makeup by Asoo
-            </h1>
-            <p class="mt-3 text-gray-600 text-sm leading-relaxed px-2 font-medium">اكتشفي سحر جمالك مع خدماتنا المميزة لتتألقي في كل مناسباتك.</p>
+        <header class="text-center mb-10 w-full">
+            <h1 class="font-dancing text-6xl sm:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-dark via-brand to-pink-500 py-2">makeup by Asoo</h1>
+            <p class="mt-3 text-gray-600 text-sm font-medium">اكتشفي سحر جمالك مع خدماتنا المميزة.</p>
         </header>
 
         <div class="flex flex-col gap-4 w-full max-w-md mx-auto pb-8">
-            <a href="makeup.html" class="glass-card p-5 rounded-3xl flex items-center gap-5 w-full" style="animation-delay: 0.1s;">
-                <div class="w-16 h-16 shrink-0 bg-brand-light text-brand rounded-2xl flex items-center justify-center shadow-inner"><i class="fa-solid fa-paintbrush text-2xl"></i></div>
-                <div class="text-right"><h2 class="text-xl font-bold font-lemonada text-gray-900 mb-1">المكياج</h2><p class="text-gray-700 text-xs font-bold leading-snug">إطلالات مكياج ساحرة تبرز جمال ملامحك.</p></div>
-            </a>
-            <a href="brides.html" class="glass-card p-5 rounded-3xl flex items-center gap-5 w-full" style="animation-delay: 0.2s;">
-                <div class="w-16 h-16 shrink-0 bg-brand-light text-brand rounded-2xl flex items-center justify-center shadow-inner"><i class="fa-solid fa-crown text-2xl"></i></div>
-                <div class="text-right"><h2 class="text-xl font-bold font-lemonada text-gray-900 mb-1">عرائس</h2><p class="text-gray-700 text-xs font-bold leading-snug">باقات متكاملة لتكوني ملكة متوجة.</p></div>
-            </a>
-            <a href="companions.html" class="glass-card p-5 rounded-3xl flex items-center gap-5 w-full" style="animation-delay: 0.3s;">
-                <div class="w-16 h-16 shrink-0 bg-brand-light text-brand rounded-2xl flex items-center justify-center shadow-inner"><i class="fa-solid fa-user-group text-2xl"></i></div>
-                <div class="text-right"><h2 class="text-xl font-bold font-lemonada text-gray-900 mb-1">مرافقات</h2><p class="text-gray-700 text-xs font-bold leading-snug">إطلالات إبداعية لأخوات العروس وصديقاتها.</p></div>
-            </a>
-            <a href="hair.html" class="glass-card p-5 rounded-3xl flex items-center gap-5 w-full" style="animation-delay: 0.4s;">
-                <div class="w-16 h-16 shrink-0 bg-brand-light text-brand rounded-2xl flex items-center justify-center shadow-inner"><i class="fa-solid fa-scissors text-2xl"></i></div>
-                <div class="text-right"><h2 class="text-xl font-bold font-lemonada text-gray-900 mb-1">تصفيف الشعر</h2><p class="text-gray-700 text-xs font-bold leading-snug">أحدث التسريحات العصرية والكلاسيكية.</p></div>
-            </a>
-            <a href="skincare.html" class="glass-card p-5 rounded-3xl flex items-center gap-5 w-full" style="animation-delay: 0.5s;">
-                <div class="w-16 h-16 shrink-0 bg-brand-light text-brand rounded-2xl flex items-center justify-center shadow-inner"><i class="fa-solid fa-spa text-2xl"></i></div>
-                <div class="text-right"><h2 class="text-xl font-bold font-lemonada text-gray-900 mb-1">عناية بالبشرة</h2><p class="text-gray-700 text-xs font-bold leading-snug">جلسات نضارة وتنظيف عميق للبشرة.</p></div>
-            </a>
+            <a href="makeup.html" class="glass-card p-5 rounded-3xl flex items-center gap-5 w-full" style="animation-delay: 0.1s;"><div class="w-16 h-16 shrink-0 bg-brand-light text-brand rounded-2xl flex items-center justify-center shadow-inner"><i class="fa-solid fa-paintbrush text-2xl"></i></div><div class="text-right"><h2 class="text-xl font-bold font-lemonada">المكياج</h2></div></a>
+            <a href="brides.html" class="glass-card p-5 rounded-3xl flex items-center gap-5 w-full" style="animation-delay: 0.2s;"><div class="w-16 h-16 shrink-0 bg-brand-light text-brand rounded-2xl flex items-center justify-center shadow-inner"><i class="fa-solid fa-crown text-2xl"></i></div><div class="text-right"><h2 class="text-xl font-bold font-lemonada">عرائس</h2></div></a>
+            <a href="companions.html" class="glass-card p-5 rounded-3xl flex items-center gap-5 w-full" style="animation-delay: 0.3s;"><div class="w-16 h-16 shrink-0 bg-brand-light text-brand rounded-2xl flex items-center justify-center shadow-inner"><i class="fa-solid fa-user-group text-2xl"></i></div><div class="text-right"><h2 class="text-xl font-bold font-lemonada">مرافقات</h2></div></a>
+            <a href="hair.html" class="glass-card p-5 rounded-3xl flex items-center gap-5 w-full" style="animation-delay: 0.4s;"><div class="w-16 h-16 shrink-0 bg-brand-light text-brand rounded-2xl flex items-center justify-center shadow-inner"><i class="fa-solid fa-scissors text-2xl"></i></div><div class="text-right"><h2 class="text-xl font-bold font-lemonada">تصفيف الشعر</h2></div></a>
+            <a href="skincare.html" class="glass-card p-5 rounded-3xl flex items-center gap-5 w-full" style="animation-delay: 0.5s;"><div class="w-16 h-16 shrink-0 bg-brand-light text-brand rounded-2xl flex items-center justify-center shadow-inner"><i class="fa-solid fa-spa text-2xl"></i></div><div class="text-right"><h2 class="text-xl font-bold font-lemonada">عناية بالبشرة</h2></div></a>
         </div>
     </main>
-
-    <footer class="py-5 text-center z-10 backdrop-blur-sm bg-white/40 border-t border-white/50 w-full mt-auto">
-        <p class="text-gray-600 text-xs font-bold">&copy; 2026 <span class="font-dancing text-brand text-sm mx-1">makeup by Asoo</span>. جميع الحقوق محفوظة.</p>
+    <footer class="py-5 text-center z-10 bg-white/40 border-t border-white/50 w-full mt-auto">
+        <p class="text-gray-600 text-xs font-bold">&copy; 2026 <span class="font-dancing text-brand text-sm mx-1">makeup by Asoo</span>.</p>
     </footer>
-
-    <script>
-        // منع النسخ بصمت
-        document.addEventListener('copy', e => e.preventDefault());
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('keydown', e => { if (e.ctrlKey && ['c', 'x', 'u', 's', 'p'].includes(e.key.toLowerCase())) e.preventDefault(); });
-    </script>
+    <script> document.addEventListener('copy', e => e.preventDefault()); document.addEventListener('contextmenu', e => e.preventDefault()); document.addEventListener('keydown', e => { if (e.ctrlKey && ['c', 'x', 'u', 's', 'p'].includes(e.key.toLowerCase())) e.preventDefault(); }); </script>
 </body>
 </html>
+
+
+```

@@ -7,7 +7,14 @@
       "price": "50،666"
     }
   ],
-  "brides": [],
+  "brides": [
+    {
+      "id": 1776854486930,
+      "image": "brides_1776854479315.jpg",
+      "name": "ععع",
+      "price": "50،788"
+    }
+  ],
   "companions": [],
   "hair": [],
   "skincare": []

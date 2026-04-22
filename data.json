@@ -1,0 +1,12 @@
+{
+  "sections": [
+    {
+      "id": "makeup",
+      "title": "المكياج",
+      "icon": "fa-paintbrush"
+    }
+  ],
+  "items": {
+    "makeup": []
+  }
+}

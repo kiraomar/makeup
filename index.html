@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Makeup by Asoo | الرئيسية</title>
+    <title>Makeup by Asoo</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Dancing+Script:wght@700&family=Lemonada:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -44,7 +44,6 @@
         async function loadSections() {
             const container = document.getElementById('sections-container');
             try {
-                // سحب البيانات
                 const res = await fetch('./data.json?t=' + Date.now());
                 if(!res.ok) throw new Error();
                 const data = await res.json();
@@ -54,18 +53,22 @@
                     return;
                 }
                 
-                // توجيه الزبون لصفحة القسم الفعلية (مثال: makeup.html) التي تصنعها لوحة التحكم
-                container.innerHTML = data.sections.map((sec, i) => `
+                container.innerHTML = data.sections.map((sec, i) => {
+                    // معالجة مؤقتة للأيقونات القديمة (إذا كان القسم منشأ قديماً بأيقونة fa-) نعرض بدالها ايموجي
+                    let displayEmoji = sec.icon;
+                    if(displayEmoji.startsWith('fa-')) displayEmoji = '✨';
+
+                    return `
                     <a href="${sec.id}.html" class="glass-card p-5 rounded-3xl flex items-center gap-5 w-full active:scale-95 transition-transform" style="animation-delay: ${i * 0.1}s;">
-                        <div class="w-16 h-16 shrink-0 bg-brand-light text-brand rounded-2xl flex items-center justify-center shadow-inner">
-                            <i class="fa-solid ${sec.icon} text-2xl"></i>
+                        <div class="w-16 h-16 shrink-0 bg-brand-light text-brand rounded-2xl flex items-center justify-center shadow-inner text-3xl">
+                            ${displayEmoji}
                         </div>
                         <div class="text-right w-full flex justify-between items-center">
                             <h2 class="text-xl font-bold font-lemonada text-gray-800">${sec.title}</h2>
                             <i class="fa-solid fa-angle-left text-gray-300"></i>
                         </div>
                     </a>
-                `).join('');
+                `}).join('');
             } catch (e) {
                 container.innerHTML = '<p class="text-center font-bold text-gray-500">سيتم تفعيل الأقسام قريباً 🌸</p>';
             }

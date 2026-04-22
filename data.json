@@ -7,13 +7,6 @@
     }
   ],
   "items": {
-    "makeup": [
-      {
-        "id": 1776875164665,
-        "image": "img_makeup_1776875146462.jpg",
-        "name": "Test",
-        "price": "50،000"
-      }
-    ]
+    "makeup": []
   }
 }

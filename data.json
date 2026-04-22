@@ -13,6 +13,13 @@
   ],
   "items": {
     "makeup": [],
-    "bride": []
+    "bride": [
+      {
+        "id": 1776876860801,
+        "image": "img_bride_1776876762146.jpeg",
+        "name": "test",
+        "price": "1000,000"
+      }
+    ]
   }
 }

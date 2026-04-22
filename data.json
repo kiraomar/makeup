@@ -4,9 +4,15 @@
       "id": "makeup",
       "title": "المكياج",
       "icon": "fa-paintbrush"
+    },
+    {
+      "id": "bride",
+      "title": "عرائس",
+      "icon": "fa-crown"
     }
   ],
   "items": {
-    "makeup": []
+    "makeup": [],
+    "bride": []
   }
 }

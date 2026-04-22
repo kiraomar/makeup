@@ -7,6 +7,14 @@
     }
   ],
   "items": {
-    "makeup": []
+    "makeup": [
+      {
+        "id": 1776879221067,
+        "image": "media_makeup_1776879209469.jpg",
+        "type": "image",
+        "name": " ",
+        "price": "5000"
+      }
+    ]
   }
 }

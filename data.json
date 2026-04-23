@@ -1,0 +1,12 @@
+{
+  "sections": [
+    {
+      "id": "makeup",
+      "title": "مكياج",
+      "icon": "❤️"
+    }
+  ],
+  "items": {
+    "makeup": []
+  }
+}

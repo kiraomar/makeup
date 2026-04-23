@@ -6,16 +6,25 @@
     <title>لوحة الإدارة | Makeup by Asoo</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Lemonada:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style> :root{--brand:#fb7185;} html, body { overflow-x: hidden; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; background: #fdf2f8; font-family: 'Cairo', sans-serif; min-height: 100vh; display: flex; flex-direction: column; margin:0; color: #1f2937;} .btn { padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 1rem; background: var(--brand); color: white; width: 100%; transition: 0.2s;} .btn:active{transform: scale(0.98);} .form-control { padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-family: 'Cairo', sans-serif; outline: none; width: 100%; margin-top: 5px; font-size: 1rem;} .card { background: white; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 20px; border: 1px solid #fce7f3; } .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--brand); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; } @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } #login-screen { position: fixed; inset: 0; background: #fdf2f8; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; } #overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 90; display: flex; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(5px); text-align: center; padding: 20px;} .hidden { display: none !important; } .nav-bar { background: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); } .main-layout { max-width: 1200px; margin: 20px auto; padding: 0 15px; display: flex; flex-direction: column; gap: 20px;} @media (min-width: 768px){.main-layout{flex-direction: row;}} .section-list { list-style: none; padding: 0; margin-top: 15px;} .section-item { padding: 12px; border-radius: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: bold; background: white; border: 1px solid #eee; margin-bottom: 10px;} .section-item.active { background: #ffe4e6; color: #e11d48; border-color: var(--brand); } table { width: 100%; border-collapse: collapse; text-align: right; } th, td { padding: 12px; border-bottom: 1px solid #eee; } th { background: #ffe4e6; color: #e11d48; } .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 50; display: none; align-items: center; justify-content: center; padding: 15px; } .modal.active { display: flex; } .modal-content { background: white; border-radius: 15px; width: 100%; max-width: 400px; overflow: hidden; } .modal-header { padding: 15px; background: var(--brand); color: white; display: flex; justify-content: space-between; font-weight: bold; } .modal-body { padding: 20px; display: flex; flex-direction: column; gap: 15px; } </style>
+    <style> :root{--brand:#fb7185;} html, body { overflow-x: hidden; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; background: #fdf2f8; font-family: 'Cairo', sans-serif; min-height: 100vh; display: flex; flex-direction: column; margin:0; color: #1f2937;} .btn { padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 1rem; background: var(--brand); color: white; width: 100%; transition: 0.2s;} .btn:active{transform: scale(0.98);} .form-control { padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-family: 'Cairo', sans-serif; outline: none; width: 100%; margin-top: 5px; font-size: 1rem;} .card { background: white; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 20px; border: 1px solid #fce7f3; } .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--brand); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; } @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } #login-screen { position: fixed; inset: 0; background: #fdf2f8; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; } #overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 90; display: flex; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(5px); text-align: center; padding: 20px;} .hidden { display: none !important; } .nav-bar { background: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); } .main-layout { max-width: 1200px; margin: 20px auto; padding: 0 15px; display: flex; flex-direction: column; gap: 20px;} @media (min-width: 768px){.main-layout{flex-direction: row;}} .section-list { list-style: none; padding: 0; margin-top: 15px;} .section-item { padding: 12px; border-radius: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: bold; background: white; border: 1px solid #eee; margin-bottom: 10px;} .section-item.active { background: #ffe4e6; color: #e11d48; border-color: var(--brand); } table { width: 100%; border-collapse: collapse; text-align: right; } th, td { padding: 12px; border-bottom: 1px solid #eee; } th { background: #ffe4e6; color: #e11d48; } .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 50; display: none; align-items: center; justify-content: center; padding: 15px; } .modal.active { display: flex; } 
+        /* تحسينات الآيفون للسكرول ومعاينة الصور */
+        .modal-content { background: white; border-radius: 15px; width: 100%; max-width: 400px; overflow-y: auto; max-height: 85vh; -webkit-overflow-scrolling: touch; } 
+        .modal-header { padding: 15px; background: var(--brand); color: white; display: flex; justify-content: space-between; font-weight: bold; position: sticky; top: 0; z-index: 10; } 
+        .modal-body { padding: 20px; display: flex; flex-direction: column; gap: 15px; } 
+        /* فئة المعاينة المصغرة */
+        .preview-box { width: 100%; max-height: 150px; object-fit: contain; margin-top: 10px; border-radius: 8px; display: none; border: 2px dashed #fbcfe8; background: #fff1f2; }
+        .preview-video { width: 100%; max-height: 150px; object-fit: contain; margin-top: 10px; border-radius: 8px; display: none; background: #000; }
+    </style>
 </head>
 <body>
 
+    <!-- شاشة تسجيل الدخول -->
     <div id="login-screen">
         <div class="card" style="width: 100%; max-width: 400px;">
             <div style="text-align: center;">
                 <div style="width: 80px; height: 80px; background: #ffe4e6; color: var(--brand); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 15px;"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
                 <h2 style="font-family: 'Lemonada', cursive; color: #e11d48; margin-bottom: 5px;">صالون ASOO 💅</h2>
-                <p style="font-size: 0.85rem; color: #6b7280; margin-bottom: 20px;">الرجاء إدخال بياناتك</p>
+                <p style="font-size: 0.85rem; color: #6b7280; margin-bottom: 20px;">الرجاء إدخال بياناتك يا جميلة</p>
             </div>
             <div style="margin-bottom: 15px;"><label style="font-weight: bold; color: var(--brand);">مفتاح الربط السري (Token)</label><input type="password" id="login-token" class="form-control" placeholder="ghp_..." dir="ltr"></div>
             <div style="margin-bottom: 15px;"><label style="font-weight: bold;">اسم المستخدم (User)</label><input type="text" id="login-user" class="form-control" dir="ltr" value="kiraomar"></div>
@@ -24,22 +33,25 @@
         </div>
     </div>
 
+    <!-- الشريط العلوي -->
     <nav class="nav-bar">
         <h1 style="font-family: 'Lemonada', cursive; color: var(--brand); font-size: 1.2rem;"><i class="fa-solid fa-crown"></i> إدارة ASOO</h1>
         <button onclick="logout()" style="background: #fee2e2; color: #ef4444; border: 1px solid #fca5a5; padding: 5px 10px; border-radius: 5px; font-weight: bold;"><i class="fa-solid fa-door-open"></i> خروج</button>
     </nav>
 
+    <!-- شاشة التحميل -->
     <div id="overlay" class="hidden">
         <div class="loader" id="overlay-loader"></div>
-        <p id="overlay-text" style="font-weight: bold; font-size: 1.1rem; margin-top: 15px; color: var(--brand);">جاري فحص الاتصال...</p>
+        <p id="overlay-text" style="font-weight: bold; font-size: 1.1rem; margin-top: 15px; color: var(--brand);">جاري تجهيز بيانات الصالون...</p>
         <button id="overlay-btn" onclick="logout()" class="btn hidden" style="margin-top: 20px; width: auto; padding: 10px 20px; background: #1f2937;">العودة لتسجيل الدخول</button>
     </div>
 
+    <!-- الواجهة الرئيسية -->
     <div class="main-layout hidden" id="main-ui">
         <aside class="card" style="flex: 1;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px;">
                 <h2 style="font-size: 1.1rem;">أقسام الصالون</h2>
-                <button onclick="openModal('section-modal')" style="background: #1f2937; color: white; padding: 5px 10px; border-radius: 5px; border: none;"><i class="fa-solid fa-plus"></i> جديد</button>
+                <button onclick="openModal('section-modal')" style="background: #1f2937; color: white; padding: 5px 10px; border-radius: 5px; border: none; font-weight: bold;"><i class="fa-solid fa-plus"></i> قسم جديد</button>
             </div>
             <ul class="section-list" id="sections-list"></ul>
         </aside>
@@ -47,7 +59,7 @@
         <main class="card" style="flex: 2; overflow-x: auto;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">
                 <h2 id="current-section-title" style="font-family: 'Lemonada', cursive; color: #e11d48;">اختر قسماً</h2>
-                <button onclick="openModal('item-modal')" id="add-item-btn" class="btn" style="width: auto; padding: 8px 15px;" disabled><i class="fa-solid fa-plus"></i> صورة/فيديو</button>
+                <button onclick="openModal('item-modal')" id="add-item-btn" class="btn" style="width: auto; padding: 8px 15px;" disabled><i class="fa-solid fa-plus"></i> إضافة للقسم</button>
             </div>
             <table>
                 <thead><tr><th>الميديا</th><th>السعر</th><th style="text-align: center;">حذف</th></tr></thead>
@@ -56,9 +68,47 @@
         </main>
     </div>
 
-    <div id="section-modal" class="modal"><div class="modal-content"><div class="modal-header"><h3>إنشاء قسم 🎀</h3><button onclick="closeModal('section-modal')" style="background:none; border:none; color:white; font-size:1.2rem;"><i class="fa-solid fa-xmark"></i></button></div><form id="section-form" class="modal-body"><input type="hidden" id="sec-old-id"><div><label>اسم القسم</label><input type="text" id="sec-name" required class="form-control"></div><div><label>الرابط (انجليزي)</label><input type="text" id="sec-id" required class="form-control" dir="ltr"></div><div><label>ايموجي</label><input type="text" id="sec-emoji" required class="form-control" style="font-size: 1.5rem;"></div><button type="submit" class="btn" style="background: #1f2937;">حفظ القسم</button></form></div></div>
+    <!-- نافذة إضافة قسم -->
+    <div id="section-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إنشاء قسم 🎀</h3>
+                <button onclick="closeModal('section-modal')" style="background:none; border:none; color:white; font-size:1.2rem;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="section-form" class="modal-body">
+                <input type="hidden" id="sec-old-id">
+                <div><label style="font-weight:bold;">اسم القسم (مثل: عرايس)</label><input type="text" id="sec-name" required class="form-control"></div>
+                <div><label style="font-weight:bold;">الرابط (انجليزي)</label><input type="text" id="sec-id" required class="form-control" dir="ltr"></div>
+                <div><label style="font-weight:bold;">ايموجي معبر</label><input type="text" id="sec-emoji" required class="form-control" style="font-size: 1.5rem;"></div>
+                <button type="submit" class="btn" style="background: #1f2937;">حفظ القسم</button>
+            </form>
+        </div>
+    </div>
     
-    <div id="item-modal" class="modal"><div class="modal-content"><div class="modal-header"><h3>إضافة ميديا 📸</h3><button onclick="closeModal('item-modal')" style="background:none; border:none; color:white; font-size:1.2rem;"><i class="fa-solid fa-xmark"></i></button></div><form id="item-form" class="modal-body"><input type="hidden" id="item-file-name"><input type="hidden" id="item-file-base64"><input type="hidden" id="item-file-type"><div><label>اختر الملف</label><input type="file" id="item-file-input" accept="image/*,video/mp4,video/quicktime" required class="form-control"><img id="image-preview" style="width:100%; margin-top:10px; border-radius:8px; display:none;"><video id="video-preview" style="width:100%; margin-top:10px; border-radius:8px; display:none;" controls></video></div><div><label>السعر (د.ع)</label><input type="text" id="item-price" required class="form-control"></div><button type="submit" class="btn" id="save-item-btn">رفع وحفظ</button></form></div></div>
+    <!-- نافذة إضافة ميديا (معاينة مصغرة) -->
+    <div id="item-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إضافة ميديا 📸</h3>
+                <button onclick="closeModal('item-modal')" style="background:none; border:none; color:white; font-size:1.2rem;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="item-form" class="modal-body">
+                <input type="hidden" id="item-file-name"><input type="hidden" id="item-file-base64"><input type="hidden" id="item-file-type">
+                <div>
+                    <label style="font-weight:bold; color:var(--brand);">1. اختاري صورة أو فيديو</label>
+                    <input type="file" id="item-file-input" accept="image/*,video/mp4,video/quicktime" required class="form-control" style="border-color: var(--brand);">
+                    <!-- المعاينة المصغرة -->
+                    <img id="image-preview" class="preview-box">
+                    <video id="video-preview" class="preview-video" controls></video>
+                </div>
+                <div>
+                    <label style="font-weight:bold;">2. السعر (د.ع)</label>
+                    <input type="text" id="item-price" required class="form-control" placeholder="مثال: 50,000">
+                </div>
+                <button type="submit" class="btn" id="save-item-btn">رفع وحفظ 🌸</button>
+            </form>
+        </div>
+    </div>
 
     <script>
         let ghConfig = null; let salonData = { sections: [], items: {} }; let currentSectionId = null; let dataFileSha = '';
@@ -71,7 +121,7 @@
 
         function login() {
             const token = document.getElementById('login-token').value.trim(); const user = document.getElementById('login-user').value.trim(); const repo = document.getElementById('login-repo').value.trim();
-            if(!token || !user || !repo) { alert('يرجى تعبئة الحقول!'); return; }
+            if(!token || !user || !repo) { alert('يرجى تعبئة الحقول يا جميلة!'); return; }
             ghConfig = { token, user, repo }; localStorage.setItem('asoo_auth_v3', JSON.stringify(ghConfig));
             document.getElementById('login-screen').classList.add('hidden'); startApp();
         }
@@ -83,24 +133,21 @@
         function encodeBase64(str) { return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (m,p) => String.fromCharCode('0x'+p))); }
         function decodeBase64(str) { return decodeURIComponent(Array.prototype.map.call(atob(str), c => '%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join('')); }
 
-        // نظام الفحص المتقدم
+        // نظام الفحص والتشغيل
         async function startApp() {
             const overlay = document.getElementById('overlay'); const text = document.getElementById('overlay-text'); const btn = document.getElementById('overlay-btn'); const loader = document.getElementById('overlay-loader');
             overlay.classList.remove('hidden'); loader.style.display = 'block'; btn.classList.add('hidden');
-            text.innerHTML = "جاري فحص الاتصال بـ GitHub..."; text.style.color = "#fb7185";
+            text.innerHTML = "جاري الاتصال بالنظام..."; text.style.color = "#fb7185";
 
             try {
-                // 1. اختبار التوكن والمستودع بشكل مباشر
                 const testRepo = await fetch(`https://api.github.com/repos/${ghConfig.user}/${ghConfig.repo}`, { headers: getHeaders() });
-                if(testRepo.status === 401) throw new Error("التوكن الخاص بك خاطئ، أو منتهي الصلاحية، أو أنه توكن من النوع الجديد (Fine-grained) الذي تحظره المتصفحات. الرجاء استخدام توكن Classic.");
-                if(testRepo.status === 404) throw new Error(`لم يتم العثور على المستودع! تأكد أن اسم المستخدم (${ghConfig.user}) والمستودع (${ghConfig.repo}) صحيحين تماماً.`);
-                if(!testRepo.ok) throw new Error(`خطأ من السيرفر: ${testRepo.status}`);
+                if(testRepo.status === 401) throw new Error("مفتاح الربط (Token) غير صحيح أو منتهي الصلاحية.");
+                if(testRepo.status === 404) throw new Error(`المستودع غير موجود، تأكدي من الاسم.`);
+                if(!testRepo.ok) throw new Error(`خطأ: ${testRepo.status}`);
 
                 const repoInfo = await testRepo.json();
-                // 2. اختبار إذا كان المستودع فارغ تماماً!
-                if(repoInfo.size === 0) throw new Error("المستودع الخاص بك فارغ تماماً! (Empty Repository). يجب عليك الدخول لموقع GitHub ورفع ملف واحد على الأقل (مثل index.html) ليتم تفعيل المستودع.");
+                if(repoInfo.size === 0) throw new Error("المستودع الخاص بك فارغ تماماً! (Empty Repository). يجب عليك الدخول لموقع GitHub ورفع ملف واحد على الأقل ليتم تفعيل المستودع.");
 
-                // 3. جلب ملف الداتا
                 const res = await fetch(`https://api.github.com/repos/${ghConfig.user}/${ghConfig.repo}/contents/data.json?t=${Date.now()}`, { headers: getHeaders(), cache: 'no-store' });
                 
                 if (res.ok) {
@@ -108,12 +155,11 @@
                     salonData = JSON.parse(decodeBase64(data.content));
                     if(!salonData.sections) salonData = { sections: [], items: {} };
                 } else if (res.status === 404) { 
-                    salonData = { sections: [], items: {} }; // ملف الداتا غير موجود، لا مشكلة سيتم انشاؤه
+                    salonData = { sections: [], items: {} };
                 } else {
-                    throw new Error("خطأ في قراءة البيانات. تأكد من صلاحية (Contents) للتوكن.");
+                    throw new Error("خطأ في قراءة البيانات. تأكدي من الصلاحيات.");
                 }
 
-                // نجاح
                 overlay.classList.add('hidden');
                 document.getElementById('main-ui').classList.remove('hidden');
                 renderSections();
@@ -129,23 +175,24 @@
         // صانع الصفحات الديناميكي
         function generatePageTemplate(sectionId, sectionTitle, sectionEmoji) {
             return `<!DOCTYPE html>
-<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${sectionTitle} | Makeup by Asoo</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Lemonada:wght@600&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>:root{--brand:#fb7185;} body{margin:0; font-family:'Cairo',sans-serif; background:#fdf2f8;} .header{text-align:center; padding:20px;} .card{background:white; border-radius:15px; margin:10px; padding:10px; box-shadow:0 4px 10px rgba(0,0,0,0.05); text-align:center;} .media{width:100%; border-radius:10px; object-fit:cover; height:200px;} .price{color:#e11d48; font-weight:bold; background:#ffe4e6; padding:5px; border-radius:8px; display:block; margin-top:10px;} .back{background:white; padding:10px; display:inline-block; border-radius:20px; margin:15px; color:#e11d48; text-decoration:none; font-weight:bold;} #viewer{position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:100; display:none; flex-direction:column; align-items:center; justify-content:center;} #viewer.show{display:flex;} .v-media{max-width:90%; max-height:70vh; border-radius:15px;} .locked{opacity:0.6; pointer-events:none; position:relative;} .lock-icon{position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; color:white; background:rgba(0,0,0,0.5); border-radius:10px; font-size:2rem;}</style></head><body>
-    <a href="index.html" class="back"><i class="fa-solid fa-arrow-right"></i> عودة</a>
-    <div class="header"><div style="font-size:3rem;">${sectionEmoji}</div><h1 style="font-family:'Lemonada',cursive; color:#1f2937;">${sectionTitle}</h1><p style="color:#fb7185; font-size:0.8rem;">تُعرض لمرة واحدة للخصوصية 🔒</p></div>
+<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${sectionTitle} | Makeup by Asoo</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Lemonada:wght@600&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>:root{--brand:#fb7185;} body{margin:0; font-family:'Cairo',sans-serif; background:#fdf2f8;} .header{text-align:center; padding:20px;} .card{background:white; border-radius:15px; margin:10px; padding:10px; box-shadow:0 4px 10px rgba(0,0,0,0.05); text-align:center; position:relative; overflow:hidden;} .media{width:100%; border-radius:10px; object-fit:cover; height:200px;} .price{color:#e11d48; font-weight:bold; background:#ffe4e6; padding:5px; border-radius:8px; display:block; margin-top:10px;} .back{background:white; padding:10px; display:inline-block; border-radius:20px; margin:15px; color:#e11d48; text-decoration:none; font-weight:bold; box-shadow:0 2px 5px rgba(0,0,0,0.05);} #viewer{position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:100; display:none; flex-direction:column; align-items:center; justify-content:center;} #viewer.show{display:flex;} .v-media{max-width:90%; max-height:70vh; border-radius:15px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);} .locked{opacity:0.6; pointer-events:none;} .lock-icon{position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; color:white; background:rgba(0,0,0,0.7); border-radius:10px; font-size:2rem; backdrop-filter:blur(3px);}</style></head><body>
+    <a href="index.html" class="back"><i class="fa-solid fa-arrow-right"></i> عودة للرئيسية</a>
+    <div class="header"><div style="font-size:3rem; background:#ffe4e6; width:80px; height:80px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 10px;">${sectionEmoji}</div><h1 style="font-family:'Lemonada',cursive; color:#1f2937; margin:0;">${sectionTitle}</h1><p style="color:#fb7185; font-size:0.8rem; font-weight:bold;">الصور تُعرض لمرة واحدة فقط 🔒</p></div>
     <div id="grid" style="display:grid; grid-template-columns:1fr 1fr; padding:10px;">جاري التحميل...</div>
-    <div id="viewer"><button onclick="history.back()" style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:2rem;"><i class="fa-solid fa-xmark"></i></button><img id="v-img" class="v-media"><video id="v-vid" class="v-media" controls></video><h3 id="v-price" style="color:#fb7185; margin-top:15px; font-size:1.5rem;"></h3></div>
+    <div id="viewer"><button onclick="history.back()" style="position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.2); border:none; color:white; width:40px; height:40px; border-radius:50%; font-size:1.2rem;"><i class="fa-solid fa-xmark"></i></button><img id="v-img" class="v-media"><video id="v-vid" class="v-media" controls playsinline></video><h3 id="v-price" style="color:#fb7185; margin-top:15px; font-size:1.5rem; background:rgba(255,255,255,0.1); padding:5px 20px; border-radius:10px;"></h3></div>
     <script>
         let viewed = JSON.parse(localStorage.getItem('v_asoo_${sectionId}')) || [];
         fetch('./data.json?t='+Date.now()).then(r=>r.json()).then(d=>{
             const items = d.items['${sectionId}'] || [];
-            if(!items.length) { document.getElementById('grid').innerHTML = '<p style="grid-column:1/-1; text-align:center;">قريباً 🌸</p>'; return; }
+            if(!items.length) { document.getElementById('grid').innerHTML = '<p style="grid-column:1/-1; text-align:center; font-weight:bold; color:#999;">سيتم اضافة صور قريباً 🌸</p>'; return; }
             document.getElementById('grid').innerHTML = items.map(i => {
                 const isL = viewed.includes(i.id.toString());
-                const m = i.type==='video' ? \`<video src="\${i.image}#t=0.1" class="media"></video><i class="fa-solid fa-play" style="position:absolute; top:20px; right:20px; color:white;"></i>\` : \`<img src="\${i.image}" class="media">\`;
-                const l = isL ? \`<div class="lock-icon"><i class="fa-solid fa-lock"></i></div>\` : '';
-                return \`<div id="c-\${i.id}" class="card \${isL?'locked':''}" \${isL?'':\`onclick="openV('\${i.id}','\${i.image}','\${i.price}','\${i.type}')"\`}>\${m}\${l}<span class="price">\${i.price} د.ع</span></div>\`;
+                const m = i.type==='video' ? \`<video src="\${i.image}#t=0.1" class="media"></video><i class="fa-solid fa-play" style="position:absolute; top:20px; right:20px; color:white; background:rgba(0,0,0,0.5); padding:8px; border-radius:50%; font-size:0.8rem;"></i>\` : \`<img src="\${i.image}" class="media">\`;
+                const l = isL ? \`<div class="lock-icon"><i class="fa-solid fa-lock"></i><span style="font-size:0.8rem; margin-top:5px; font-family:'Cairo';">تمت المشاهدة</span></div>\` : '';
+                return \`<div id="c-\${i.id}" class="card \${isL?'locked':''}" \${isL?'':\`onclick="openV('\${i.id}','\${i.image}','\${i.price}','\${i.type}')"\`}><div style="position:relative;">\${m}\${l}</div><span class="price">\${i.price} د.ع</span></div>\`;
             }).join('');
-        });
+        }).catch(e=>{ document.getElementById('grid').innerHTML = '<p style="grid-column:1/-1; text-align:center;">حدث خطأ</p>'; });
+        
         function openV(id, src, price, type){
             document.getElementById('v-price').innerText = price+' د.ع';
             if(type==='video'){document.getElementById('v-img').style.display='none'; document.getElementById('v-vid').src=src; document.getElementById('v-vid').style.display='block'; document.getElementById('v-vid').play();}
@@ -156,7 +203,7 @@
             if(!window.location.hash.includes('view')){
                 document.getElementById('viewer').classList.remove('show'); document.getElementById('v-vid').pause();
                 const id = window.lastId;
-                if(id && !viewed.includes(id)){ viewed.push(id); localStorage.setItem('v_asoo_${sectionId}', JSON.stringify(viewed)); document.getElementById('c-'+id).classList.add('locked'); document.getElementById('c-'+id).innerHTML += '<div class="lock-icon"><i class="fa-solid fa-lock"></i></div>'; document.getElementById('c-'+id).onclick=null; }
+                if(id && !viewed.includes(id)){ viewed.push(id); localStorage.setItem('v_asoo_${sectionId}', JSON.stringify(viewed)); document.getElementById('c-'+id).classList.add('locked'); document.getElementById('c-'+id).querySelector('div').innerHTML += '<div class="lock-icon"><i class="fa-solid fa-lock"></i><span style="font-size:0.8rem; margin-top:5px; font-family:\\'Cairo\\';">تمت المشاهدة</span></div>'; document.getElementById('c-'+id).onclick=null; }
             } else { window.lastId = window.location.hash.split('_')[1]; }
         });
     <\/script>
@@ -164,7 +211,7 @@
         }
 
         async function uploadDataToGithub() {
-            const body = { message: "تحديث الأقسام", content: encodeBase64(JSON.stringify(salonData, null, 2)) };
+            const body = { message: "تحديث الأقسام والمحتوى", content: encodeBase64(JSON.stringify(salonData, null, 2)) };
             if (dataFileSha) body.sha = dataFileSha;
             const res = await fetch(`https://api.github.com/repos/${ghConfig.user}/${ghConfig.repo}/contents/data.json`, { method: 'PUT', headers: { ...getHeaders(), 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
             if(res.ok) { dataFileSha = (await res.json()).content.sha; return true; } return false;
@@ -224,20 +271,28 @@
             });
         }
 
+        // --- التعديل الأساسي هنا (جعل المعاينة صغيرة كالمربع وليست بحجم الشاشة) ---
         document.getElementById('item-file-input').onchange = function(e) {
             const file = e.target.files[0]; if(!file) return;
             const isV = file.type.startsWith('video/'); document.getElementById('item-file-type').value = isV ? 'video' : 'image';
             document.getElementById('item-file-name').value = `m_${Date.now()}.${file.name.split('.').pop()}`;
             const r = new FileReader(); r.onload = ev => {
                 document.getElementById('item-file-base64').value = ev.target.result;
-                if(isV){ document.getElementById('image-preview').style.display='none'; document.getElementById('video-preview').src=ev.target.result; document.getElementById('video-preview').style.display='block'; }
-                else { document.getElementById('video-preview').style.display='none'; document.getElementById('image-preview').src=ev.target.result; document.getElementById('image-preview').style.display='block'; }
+                if(isV){ 
+                    document.getElementById('image-preview').style.display='none'; 
+                    document.getElementById('video-preview').src=ev.target.result; 
+                    document.getElementById('video-preview').style.display='block'; 
+                } else { 
+                    document.getElementById('video-preview').style.display='none'; 
+                    document.getElementById('image-preview').src=ev.target.result; 
+                    document.getElementById('image-preview').style.display='block'; 
+                }
             }; r.readAsDataURL(file);
         };
 
         document.getElementById('item-form').onsubmit = async function(e) {
             e.preventDefault();
-            const btn = document.getElementById('save-item-btn'); btn.innerText = 'جاري الرفع...'; btn.disabled = true;
+            const btn = document.getElementById('save-item-btn'); btn.innerText = 'جاري الرفع للصالون... 🌸'; btn.disabled = true;
             const fName = document.getElementById('item-file-name').value; const b64 = document.getElementById('item-file-base64').value.split(',')[1];
             await uploadFileToGithub(fName, b64, 'رفع ميديا');
             salonData.items[currentSectionId].push({ id: Date.now(), image: fName, type: document.getElementById('item-file-type').value, price: document.getElementById('item-price').value });

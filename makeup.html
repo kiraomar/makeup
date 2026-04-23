@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>مكياج | Makeup by Asoo</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Lemonada:wght@600&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>:root{--brand:#fb7185;} body{margin:0; font-family:'Cairo',sans-serif; background:#fdf2f8;} .header{text-align:center; padding:20px;} .card{background:white; border-radius:15px; margin:10px; padding:10px; box-shadow:0 4px 10px rgba(0,0,0,0.05); text-align:center;} .media{width:100%; border-radius:10px; object-fit:cover; height:200px;} .price{color:#e11d48; font-weight:bold; background:#ffe4e6; padding:5px; border-radius:8px; display:block; margin-top:10px;} .back{background:white; padding:10px; display:inline-block; border-radius:20px; margin:15px; color:#e11d48; text-decoration:none; font-weight:bold;} #viewer{position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:100; display:none; flex-direction:column; align-items:center; justify-content:center;} #viewer.show{display:flex;} .v-media{max-width:90%; max-height:70vh; border-radius:15px;} .locked{opacity:0.6; pointer-events:none; position:relative;} .lock-icon{position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; color:white; background:rgba(0,0,0,0.5); border-radius:10px; font-size:2rem;}</style></head><body>
+    <a href="index.html" class="back"><i class="fa-solid fa-arrow-right"></i> عودة</a>
+    <div class="header"><div style="font-size:3rem;">❤️</div><h1 style="font-family:'Lemonada',cursive; color:#1f2937;">مكياج</h1><p style="color:#fb7185; font-size:0.8rem;">تُعرض لمرة واحدة للخصوصية 🔒</p></div>
+    <div id="grid" style="display:grid; grid-template-columns:1fr 1fr; padding:10px;">جاري التحميل...</div>
+    <div id="viewer"><button onclick="history.back()" style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:2rem;"><i class="fa-solid fa-xmark"></i></button><img id="v-img" class="v-media"><video id="v-vid" class="v-media" controls></video><h3 id="v-price" style="color:#fb7185; margin-top:15px; font-size:1.5rem;"></h3></div>
+    <script>
+        let viewed = JSON.parse(localStorage.getItem('v_asoo_makeup')) || [];
+        fetch('./data.json?t='+Date.now()).then(r=>r.json()).then(d=>{
+            const items = d.items['makeup'] || [];
+            if(!items.length) { document.getElementById('grid').innerHTML = '<p style="grid-column:1/-1; text-align:center;">قريباً 🌸</p>'; return; }
+            document.getElementById('grid').innerHTML = items.map(i => {
+                const isL = viewed.includes(i.id.toString());
+                const m = i.type==='video' ? `<video src="${i.image}#t=0.1" class="media"></video><i class="fa-solid fa-play" style="position:absolute; top:20px; right:20px; color:white;"></i>` : `<img src="${i.image}" class="media">`;
+                const l = isL ? `<div class="lock-icon"><i class="fa-solid fa-lock"></i></div>` : '';
+                return `<div id="c-${i.id}" class="card ${isL?'locked':''}" ${isL?'':`onclick="openV('${i.id}','${i.image}','${i.price}','${i.type}')"`}>${m}${l}<span class="price">${i.price} د.ع</span></div>`;
+            }).join('');
+        });
+        function openV(id, src, price, type){
+            document.getElementById('v-price').innerText = price+' د.ع';
+            if(type==='video'){document.getElementById('v-img').style.display='none'; document.getElementById('v-vid').src=src; document.getElementById('v-vid').style.display='block'; document.getElementById('v-vid').play();}
+            else{document.getElementById('v-vid').style.display='none'; document.getElementById('v-img').src=src; document.getElementById('v-img').style.display='block';}
+            document.getElementById('viewer').classList.add('show'); window.location.hash='view_'+id;
+        }
+        window.addEventListener('hashchange', ()=>{
+            if(!window.location.hash.includes('view')){
+                document.getElementById('viewer').classList.remove('show'); document.getElementById('v-vid').pause();
+                const id = window.lastId;
+                if(id && !viewed.includes(id)){ viewed.push(id); localStorage.setItem('v_asoo_makeup', JSON.stringify(viewed)); document.getElementById('c-'+id).classList.add('locked'); document.getElementById('c-'+id).innerHTML += '<div class="lock-icon"><i class="fa-solid fa-lock"></i></div>'; document.getElementById('c-'+id).onclick=null; }
+            } else { window.lastId = window.location.hash.split('_')[1]; }
+        });
+    </script>
+</body></html>

@@ -58,7 +58,7 @@
 
     <div id="section-modal" class="modal"><div class="modal-content"><div class="modal-header"><h3>إعداد القسم 🎀</h3><button onclick="closeModal('section-modal')" style="background:none; border:none; color:white; font-size:1.2rem;"><i class="fa-solid fa-xmark"></i></button></div><form id="section-form" class="modal-body"><input type="hidden" id="sec-old-id"><div><label>اسم القسم</label><input type="text" id="sec-name" required class="form-control"></div><div><label>الرابط (انجليزي)</label><input type="text" id="sec-id" required class="form-control" dir="ltr"></div><div><label>ايموجي</label><input type="text" id="sec-emoji" required class="form-control" style="font-size: 1.5rem;"></div><button type="submit" class="btn" style="background: #1f2937;">حفظ القسم</button></form></div></div>
     
-    <div id="item-modal" class="modal"><div class="modal-content"><div class="modal-header"><h3>إضافة ميديا ⚡</h3><button onclick="closeModal('item-modal')" style="background:none; border:none; color:white; font-size:1.2rem;"><i class="fa-solid fa-xmark"></i></button></div><form id="item-form" class="modal-body"><input type="hidden" id="item-file-name"><input type="hidden" id="item-file-base64"><input type="hidden" id="item-file-type"><div><label style="color:var(--brand);">اختر الملف</label><input type="file" id="item-file-input" accept="image/*,video/mp4,video/quicktime" required class="form-control"><img id="image-preview" style="width:100%; max-height:150px; object-fit:contain; margin-top:10px; border-radius:8px; display:none; background:#fff1f2; border:1px dashed #fb7185;"><video id="video-preview" style="width:100%; max-height:150px; object-fit:contain; margin-top:10px; border-radius:8px; display:none; background:#000;" controls></video></div><div><label>السعر (د.ع)</label><input type="text" id="item-price" required class="form-control"></div><button type="submit" class="btn" id="save-item-btn">رفع للموقع</button></form></div></div>
+    <div id="item-modal" class="modal"><div class="modal-content"><div class="modal-header"><h3>إضافة ميديا السريعة ⚡</h3><button onclick="closeModal('item-modal')" style="background:none; border:none; color:white; font-size:1.2rem;"><i class="fa-solid fa-xmark"></i></button></div><form id="item-form" class="modal-body"><input type="hidden" id="item-file-name"><input type="hidden" id="item-file-base64"><input type="hidden" id="item-file-type"><div><label style="color:var(--brand);">اختر الملف (سيتم ضغطه وتسريعه تلقائياً)</label><input type="file" id="item-file-input" accept="image/*,video/mp4,video/quicktime" required class="form-control"><img id="image-preview" style="width:100%; max-height:150px; object-fit:contain; margin-top:10px; border-radius:8px; display:none; background:#fff1f2; border:1px dashed #fb7185;"><video id="video-preview" style="width:100%; max-height:150px; object-fit:contain; margin-top:10px; border-radius:8px; display:none; background:#000;" controls></video></div><div><label>السعر (د.ع)</label><input type="text" id="item-price" required class="form-control"></div><button type="submit" class="btn" id="save-item-btn">ضغط ورفع للموقع</button></form></div></div>
 
     <script>
         let ghConfig = null; let salonData = { sections: [], items: {} }; let currentSectionId = null; let dataFileSha = '';
@@ -107,6 +107,9 @@
             }
         }
 
+        // =========================================================================
+        // 🔥 القالب الجديد: تخطي حماية أبل للفيديو بآلية הـ BLOB! 🔥
+        // =========================================================================
         function generatePageTemplate(sectionId, sectionTitle, sectionEmoji) {
             return `<!DOCTYPE html>
 <html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${sectionTitle} | Makeup by Asoo</title>
@@ -115,63 +118,112 @@
 <style>
     :root{--brand:#fb7185;} body{margin:0; font-family:'Cairo',sans-serif; background:#fdf2f8;} 
     .header{text-align:center; padding:20px;} 
-    .card{background:white; border-radius:15px; margin:10px; padding:8px; box-shadow:0 4px 10px rgba(0,0,0,0.05); text-align:center; cursor:pointer; -webkit-tap-highlight-color: transparent;} 
+    .card{background:white; border-radius:15px; margin:10px; padding:10px; box-shadow:0 4px 10px rgba(0,0,0,0.05); text-align:center; cursor:pointer; -webkit-tap-highlight-color: transparent;} 
     .card:active{transform:scale(0.98);}
-    .media-box { position:relative; width:100%; aspect-ratio:1/1; border-radius:10px; overflow:hidden; background:#ffe4e6; } 
-    .media{width:100%; height:100%; object-fit:cover; pointer-events:none;} 
-    .price{color:#e11d48; font-weight:900; background:#ffe4e6; padding:5px; border-radius:8px; display:block; margin-top:10px; font-size:0.85rem;} 
-    .back{background:white; padding:8px 15px; display:inline-block; border-radius:20px; margin:15px; color:#e11d48; text-decoration:none; font-weight:bold;} 
-    #viewer{position:fixed; inset:0; background:rgba(0,0,0,0.98); z-index:100; display:none; flex-direction:column; align-items:center; justify-content:center;} 
+    
+    .media-box { position:relative; width:100%; height:220px; border-radius:10px; overflow:hidden; background:#1f2937; display:flex; align-items:center; justify-content:center;} 
+    .media{width:100%; height:100%; object-fit:cover;} 
+    .video-thumb { color: white; font-size: 3rem; }
+    
+    .price{color:#e11d48; font-weight:bold; background:#ffe4e6; padding:5px; border-radius:8px; display:block; margin-top:10px;} 
+    .back{background:white; padding:10px 20px; display:inline-block; border-radius:20px; margin:15px; color:#e11d48; text-decoration:none; font-weight:bold; box-shadow:0 2px 5px rgba(0,0,0,0.05);} 
+    
+    .watermark { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:10; }
+    .watermark span { color:rgba(255,255,255,0.6); font-size:3rem; font-family:'Dancing Script',cursive; transform:rotate(-35deg); text-shadow:2px 2px 4px rgba(0,0,0,0.4); }
+    
+    #viewer{position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:100; display:none; flex-direction:column; align-items:center; justify-content:center;} 
     #viewer.show{display:flex;} 
-    .v-media-box {position:relative; width:100%; max-width:400px; display:flex; justify-content:center; align-items:center; padding:0 15px;} 
-    .v-media{max-width:100%; max-height:75vh; border-radius:15px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);} 
-    .locked{opacity:0.7; pointer-events:none;} 
-    .lock-icon{position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; color:white; background:rgba(0,0,0,0.7); z-index:20; font-size:2rem; backdrop-filter:blur(4px);} 
-    .play-icon{position:absolute; top:8px; right:8px; background:rgba(0,0,0,0.6); color:white; width:30px; height:30px; display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:0.8rem; z-index:15;} 
-    .watermark { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:10; } 
-    .watermark span { color:rgba(255,255,255,0.7); font-size:2rem; font-family:'Dancing Script',cursive; transform:rotate(-35deg); text-shadow:1px 1px 3px rgba(0,0,0,0.3); } 
-    #viewer .watermark span { font-size:4rem; } 
-    .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--brand); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto; } @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } 
+    .v-media-box { position:relative; width:100%; max-width:400px; display:flex; justify-content:center; align-items:center;}
+    .v-media{max-width:100%; max-height:75vh; border-radius:15px; object-fit:contain; box-shadow:0 10px 20px rgba(0,0,0,0.5);} 
+    #viewer .watermark span { font-size:4.5rem; }
+    
+    .locked{opacity:0.6; pointer-events:none;} 
+    .lock-icon{position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; color:white; background:rgba(0,0,0,0.6); z-index:20; font-size:2.5rem; backdrop-filter:blur(3px);} 
+    
+    .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--brand); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; } 
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } 
 </style>
 </head><body>
     <a href="index.html" class="back"><i class="fa-solid fa-arrow-right"></i> العودة</a>
-    <div class="header"><div style="font-size:3rem; background:#ffe4e6; width:80px; height:80px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 10px;">${sectionEmoji}</div><h1 style="font-family:'Lemonada',cursive; color:#1f2937; margin:0; font-size:1.5rem;">${sectionTitle}</h1><p style="color:#fb7185; font-size:0.75rem; font-weight:bold; margin-top:5px;">تُعرض الصور لمرة واحدة للخصوصية 🔒</p></div>
-    <div id="grid" style="display:grid; grid-template-columns:1fr 1fr; padding:5px 15px; max-width:500px; margin:0 auto;"><div style="grid-column:1/-1; text-align:center; padding:30px;"><div class="loader"></div></div></div>
+    <div class="header">
+        <div style="font-size:3.5rem; background:#ffe4e6; width:80px; height:80px; margin:0 auto 10px; border-radius:50%; display:flex; align-items:center; justify-content:center;">${sectionEmoji}</div>
+        <h1 style="font-family:'Lemonada',cursive; color:#1f2937; margin:0;">${sectionTitle}</h1>
+        <p style="color:#fb7185; font-size:0.85rem; font-weight:bold; margin-top:5px;">تُعرض الصور والفيديوهات لمرة واحدة للخصوصية 🔒</p>
+    </div>
+    
+    <div id="grid" style="display:grid; grid-template-columns:1fr 1fr; padding:10px; max-width:500px; margin:0 auto;"><div style="grid-column:1/-1; text-align:center; padding:30px;"><div class="loader"></div></div></div>
     
     <div id="viewer">
-        <button onclick="history.back()" style="position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.2); border:none; color:white; width:45px; height:45px; border-radius:50%; font-size:1.5rem; z-index:110;"><i class="fa-solid fa-xmark"></i></button>
+        <button onclick="history.back()" style="position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.2); border:none; color:white; font-size:1.5rem; width:45px; height:45px; border-radius:50%; z-index:110;"><i class="fa-solid fa-xmark"></i></button>
         <div class="v-media-box">
+            <!-- شاشة تحميل تظهر فقط أثناء جلب الفيديو -->
+            <div id="v-loader" style="display:none; color:white; flex-direction:column; align-items:center;"><div class="loader" style="margin-bottom:10px;"></div><span style="font-family:'Cairo';">جاري تجهيز الفيديو...</span></div>
             <img id="v-img" class="v-media">
-            <video id="v-vid" class="v-media" playsinline controls preload="metadata"></video>
-            <div class="watermark"><span>ASOO</span></div>
+            <video id="v-vid" class="v-media" playsinline controls controlsList="nodownload"></video>
+            <div id="v-watermark" class="watermark"><span>ASOO</span></div>
         </div>
         <h3 id="v-price" style="color:#fb7185; margin-top:20px; font-size:1.5rem; background:rgba(255,255,255,0.1); padding:8px 25px; border-radius:12px; border:1px solid rgba(255,255,255,0.2);"></h3>
     </div>
     
     <script>
         let viewed = JSON.parse(localStorage.getItem('v_asoo_${sectionId}')) || [];
+        
         fetch('./data.json?t='+Date.now()).then(r=>r.json()).then(d=>{
             const items = d.items['${sectionId}'] || [];
             if(!items.length) { document.getElementById('grid').innerHTML = '<p style="grid-column:1/-1; text-align:center; font-weight:bold; color:#9ca3af;">سيتم الإضافة قريباً 🌸</p>'; return; }
+            
             document.getElementById('grid').innerHTML = items.map(i => {
                 const isL = viewed.includes(i.id.toString());
-                const m = i.type==='video' ? \`<video src="\${i.image}#t=0.001" class="media" playsinline muted preload="metadata"></video><div class="play-icon"><i class="fa-solid fa-play"></i></div>\` : \`<img src="\${i.image}" class="media" loading="lazy">\`;
-                const l = isL ? \`<div class="lock-icon"><i class="fa-solid fa-lock"></i><span style="font-size:0.7rem; margin-top:5px; font-family:'Cairo';">تمت المشاهدة</span></div>\` : '';
-                return \`<div id="c-\${i.id}" class="card \${isL?'locked':''}" \${isL?'':\`onclick="openV('\${i.id}','\${i.image}','\${i.price}','\${i.type}')"\`}><div class="media-box">\${m}\${l}<div class="watermark"><span>ASOO</span></div></div><span class="price">\${i.price}</span></div>\`;
+                // استبدال محاولة تحميل الفيديو في المعاينة بمربع أسود أنيق وزر Play (يحل مشكلة تأخير الصفحة)
+                const m = i.type==='video' ? \`<div class="video-thumb"><i class="fa-solid fa-play"></i></div>\` : \`<img src="\${i.image}" class="media" loading="lazy">\`;
+                const l = isL ? \`<div class="lock-icon"><i class="fa-solid fa-lock"></i><span style="font-size:0.8rem; margin-top:5px; font-family:'Cairo';">تمت المشاهدة</span></div>\` : '';
+                
+                return \`<div id="c-\${i.id}" class="card \${isL?'locked':''}" \${isL?'':\`onclick="openV('\${i.id}','\${i.image}','\${i.price}','\${i.type}')"\`}>
+                    <div class="media-box">\${m}\${l}<div class="watermark" style="\${i.type==='video' ? 'display:none;' : ''}"><span>ASOO</span></div></div>
+                    <span class="price">\${i.price} د.ع</span>
+                </div>\`;
             }).join('');
         });
         
-        function openV(id, src, price, type){
-            document.getElementById('v-price').innerText = price;
+        // الخدعة التي تحل مشكلة الآيفون (تحويل الفيديو إلى Blob قبل تشغيله)
+        async function openV(id, src, price, type){
+            document.getElementById('v-price').innerText = price+' د.ع';
+            const vVid = document.getElementById('v-vid');
+            const vImg = document.getElementById('v-img');
+            const vLoad = document.getElementById('v-loader');
+            const vWater = document.getElementById('v-watermark');
+            
+            document.getElementById('viewer').classList.add('show'); 
+            window.location.hash='view_'+id;
+
             if(type==='video'){
-                document.getElementById('v-img').style.display='none'; 
-                let vid = document.getElementById('v-vid');
-                vid.src=src; vid.style.display='block'; 
-                let playPromise = vid.play();
-                if (playPromise !== undefined) { playPromise.catch(error => { console.log("Autoplay prevented by iOS"); }); }
+                vImg.style.display='none'; 
+                vVid.style.display='none';
+                vWater.style.display='none';
+                vLoad.style.display='flex'; // إظهار شاشة التحميل
+                
+                try {
+                    // سحب الفيديو للذاكرة لكي يعمل على الآيفون إجبارياً
+                    const response = await fetch(src);
+                    const blob = await response.blob();
+                    const blobUrl = URL.createObjectURL(blob);
+                    
+                    vLoad.style.display='none';
+                    vVid.src = blobUrl; 
+                    vVid.style.display='block';
+                    vWater.style.display='flex';
+                    vVid.play();
+                } catch(e) {
+                    vLoad.innerHTML = "فشل تحميل الفيديو. تأكدي من الانترنت.";
+                }
             }
-            else{document.getElementById('v-vid').style.display='none'; document.getElementById('v-img').src=src; document.getElementById('v-img').style.display='block';}
-            document.getElementById('viewer').classList.add('show'); window.location.hash='view_'+id;
+            else{
+                vVid.style.display='none'; 
+                vLoad.style.display='none';
+                vImg.src=src; 
+                vImg.style.display='block';
+                vWater.style.display='flex';
+            }
         }
         
         window.addEventListener('hashchange', ()=>{
@@ -265,20 +317,17 @@
             });
         }
 
-        // تم إزالة قيد الـ 15 ميجا من هنا 🚀
         document.getElementById('item-file-input').onchange = function(e) {
             const file = e.target.files[0]; if(!file) return;
             const isV = file.type.startsWith('video/'); document.getElementById('item-file-type').value = isV ? 'video' : 'image';
             
             if(isV) {
-                // فيديو: يرفع كما هو بدون قيود
                 document.getElementById('item-file-name').value = `v_${Date.now()}.mp4`;
                 const r = new FileReader(); r.onload = ev => {
                     document.getElementById('item-file-base64').value = ev.target.result;
                     document.getElementById('image-preview').style.display='none'; document.getElementById('video-preview').src=ev.target.result; document.getElementById('video-preview').style.display='block';
                 }; r.readAsDataURL(file);
             } else {
-                // صورة: ضغط ذكي وتسريع
                 document.getElementById('item-file-name').value = `img_${Date.now()}.jpg`;
                 const reader = new FileReader();
                 reader.onload = ev => {

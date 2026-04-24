@@ -9,12 +9,6 @@
   "items": {
     "makeup": [
       {
-        "id": 1776981403784,
-        "image": "m_1776981393635.jpeg",
-        "type": "image",
-        "price": "5000"
-      },
-      {
         "id": 1777060768298,
         "image": "m_1777060603696.mov",
         "type": "video",

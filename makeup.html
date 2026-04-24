@@ -1,5 +1,29 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>مكياج | Makeup by Asoo</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Lemonada:wght@600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>:root{--brand:#fb7185;} body{margin:0; font-family:'Cairo',sans-serif; background:#fdf2f8;} .header{text-align:center; padding:20px;} .card{background:white; border-radius:15px; margin:10px; padding:8px; box-shadow:0 4px 10px rgba(0,0,0,0.05); text-align:center; position:relative; overflow:hidden;} .media-box { position:relative; width:100%; aspect-ratio:1/1; border-radius:10px; overflow:hidden; background:#ffe4e6; } .media{width:100%; height:100%; object-fit:cover; pointer-events:none;} .price{color:#e11d48; font-weight:900; background:#ffe4e6; padding:5px; border-radius:8px; display:block; margin-top:10px; font-size:0.85rem;} .back{background:white; padding:8px 15px; display:inline-block; border-radius:20px; margin:15px; color:#e11d48; text-decoration:none; font-weight:bold;} #viewer{position:fixed; inset:0; background:rgba(0,0,0,0.98); z-index:100; display:none; flex-direction:column; align-items:center; justify-content:center;} #viewer.show{display:flex;} .v-media-box {position:relative; width:100%; max-width:400px; display:flex; justify-content:center; align-items:center; padding:0 15px;} .v-media{max-width:100%; max-height:75vh; border-radius:15px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);} .locked{opacity:0.7; pointer-events:none;} .lock-icon{position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; color:white; background:rgba(0,0,0,0.7); z-index:20; font-size:2rem; backdrop-filter:blur(4px);} .play-icon{position:absolute; top:8px; right:8px; background:rgba(0,0,0,0.6); color:white; width:30px; height:30px; display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:0.8rem; z-index:15;} .watermark { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:10; } .watermark span { color:rgba(255,255,255,0.7); font-size:2rem; font-family:'Dancing Script',cursive; transform:rotate(-35deg); text-shadow:1px 1px 3px rgba(0,0,0,0.3); } #viewer .watermark span { font-size:4rem; } .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--brand); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto; } @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } </style></head><body>
+<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>مكياج | Makeup by Asoo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Lemonada:wght@600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    :root{--brand:#fb7185;} body{margin:0; font-family:'Cairo',sans-serif; background:#fdf2f8;} 
+    .header{text-align:center; padding:20px;} 
+    .card{background:white; border-radius:15px; margin:10px; padding:8px; box-shadow:0 4px 10px rgba(0,0,0,0.05); text-align:center; cursor:pointer; -webkit-tap-highlight-color: transparent;} 
+    .card:active{transform:scale(0.98);}
+    .media-box { position:relative; width:100%; aspect-ratio:1/1; border-radius:10px; overflow:hidden; background:#ffe4e6; } 
+    .media{width:100%; height:100%; object-fit:cover; pointer-events:none;} 
+    .price{color:#e11d48; font-weight:900; background:#ffe4e6; padding:5px; border-radius:8px; display:block; margin-top:10px; font-size:0.85rem;} 
+    .back{background:white; padding:8px 15px; display:inline-block; border-radius:20px; margin:15px; color:#e11d48; text-decoration:none; font-weight:bold;} 
+    #viewer{position:fixed; inset:0; background:rgba(0,0,0,0.98); z-index:100; display:none; flex-direction:column; align-items:center; justify-content:center;} 
+    #viewer.show{display:flex;} 
+    .v-media-box {position:relative; width:100%; max-width:400px; display:flex; justify-content:center; align-items:center; padding:0 15px;} 
+    .v-media{max-width:100%; max-height:75vh; border-radius:15px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);} 
+    .locked{opacity:0.7; pointer-events:none;} 
+    .lock-icon{position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; color:white; background:rgba(0,0,0,0.7); z-index:20; font-size:2rem; backdrop-filter:blur(4px);} 
+    .play-icon{position:absolute; top:8px; right:8px; background:rgba(0,0,0,0.6); color:white; width:30px; height:30px; display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:0.8rem; z-index:15;} 
+    .watermark { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:10; } 
+    .watermark span { color:rgba(255,255,255,0.7); font-size:2rem; font-family:'Dancing Script',cursive; transform:rotate(-35deg); text-shadow:1px 1px 3px rgba(0,0,0,0.3); } 
+    #viewer .watermark span { font-size:4rem; } 
+    .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--brand); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto; } @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } 
+</style>
+</head><body>
     <a href="index.html" class="back"><i class="fa-solid fa-arrow-right"></i> العودة</a>
     <div class="header"><div style="font-size:3rem; background:#ffe4e6; width:80px; height:80px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 10px;">❤️</div><h1 style="font-family:'Lemonada',cursive; color:#1f2937; margin:0; font-size:1.5rem;">مكياج</h1><p style="color:#fb7185; font-size:0.75rem; font-weight:bold; margin-top:5px;">تُعرض الصور لمرة واحدة للخصوصية 🔒</p></div>
     <div id="grid" style="display:grid; grid-template-columns:1fr 1fr; padding:5px 15px; max-width:500px; margin:0 auto;"><div style="grid-column:1/-1; text-align:center; padding:30px;"><div class="loader"></div></div></div>
@@ -21,7 +45,6 @@
             if(!items.length) { document.getElementById('grid').innerHTML = '<p style="grid-column:1/-1; text-align:center; font-weight:bold; color:#9ca3af;">سيتم الإضافة قريباً 🌸</p>'; return; }
             document.getElementById('grid').innerHTML = items.map(i => {
                 const isL = viewed.includes(i.id.toString());
-                // استخدام #t=0.001 لجلب أول فريم من الفيديو بسرعة للآيفون!
                 const m = i.type==='video' ? `<video src="${i.image}#t=0.001" class="media" playsinline muted preload="metadata"></video><div class="play-icon"><i class="fa-solid fa-play"></i></div>` : `<img src="${i.image}" class="media" loading="lazy">`;
                 const l = isL ? `<div class="lock-icon"><i class="fa-solid fa-lock"></i><span style="font-size:0.7rem; margin-top:5px; font-family:'Cairo';">تمت المشاهدة</span></div>` : '';
                 return `<div id="c-${i.id}" class="card ${isL?'locked':''}" ${isL?'':`onclick="openV('${i.id}','${i.image}','${i.price}','${i.type}')"`}><div class="media-box">${m}${l}<div class="watermark"><span>ASOO</span></div></div><span class="price">${i.price}</span></div>`;
@@ -49,7 +72,7 @@
                     viewed.push(id); localStorage.setItem('v_asoo_makeup', JSON.stringify(viewed)); 
                     const card = document.getElementById('c-'+id);
                     card.classList.add('locked'); card.onclick=null;
-                    card.querySelector('.media-box').innerHTML += '<div class="lock-icon"><i class="fa-solid fa-lock"></i><span style="font-size:0.7rem; margin-top:5px; font-family:\'Cairo\';">تمت المشاهدة</span></div>';
+                    card.querySelector('.media-box').innerHTML += '<div class="lock-icon"><i class="fa-solid fa-lock"></i><span style="font-size:0.8rem; margin-top:5px; font-family:\'Cairo\';">تمت المشاهدة</span></div>';
                 }
             } else { window.lastId = window.location.hash.split('_')[1]; }
         });

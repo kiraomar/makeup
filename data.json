@@ -19,6 +19,13 @@
         "image": "m_1777060814232.jpeg",
         "type": "image",
         "price": "40,000"
+      },
+      {
+        "id": 1777067817124,
+        "image": "v_1777067801362.mp4",
+        "type": "video",
+        "price": "234",
+        "thumb": null
       }
     ]
   }

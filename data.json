@@ -24,6 +24,11 @@
       "id": "fullmakeup",
       "title": "مكياج كامل ",
       "icon": "✨"
+    },
+    {
+      "id": "invited",
+      "title": "مدعوات",
+      "icon": "🎀"
     }
   ],
   "items": {
@@ -31,6 +36,7 @@
     "bride": [],
     "hair": [],
     "graduated": [],
-    "fullmakeup": []
+    "fullmakeup": [],
+    "invited": []
   }
 }

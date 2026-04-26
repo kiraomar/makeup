@@ -77,6 +77,13 @@
         "type": "image",
         "price": "0",
         "thumb": null
+      },
+      {
+        "id": 1777234393054,
+        "image": "v_1777234315639.mp4",
+        "type": "video",
+        "price": "0",
+        "thumb": null
       }
     ],
     "invited": [],

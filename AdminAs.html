@@ -68,7 +68,7 @@
                 <input type="hidden" id="item-file-name">
                 <input type="hidden" id="item-file-base64">
                 <input type="hidden" id="item-file-type">
-                <input type="hidden" id="item-file-thumb"> <!-- حقل جديد لحفظ الصورة المصغرة للفيديو -->
+                <input type="hidden" id="item-file-thumb">
                 
                 <div>
                     <label style="color:var(--brand);">اختر الملف (فيديو أو صورة)</label>
@@ -130,7 +130,7 @@
         }
 
         // =========================================================================
-        // 🔥 القالب الجديد: أنيميشن مكياج + تشغيل فيديو مع تحميل + علامة مائية 🔥
+        // 🔥 القالب الجديد: حل مشكلة الـ 404 ومشاكل الصورة المكسورة 🔥
         // =========================================================================
         function generatePageTemplate(sectionId, sectionTitle, sectionEmoji) {
             return `<!DOCTYPE html>
@@ -170,11 +170,7 @@
     @keyframes float-up { 0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.3; } 90% { opacity: 0.3; } 100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; } }
 </style>
 </head><body>
-    <!-- أيقونات عائمة -->
-    <div class="bg-icon" style="left: 10%; animation-duration: 12s;">💄</div>
-    <div class="bg-icon" style="left: 80%; animation-duration: 15s;">💋</div>
-    <div class="bg-icon" style="left: 40%; animation-duration: 10s;">💅</div>
-    <div class="bg-icon" style="left: 70%; animation-duration: 18s;">👑</div>
+    <div class="bg-icon" style="left: 10%; animation-duration: 12s;">💄</div><div class="bg-icon" style="left: 80%; animation-duration: 15s;">💋</div><div class="bg-icon" style="left: 40%; animation-duration: 10s;">💅</div><div class="bg-icon" style="left: 70%; animation-duration: 18s;">👑</div>
 
     <a href="index.html" class="back"><i class="fa-solid fa-arrow-right"></i> العودة</a>
     <div class="header">
@@ -188,10 +184,8 @@
     <div id="viewer">
         <button onclick="history.back()" style="position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.2); border:none; color:white; font-size:1.5rem; width:45px; height:45px; border-radius:50%; z-index:110;"><i class="fa-solid fa-xmark"></i></button>
         <div class="v-media-box">
-            <div id="v-loader" style="display:none; position:absolute; z-index:50; flex-direction:column; align-items:center; color:white;"><div class="loader" style="margin-bottom:10px; border-top-color:white;"></div><span style="font-family:'Cairo'; font-size:0.8rem;">جاري التحميل...</span></div>
             <img id="v-img" class="v-media">
-            <!-- استخدام preload="auto" لتشجيع المتصفح على التحميل -->
-            <video id="v-vid" class="v-media" playsinline controls preload="auto"></video>
+            <video id="v-vid" class="v-media" playsinline controls preload="metadata"></video>
             <div class="watermark"><span>ASOO</span></div>
         </div>
         <h3 id="v-price" style="color:#fb7185; margin-top:20px; font-size:1.5rem; background:rgba(255,255,255,0.1); padding:8px 25px; border-radius:12px; border:1px solid rgba(255,255,255,0.2);"></h3>
@@ -206,7 +200,12 @@
             
             document.getElementById('grid').innerHTML = items.map(i => {
                 const isL = viewed.includes(i.id.toString());
-                const imgSrc = i.thumb ? i.thumb : i.image;
+                
+                // الحل الذكي للصورة المكسورة: إذا لم يوجد thumb للفيديو، نضع صورة بديلة جميلة
+                let imgSrc = i.image;
+                if(i.type === 'video') {
+                    imgSrc = i.thumb ? i.thumb : 'https://placehold.co/400x400/fdf2f8/fb7185?text=Video+🎬';
+                }
                 
                 const m = \`<img src="\${imgSrc}" class="media" loading="lazy">\`;
                 const playBtn = i.type === 'video' ? \`<div class="play-icon"><i class="fa-solid fa-play"></i></div>\` : '';
@@ -223,7 +222,6 @@
             document.getElementById('v-price').innerText = price+' د.ع';
             const vVid = document.getElementById('v-vid');
             const vImg = document.getElementById('v-img');
-            const vLoader = document.getElementById('v-loader');
             
             document.getElementById('viewer').classList.add('show'); 
             window.location.hash='view_'+id;
@@ -231,20 +229,11 @@
             if(type==='video'){
                 vImg.style.display='none'; 
                 vVid.style.display='block';
-                vLoader.style.display='flex';
-                vVid.src = src;
-                
-                // محاولة التشغيل، وعندما يكون جاهزاً يختفي اللودر
-                vVid.oncanplay = () => { vLoader.style.display = 'none'; };
-                vVid.onwaiting = () => { vLoader.style.display = 'flex'; };
-                vVid.onplaying = () => { vLoader.style.display = 'none'; };
-                
+                vVid.src = src; // التوجيه المباشر للفيديو
                 let playPromise = vVid.play();
                 if (playPromise !== undefined) { 
                     playPromise.catch(error => { 
-                        console.log("Auto-play prevented by iOS"); 
-                        // نترك اللودر يختفي بعد 3 ثوان كحد أقصى لتفادي التعليق
-                        setTimeout(()=>{ vLoader.style.display='none'; }, 3000);
+                        console.log("الآيفون يمنع التشغيل التلقائي، يجب على المستخدم الضغط على Play."); 
                     }); 
                 }
             }
@@ -252,7 +241,6 @@
                 vVid.style.display='none'; 
                 vVid.pause();
                 vVid.src = '';
-                vLoader.style.display='none';
                 vImg.src=src; 
                 vImg.style.display='block';
             }
@@ -288,7 +276,13 @@
             const url = `https://api.github.com/repos/${ghConfig.user}/${ghConfig.repo}/contents/${fileName}`;
             let sha = null; try { const check = await fetch(url, { headers: getHeaders(), cache:'no-cache' }); if(check.ok) sha = (await check.json()).sha; } catch(e){}
             const body = { message: commitMsg, content: base64Content }; if(sha) body.sha = sha;
-            const res = await fetch(url, { method: 'PUT', headers: { ...getHeaders(), 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); return res.ok;
+            
+            const res = await fetch(url, { method: 'PUT', headers: { ...getHeaders(), 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); 
+            if(!res.ok) {
+                const err = await res.json();
+                throw new Error(err.message || "فشل الرفع");
+            }
+            return res.ok;
         }
 
         function renderSections() {
@@ -345,7 +339,7 @@
             const items = salonData.items[currentSectionId] || [];
             if(!items.length) { body.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:20px; color:#999;">القسم فارغ</td></tr>'; return; }
             items.forEach(i => {
-                const mediaSrc = i.thumb ? i.thumb : i.image;
+                const mediaSrc = i.thumb ? i.thumb : (i.type === 'video' ? 'https://placehold.co/400x400/fdf2f8/fb7185?text=Video' : i.image);
                 const media = i.type === 'video' ? `<div style="position:relative; width:45px; height:45px;"><img src="${mediaSrc}" style="width:100%; height:100%; border-radius:8px; object-fit:cover;"><i class="fa-solid fa-play" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:white; background:rgba(0,0,0,0.5); padding:4px; border-radius:50%; font-size:0.6rem;"></i></div>` : `<img src="${mediaSrc}" style="width:45px; height:45px; border-radius:8px; object-fit:cover;">`;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${media}</td><td style="color:#e11d48; font-weight:bold;">${i.price}</td><td style="text-align:center;"><button onclick="deleteItem(${i.id})" style="background:none; border:none; color:#ef4444;"><i class="fa-solid fa-trash"></i></button></td>`;
@@ -353,14 +347,12 @@
             });
         }
 
-        // === نظام استخراج الصور المصغرة (Thumbnails) للفيديو عند الرفع ===
         document.getElementById('item-file-input').onchange = function(e) {
             const file = e.target.files[0]; if(!file) return;
             const isV = file.type.startsWith('video/'); document.getElementById('item-file-type').value = isV ? 'video' : 'image';
-            document.getElementById('item-file-thumb').value = ''; // تصفير القديم
+            document.getElementById('item-file-thumb').value = ''; 
             
             if(isV) {
-                // معالجة الفيديو واستخراج صورة
                 document.getElementById('item-file-name').value = `v_${Date.now()}.mp4`;
                 const fileURL = URL.createObjectURL(file);
                 
@@ -368,34 +360,30 @@
                 vidNode.src = fileURL;
                 vidNode.muted = true;
                 vidNode.playsInline = true;
-                vidNode.currentTime = 1; // استخراج الفريم عند الثانية 1
+                vidNode.currentTime = 1; 
                 
                 vidNode.addEventListener('loadeddata', function() {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = 400; // حجم مصغر وسريع
-                    canvas.height = (vidNode.videoHeight / vidNode.videoWidth) * 400;
-                    const ctx = canvas.getContext('2d');
-                    
-                    // رسم الصورة المصغرة للفيديو
-                    setTimeout(() => {
-                        ctx.drawImage(vidNode, 0, 0, canvas.width, canvas.height);
-                        const thumbBase64 = canvas.toDataURL('image/jpeg', 0.6);
-                        document.getElementById('item-file-thumb').value = thumbBase64;
-                        
-                        // عرض المعاينة للمستخدم
-                        document.getElementById('video-preview').style.display='none'; 
-                        document.getElementById('image-preview').src = thumbBase64; 
-                        document.getElementById('image-preview').style.display='block';
-                    }, 300); // مهلة صغيرة للتأكد من تحميل الفريم
+                    try {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = 400; 
+                        canvas.height = (vidNode.videoHeight / vidNode.videoWidth) * 400;
+                        const ctx = canvas.getContext('2d');
+                        setTimeout(() => {
+                            ctx.drawImage(vidNode, 0, 0, canvas.width, canvas.height);
+                            const thumbBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                            document.getElementById('item-file-thumb').value = thumbBase64;
+                            document.getElementById('video-preview').style.display='none'; 
+                            document.getElementById('image-preview').src = thumbBase64; 
+                            document.getElementById('image-preview').style.display='block';
+                        }, 500); 
+                    } catch(err) {
+                        console.log("لا يمكن استخراج صورة من الفيديو في هذا المتصفح.");
+                    }
                 });
 
-                // قراءة ملف الفيديو الأصلي للرفع
-                const r = new FileReader(); r.onload = ev => {
-                    document.getElementById('item-file-base64').value = ev.target.result;
-                }; r.readAsDataURL(file);
+                const r = new FileReader(); r.onload = ev => { document.getElementById('item-file-base64').value = ev.target.result; }; r.readAsDataURL(file);
 
             } else {
-                // معالجة الصورة وضغطها
                 document.getElementById('item-file-name').value = `img_${Date.now()}.jpg`;
                 const reader = new FileReader();
                 reader.onload = ev => {
@@ -424,21 +412,28 @@
             const btn = document.getElementById('save-item-btn'); btn.innerText = 'جاري الرفع... ⏳'; btn.disabled = true;
             const fName = document.getElementById('item-file-name').value; const b64 = document.getElementById('item-file-base64').value.split(',')[1];
             
-            await uploadFileToGithub(fName, b64, 'رفع ميديا');
-            
-            // جلب الصورة المصغرة (للفيديو) إن وجدت
-            const thumb = document.getElementById('item-file-thumb').value;
-
-            salonData.items[currentSectionId].push({ 
-                id: Date.now(), 
-                image: fName, 
-                type: document.getElementById('item-file-type').value, 
-                price: document.getElementById('item-price').value,
-                thumb: thumb || null // نحفظ الصورة المصغرة مع البيانات
-            });
-            
-            await uploadDataToGithub();
-            document.getElementById('item-modal').classList.remove('active'); renderItems(); btn.innerText = 'رفع وحفظ'; btn.disabled = false;
+            try {
+                await uploadFileToGithub(fName, b64, 'رفع ميديا');
+                
+                const thumb = document.getElementById('item-file-thumb').value;
+                salonData.items[currentSectionId].push({ 
+                    id: Date.now(), 
+                    image: fName, 
+                    type: document.getElementById('item-file-type').value, 
+                    price: document.getElementById('item-price').value,
+                    thumb: thumb || null 
+                });
+                
+                await uploadDataToGithub();
+                document.getElementById('item-modal').classList.remove('active'); renderItems(); btn.innerText = 'رفع للموقع'; btn.disabled = false;
+                
+                // تنبيه مهم لانتظار السيرفر
+                alert("تم الرفع بنجاح! \nملاحظة: إذا كان الملف كبيراً، يرجى الانتظار دقيقتين قبل فتح الموقع لكي يصل الملف إلى السيرفر بالكامل.");
+                
+            } catch (err) {
+                alert("فشل الرفع! حجم الملف كبير جداً ويرفضه السيرفر. حاول ضغط الفيديو أو تقليل مدته.");
+                btn.innerText = 'رفع للموقع'; btn.disabled = false;
+            }
         };
 
         async function deleteItem(id) { salonData.items[currentSectionId] = salonData.items[currentSectionId].filter(i => i.id !== id); await uploadDataToGithub(); renderItems(); }

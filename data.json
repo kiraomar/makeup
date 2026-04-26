@@ -4,9 +4,15 @@
       "id": "makeup",
       "title": "مكياج",
       "icon": "🥰"
+    },
+    {
+      "id": "bride",
+      "title": "العرائس ",
+      "icon": "👑"
     }
   ],
   "items": {
-    "makeup": []
+    "makeup": [],
+    "bride": []
   }
 }

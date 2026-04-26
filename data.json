@@ -70,6 +70,13 @@
         "type": "image",
         "price": "0",
         "thumb": null
+      },
+      {
+        "id": 1777234152899,
+        "image": "img_1777234144136.jpg",
+        "type": "image",
+        "price": "0",
+        "thumb": null
       }
     ],
     "invited": [],

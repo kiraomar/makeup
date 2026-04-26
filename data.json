@@ -56,7 +56,15 @@
     "bride": [],
     "hair": [],
     "graduated": [],
-    "fullmakeup": [],
+    "fullmakeup": [
+      {
+        "id": 1777234065550,
+        "image": "img_1777234057883.jpg",
+        "type": "image",
+        "price": "0",
+        "thumb": null
+      }
+    ],
     "invited": [],
     "hairstyles": []
   }

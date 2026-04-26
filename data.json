@@ -14,11 +14,17 @@
       "id": "hair",
       "title": "تصفيف الشعر",
       "icon": "💇🏻‍♀️"
+    },
+    {
+      "id": "graduated",
+      "title": "خريجات ",
+      "icon": "👩🏻‍🎓"
     }
   ],
   "items": {
     "makeup": [],
     "bride": [],
-    "hair": []
+    "hair": [],
+    "graduated": []
   }
 }

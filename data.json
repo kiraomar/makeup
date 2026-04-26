@@ -37,7 +37,15 @@
     }
   ],
   "items": {
-    "makeup": [],
+    "makeup": [
+      {
+        "id": 1777220502729,
+        "image": "v_1777220409747.mp4",
+        "type": "video",
+        "price": "45,000",
+        "thumb": null
+      }
+    ],
     "bride": [],
     "hair": [],
     "graduated": [],

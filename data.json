@@ -9,10 +9,16 @@
       "id": "bride",
       "title": "العرائس ",
       "icon": "👑"
+    },
+    {
+      "id": "hair",
+      "title": "تصفيف الشعر",
+      "icon": "💇🏻‍♀️"
     }
   ],
   "items": {
     "makeup": [],
-    "bride": []
+    "bride": [],
+    "hair": []
   }
 }

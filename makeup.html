@@ -35,11 +35,7 @@
     @keyframes float-up { 0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.3; } 90% { opacity: 0.3; } 100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; } }
 </style>
 </head><body>
-    <!-- أيقونات عائمة -->
-    <div class="bg-icon" style="left: 10%; animation-duration: 12s;">💄</div>
-    <div class="bg-icon" style="left: 80%; animation-duration: 15s;">💋</div>
-    <div class="bg-icon" style="left: 40%; animation-duration: 10s;">💅</div>
-    <div class="bg-icon" style="left: 70%; animation-duration: 18s;">👑</div>
+    <div class="bg-icon" style="left: 10%; animation-duration: 12s;">💄</div><div class="bg-icon" style="left: 80%; animation-duration: 15s;">💋</div><div class="bg-icon" style="left: 40%; animation-duration: 10s;">💅</div><div class="bg-icon" style="left: 70%; animation-duration: 18s;">👑</div>
 
     <a href="index.html" class="back"><i class="fa-solid fa-arrow-right"></i> العودة</a>
     <div class="header">
@@ -53,10 +49,8 @@
     <div id="viewer">
         <button onclick="history.back()" style="position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.2); border:none; color:white; font-size:1.5rem; width:45px; height:45px; border-radius:50%; z-index:110;"><i class="fa-solid fa-xmark"></i></button>
         <div class="v-media-box">
-            <div id="v-loader" style="display:none; position:absolute; z-index:50; flex-direction:column; align-items:center; color:white;"><div class="loader" style="margin-bottom:10px; border-top-color:white;"></div><span style="font-family:'Cairo'; font-size:0.8rem;">جاري التحميل...</span></div>
             <img id="v-img" class="v-media">
-            <!-- استخدام preload="auto" لتشجيع المتصفح على التحميل -->
-            <video id="v-vid" class="v-media" playsinline controls preload="auto"></video>
+            <video id="v-vid" class="v-media" playsinline controls preload="metadata"></video>
             <div class="watermark"><span>ASOO</span></div>
         </div>
         <h3 id="v-price" style="color:#fb7185; margin-top:20px; font-size:1.5rem; background:rgba(255,255,255,0.1); padding:8px 25px; border-radius:12px; border:1px solid rgba(255,255,255,0.2);"></h3>
@@ -71,7 +65,12 @@
             
             document.getElementById('grid').innerHTML = items.map(i => {
                 const isL = viewed.includes(i.id.toString());
-                const imgSrc = i.thumb ? i.thumb : i.image;
+                
+                // الحل الذكي للصورة المكسورة: إذا لم يوجد thumb للفيديو، نضع صورة بديلة جميلة
+                let imgSrc = i.image;
+                if(i.type === 'video') {
+                    imgSrc = i.thumb ? i.thumb : 'https://placehold.co/400x400/fdf2f8/fb7185?text=Video+🎬';
+                }
                 
                 const m = `<img src="${imgSrc}" class="media" loading="lazy">`;
                 const playBtn = i.type === 'video' ? `<div class="play-icon"><i class="fa-solid fa-play"></i></div>` : '';
@@ -88,7 +87,6 @@
             document.getElementById('v-price').innerText = price+' د.ع';
             const vVid = document.getElementById('v-vid');
             const vImg = document.getElementById('v-img');
-            const vLoader = document.getElementById('v-loader');
             
             document.getElementById('viewer').classList.add('show'); 
             window.location.hash='view_'+id;
@@ -96,20 +94,11 @@
             if(type==='video'){
                 vImg.style.display='none'; 
                 vVid.style.display='block';
-                vLoader.style.display='flex';
-                vVid.src = src;
-                
-                // محاولة التشغيل، وعندما يكون جاهزاً يختفي اللودر
-                vVid.oncanplay = () => { vLoader.style.display = 'none'; };
-                vVid.onwaiting = () => { vLoader.style.display = 'flex'; };
-                vVid.onplaying = () => { vLoader.style.display = 'none'; };
-                
+                vVid.src = src; // التوجيه المباشر للفيديو
                 let playPromise = vVid.play();
                 if (playPromise !== undefined) { 
                     playPromise.catch(error => { 
-                        console.log("Auto-play prevented by iOS"); 
-                        // نترك اللودر يختفي بعد 3 ثوان كحد أقصى لتفادي التعليق
-                        setTimeout(()=>{ vLoader.style.display='none'; }, 3000);
+                        console.log("الآيفون يمنع التشغيل التلقائي، يجب على المستخدم الضغط على Play."); 
                     }); 
                 }
             }
@@ -117,7 +106,6 @@
                 vVid.style.display='none'; 
                 vVid.pause();
                 vVid.src = '';
-                vLoader.style.display='none';
                 vImg.src=src; 
                 vImg.style.display='block';
             }

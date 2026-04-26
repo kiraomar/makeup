@@ -19,12 +19,18 @@
       "id": "graduated",
       "title": "خريجات ",
       "icon": "👩🏻‍🎓"
+    },
+    {
+      "id": "fullmakeup",
+      "title": "مكياج كامل ",
+      "icon": "✨"
     }
   ],
   "items": {
     "makeup": [],
     "bride": [],
     "hair": [],
-    "graduated": []
+    "graduated": [],
+    "fullmakeup": []
   }
 }

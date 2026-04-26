@@ -80,14 +80,6 @@
       }
     ],
     "invited": [],
-    "hairstyles": [
-      {
-        "id": 1777237562938,
-        "image": "v_1777237542084.mp4",
-        "type": "video",
-        "price": "0",
-        "thumb": null
-      }
-    ]
+    "hairstyles": []
   }
 }

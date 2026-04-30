@@ -47,8 +47,9 @@
         #receipt-file { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
         .file-name-display { margin-top: 10px; font-size: 0.8rem; color: #10b981; font-weight: bold; display: none; }
         
-        .price-box { background: var(--brand-light); border-radius: 12px; padding: 10px; text-align: center; margin-bottom: 15px; border: 1px dashed var(--brand); }
-        .price-box span { display: block; color: var(--brand-dark); font-weight: 900; font-size: 1.4rem; }
+        .price-box { background: var(--brand-dark); color: white; border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(225, 29, 72, 0.3); }
+        .price-box span { display: block; font-weight: 900; font-size: 1.8rem; letter-spacing: 1px; }
+        .price-box small { color: #fce7f3; font-weight: bold; font-size: 0.85rem; }
         
         .btn-submit { background: linear-gradient(45deg, #e11d48, #fb7185); color: white; width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3); transition: 0.2s; font-family: 'Cairo', sans-serif; margin-top: 15px; }
         .btn-submit:active { transform: scale(0.97); }
@@ -105,37 +106,55 @@
             <form id="booking-form">
                 <div class="card">
                     <h2 class="section-title"><i class="fa-solid fa-clipboard-user"></i> معلومات الحجز الأساسية</h2>
+                    
                     <div class="form-group">
                         <label>الاسم الثلاثي</label>
                         <input type="text" id="cust-name" class="form-control" required placeholder="اسم الزبونة">
                     </div>
+
+                    <div class="form-group">
+                        <label>رقم الهاتف</label>
+                        <input type="tel" id="cust-phone" class="form-control" required placeholder="07...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>الخدمة الأساسية المطلوبة</label>
+                        <select id="cust-service" class="form-control" required>
+                            <option value="" disabled selected>اختاري...</option>
+                            <option value="مكياج وتسريحة عرايس">مكياج وتسريحة عرايس</option>
+                            <option value="مكياج وتسريحة خطوبة">مكياج وتسريحة خطوبة</option>
+                            <option value="مكياج سهرة">مكياج سهرة</option>
+                            <option value="تسريحة شعر فقط">تسريحة شعر فقط</option>
+                            <option value="خدمات أخرى">خدمات أخرى</option>
+                        </select>
+                    </div>
+
                     <div class="grid-2">
                         <div class="form-group">
-                            <label>نوع الخدمة الأساسية</label>
-                            <select id="cust-service" class="form-control" required>
-                                <option value="" disabled selected>اختاري...</option>
-                                <option value="مكياج وتسريحة عرايس">مكياج وتسريحة عرايس</option>
-                                <option value="مكياج وتسريحة خطوبة">مكياج وتسريحة خطوبة</option>
-                                <option value="مكياج سهرة">مكياج سهرة</option>
-                                <option value="تسريحة شعر فقط">تسريحة شعر فقط</option>
-                                <option value="خدمات أخرى">خدمات أخرى</option>
-                            </select>
+                            <label>عدد المكياج</label>
+                            <input type="number" id="cust-makeup" class="form-control" min="0" value="0">
                         </div>
                         <div class="form-group">
-                            <label>العدد (عدد الأشخاص)</label>
-                            <input type="number" id="cust-count" class="form-control" required min="1" value="1">
+                            <label>عدد التسريحات</label>
+                            <input type="number" id="cust-hair" class="form-control" min="0" value="0">
                         </div>
+                    </div>
+                    
+                    <div class="form-group" style="background: #fff1f2; padding: 10px; border-radius: 10px; border: 1px dashed var(--brand);">
+                        <label style="color: var(--brand-dark);">إجمالي عدد الأشخاص (لحساب العربون)</label>
+                        <input type="number" id="cust-count" class="form-control" required min="1" value="1" style="font-size: 1.2rem; text-align: center; font-weight: bold;">
                     </div>
                 </div>
 
                 <div class="card">
-                    <h2 class="section-title"><i class="fa-solid fa-money-bill-transfer"></i> دفع العربون (ماستر كارد)</h2>
+                    <h2 class="section-title"><i class="fa-solid fa-money-bill-transfer"></i> دفع العربون (سوبر كي)</h2>
+                    
                     <div class="price-box">
-                        <small>مبلغ العربون المطلوب لتأكيد الحجز</small>
-                        <!-- تم التعديل هنا: 10,000 د.ع -->
-                        <span>10,000 د.ع</span>
+                        <small>إجمالي مبلغ العربون المطلوب (10 ألف لكل شخص)</small>
+                        <span id="display-deposit">10,000 د.ع</span>
                     </div>
-                    <p style="font-size: 0.85rem; color: #4b5563; font-weight: bold; margin-bottom: 10px;">يرجى تحويل مبلغ العربون إلى البطاقة التالية:</p>
+                    
+                    <p style="font-size: 0.85rem; color: #4b5563; font-weight: bold; margin-bottom: 10px;">يرجى تحويل المبلغ المذكور أعلاه إلى البطاقة التالية:</p>
 
                     <div class="pay-card-box">
                         <div class="cc-logo"><i class="fa-brands fa-cc-mastercard"></i> سوبر كي - Super Qi</div>
@@ -196,14 +215,15 @@
                 <div class="receipt-row"><span>رقم الوصل:</span> <strong id="r-id" style="font-family: monospace;">---</strong></div>
                 <div class="receipt-row"><span>التاريخ والوقت:</span> <strong id="r-date" dir="ltr">---</strong></div>
                 <div class="receipt-row"><span>اسم الزبونة:</span> <strong id="r-name">---</strong></div>
-                <div class="receipt-row"><span>نوع الخدمة:</span> <strong id="r-service">---</strong></div>
-                <div class="receipt-row"><span>العدد:</span> <strong id="r-count">---</strong></div>
-                <div class="receipt-row"><span>طريقة الدفع:</span> <strong>تحويل ماستر (Super Qi)</strong></div>
+                <div class="receipt-row"><span>رقم الهاتف:</span> <strong id="r-phone">---</strong></div>
+                <div class="receipt-row" style="border-top: 1px dashed #eee; padding-top: 10px;"><span>الخدمة الأساسية:</span> <strong id="r-service">---</strong></div>
+                <div class="receipt-row"><span>عدد المكياج:</span> <strong id="r-makeup">---</strong></div>
+                <div class="receipt-row"><span>عدد التسريحات:</span> <strong id="r-hair">---</strong></div>
+                <div class="receipt-row"><span>إجمالي الأشخاص:</span> <strong id="r-count">---</strong></div>
                 
                 <div class="receipt-row bold">
                     <span>العربون المدفوع:</span> 
-                    <!-- تم التعديل هنا: 10,000 د.ع -->
-                    <span>10,000 د.ع</span>
+                    <span id="r-deposit">---</span>
                 </div>
                 
                 <div style="text-align: center; margin-top: 30px;">
@@ -229,6 +249,18 @@
     </div>
 
     <script>
+        // حساب العربون تلقائياً بناءً على عدد الأشخاص
+        const countInput = document.getElementById('cust-count');
+        const displayDeposit = document.getElementById('display-deposit');
+        let currentTotalDeposit = 10000;
+
+        countInput.addEventListener('input', function() {
+            let count = parseInt(this.value);
+            if(isNaN(count) || count < 1) count = 1;
+            currentTotalDeposit = count * 10000;
+            displayDeposit.innerText = currentTotalDeposit.toLocaleString() + ' د.ع';
+        });
+
         function copyCardNumber() {
             const cardNumber = '9705581719';
             const el = document.createElement('textarea');
@@ -252,29 +284,15 @@
             const receiptElement = document.getElementById('receipt-card-to-save');
             const saveBtn = document.getElementById('save-btn-action');
             const originalText = saveBtn.innerHTML;
-            
-            saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الحفظ...';
-            saveBtn.style.opacity = '0.8';
+            saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الحفظ...'; saveBtn.style.opacity = '0.8';
 
             html2canvas(receiptElement, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
                 const imgData = canvas.toDataURL('image/jpeg', 1.0);
-                const link = document.createElement('a');
-                link.download = 'ASOO_Receipt_' + document.getElementById('r-id').innerText + '.jpg';
-                link.href = imgData;
-                link.click();
-                
-                saveBtn.innerHTML = '<i class="fa-solid fa-check"></i> تم حفظ الصورة بنجاح!';
-                saveBtn.style.background = '#10b981';
-                saveBtn.style.opacity = '1';
-                
-                setTimeout(() => { 
-                    saveBtn.innerHTML = originalText; 
-                    saveBtn.style.background = '#1f2937';
-                }, 3000);
+                const link = document.createElement('a'); link.download = 'ASOO_Receipt_' + document.getElementById('r-id').innerText + '.jpg'; link.href = imgData; link.click();
+                saveBtn.innerHTML = '<i class="fa-solid fa-check"></i> تم حفظ الصورة بنجاح!'; saveBtn.style.background = '#10b981'; saveBtn.style.opacity = '1';
+                setTimeout(() => { saveBtn.innerHTML = originalText; saveBtn.style.background = '#1f2937'; }, 3000);
             }).catch(err => {
-                alert('حدث خطأ أثناء حفظ الصورة. يمكنك أخذ لقطة شاشة (Screenshot) يدوياً.');
-                saveBtn.innerHTML = originalText;
-                saveBtn.style.opacity = '1';
+                alert('حدث خطأ أثناء حفظ الصورة.'); saveBtn.innerHTML = originalText; saveBtn.style.opacity = '1';
             });
         }
 
@@ -282,7 +300,10 @@
             e.preventDefault();
             
             const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
             const service = document.getElementById('cust-service').value;
+            const makeupCount = document.getElementById('cust-makeup').value || "0";
+            const hairCount = document.getElementById('cust-hair').value || "0";
             const count = document.getElementById('cust-count').value;
             
             const receiptId = 'ASOO-' + Math.floor(100000 + Math.random() * 900000);
@@ -299,15 +320,19 @@
                 document.getElementById('r-id').innerText = receiptId;
                 document.getElementById('r-date').innerText = dateString;
                 document.getElementById('r-name').innerText = name;
+                document.getElementById('r-phone').innerText = phone;
                 document.getElementById('r-service').innerText = service;
+                document.getElementById('r-makeup').innerText = makeupCount;
+                document.getElementById('r-hair').innerText = hairCount;
                 document.getElementById('r-count').innerText = count + ' أشخاص';
+                document.getElementById('r-deposit').innerText = currentTotalDeposit.toLocaleString() + ' د.ع';
 
                 // =========================================
                 // ⚠️ ضعي رقم الواتساب الخاص بالصالون هنا ⚠️
                 // =========================================
                 const salonPhoneNumber = "9647700000000"; 
                 
-                const whatsappMessage = `مرحباً صالون Asoo 🌸\nلقد قمت بتحويل العربون وأود تأكيد حجزي.\n\nرقم الوصل: ${receiptId}\nالاسم: ${name}\nالخدمة: ${service}\nالعدد: ${count}\n\n(لقد قمت بحفظ صورة الوصل وسأقوم بإرفاقها لكِ الآن مع صورة الحوالة 📸)`;
+                const whatsappMessage = `مرحباً صالون Asoo 🌸\nأود تأكيد حجزي (حولت العربون).\n\nرقم الوصل: ${receiptId}\nالاسم: ${name}\nالرقم: ${phone}\nالخدمة: ${service}\n(مكياج: ${makeupCount} | تسريحات: ${hairCount})\nإجمالي الأشخاص: ${count}\nالعربون المدفوع: ${currentTotalDeposit.toLocaleString()} دينار\n\n(سأرفق الآن صورة هذا الوصل مع صورة حوالة سوبر كي 📸)`;
                 const encodedMessage = encodeURIComponent(whatsappMessage);
                 
                 document.getElementById('whatsapp-link').href = `https://wa.me/${salonPhoneNumber}?text=${encodedMessage}`;

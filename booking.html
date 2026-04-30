@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تأكيد الحجز والدفع | Makeup by Asoo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Lemonada:wght@600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- مكتبة تحويل الوصل إلى صورة -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root { --brand: #fb7185; --brand-dark: #e11d48; --brand-light: #ffe4e6; }
+        html, body { overflow-x: hidden; font-family: 'Cairo', sans-serif; background: #fdf2f8; margin: 0; padding: 0; min-height: 100vh; color: #1f2937; }
+        .container { max-width: 500px; margin: 0 auto; padding: 20px; position: relative; z-index: 10; }
+        
+        .header { text-align: center; margin-bottom: 25px; }
+        .header h1 { font-family: 'Lemonada', cursive; color: var(--brand-dark); margin: 0; font-size: 1.8rem; }
+        .header p { color: #6b7280; margin-top: 5px; font-weight: bold; font-size: 0.9rem; }
+        
+        .card { background: white; border-radius: 20px; box-shadow: 0 10px 25px rgba(251, 113, 133, 0.1); padding: 25px; margin-bottom: 20px; border: 1px solid #fce7f3; }
+        .section-title { font-weight: bold; color: var(--brand); border-bottom: 2px dashed #fce7f3; padding-bottom: 10px; margin-bottom: 15px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+        
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; font-size: 0.85rem; margin-bottom: 5px; color: #4b5563; }
+        .form-control { width: 100%; padding: 12px 15px; border: 2px solid #f3f4f6; border-radius: 12px; font-family: 'Cairo', sans-serif; font-size: 0.95rem; outline: none; transition: 0.2s; box-sizing: border-box; background: #f9fafb; }
+        .form-control:focus { border-color: var(--brand); background: white; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        
+        .pay-card-box { background: linear-gradient(135deg, #1e3a8a, #111827); color: white; border-radius: 15px; padding: 20px; margin-bottom: 15px; position: relative; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+        .pay-card-box::before { content: ''; position: absolute; top: -50%; right: -50%; width: 200px; height: 200px; background: rgba(255,255,255,0.05); border-radius: 50%; }
+        .cc-logo { font-size: 1.5rem; color: #facc15; margin-bottom: 10px; }
+        .cc-number-container { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 10px 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); margin-top: 10px;}
+        .cc-number { font-family: monospace; font-size: 1.3rem; letter-spacing: 2px; font-weight: bold; }
+        .btn-copy { background: var(--brand); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-family: 'Cairo'; font-weight: bold; font-size: 0.8rem; transition: 0.2s; display: flex; align-items: center; gap: 5px; }
+        .btn-copy:active { transform: scale(0.9); }
+        
+        .apps-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .app-btn { background: #f3f4f6; color: #1f2937; text-decoration: none; padding: 10px; border-radius: 10px; text-align: center; font-weight: bold; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid #e5e7eb; transition: 0.2s; }
+        .app-btn:active { background: #e5e7eb; }
+        .app-btn.ios { color: #000; }
+        .app-btn.android { color: #16a34a; }
+
+        .upload-area { border: 2px dashed var(--brand); border-radius: 12px; padding: 20px; text-align: center; background: #fff1f2; cursor: pointer; position: relative; transition: 0.2s; }
+        .upload-area:active { background: #ffe4e6; }
+        .upload-icon { font-size: 2rem; color: var(--brand); margin-bottom: 10px; }
+        .upload-text { font-weight: bold; color: var(--brand-dark); font-size: 0.9rem; margin: 0; }
+        #receipt-file { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .file-name-display { margin-top: 10px; font-size: 0.8rem; color: #10b981; font-weight: bold; display: none; }
+        
+        .price-box { background: var(--brand-light); border-radius: 12px; padding: 10px; text-align: center; margin-bottom: 15px; border: 1px dashed var(--brand); }
+        .price-box span { display: block; color: var(--brand-dark); font-weight: 900; font-size: 1.4rem; }
+        
+        .btn-submit { background: linear-gradient(45deg, #e11d48, #fb7185); color: white; width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3); transition: 0.2s; font-family: 'Cairo', sans-serif; margin-top: 15px; }
+        .btn-submit:active { transform: scale(0.97); }
+        
+        #receipt-screen { display: none; animation: slideUp 0.5s ease; }
+        .receipt { background: white; border-radius: 15px; padding: 30px 20px; position: relative; margin-top: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .receipt::before, .receipt::after { content: ''; position: absolute; left: 0; right: 0; height: 10px; background-size: 20px 20px; }
+        .receipt::before { top: -5px; background-image: radial-gradient(circle at 10px 0, transparent 10px, white 11px); }
+        .receipt::after { bottom: -5px; background-image: radial-gradient(circle at 10px 10px, transparent 10px, white 11px); }
+        
+        .receipt-header { text-align: center; border-bottom: 2px dashed #e5e7eb; padding-bottom: 15px; margin-bottom: 20px; }
+        .receipt-logo { font-size: 2.5rem; color: var(--brand); margin-bottom: 5px; }
+        .receipt-title { font-family: 'Dancing Script', cursive; font-size: 2rem; margin: 0; color: #1f2937; }
+        
+        .receipt-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.95rem; }
+        .receipt-row.bold { font-weight: bold; font-size: 1.1rem; color: var(--brand-dark); border-top: 1px solid #e5e7eb; padding-top: 10px; margin-top: 10px; }
+        
+        .stamp { position: absolute; top: 40%; left: 10%; transform: rotate(-15deg); color: #22c55e; border: 3px solid #22c55e; padding: 5px 15px; border-radius: 10px; font-weight: 900; font-size: 1.5rem; letter-spacing: 2px; opacity: 0.3; pointer-events: none; }
+        
+        /* أزرار الإجراءات في الوصل */
+        .actions-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+        
+        .btn-save { background: #1f2937; color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; font-family: 'Cairo'; font-size: 1.05rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.2s; }
+        .btn-save:active { transform: scale(0.97); }
+        
+        .whatsapp-btn { background: #25D366; color: white; text-decoration: none; padding: 15px; border-radius: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.05rem; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); transition: 0.2s; text-align: center; }
+        .whatsapp-btn:active { transform: scale(0.97); }
+
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--brand); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .bg-icon { position: fixed; font-size: 1.8rem; opacity: 0.15; z-index: 0; pointer-events: none; animation: float-up linear infinite; }
+        @keyframes float-up { 0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.3; } 90% { opacity: 0.3; } 100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; } }
+
+        #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 10px 20px; border-radius: 30px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); opacity: 0; transition: 0.3s; z-index: 1000; pointer-events: none; }
+        #toast.show { opacity: 1; bottom: 40px; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-icon" style="left: 10%; animation-duration: 12s;">💄</div><div class="bg-icon" style="left: 80%; animation-duration: 15s;">💳</div><div class="bg-icon" style="left: 40%; animation-duration: 10s;">💅</div><div class="bg-icon" style="left: 70%; animation-duration: 18s;">✨</div>
+
+    <div id="toast"><i class="fa-solid fa-check"></i> تم النسخ بنجاح</div>
+
+    <div class="container">
+        
+        <a href="javascript:history.back()" style="display:inline-block; margin-bottom:15px; color:var(--brand-dark); text-decoration:none; font-weight:bold; background:white; padding:5px 15px; border-radius:20px; box-shadow:0 2px 5px rgba(0,0,0,0.05);"><i class="fa-solid fa-arrow-right"></i> تراجع</a>
+
+        <!-- شاشة الحجز والدفع -->
+        <div id="booking-screen">
+            <div class="header">
+                <h1>إتمام الحجز 🎀</h1>
+                <p>يرجى إدخال تفاصيل الحجز وتحويل العربون</p>
+            </div>
+
+            <form id="booking-form">
+                <div class="card">
+                    <h2 class="section-title"><i class="fa-solid fa-clipboard-user"></i> معلومات الحجز الأساسية</h2>
+                    <div class="form-group">
+                        <label>الاسم الثلاثي</label>
+                        <input type="text" id="cust-name" class="form-control" required placeholder="اسم الزبونة">
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>نوع الخدمة الأساسية</label>
+                            <select id="cust-service" class="form-control" required>
+                                <option value="" disabled selected>اختاري...</option>
+                                <option value="مكياج وتسريحة عرايس">مكياج وتسريحة عرايس</option>
+                                <option value="مكياج وتسريحة خطوبة">مكياج وتسريحة خطوبة</option>
+                                <option value="مكياج سهرة">مكياج سهرة</option>
+                                <option value="تسريحة شعر فقط">تسريحة شعر فقط</option>
+                                <option value="خدمات أخرى">خدمات أخرى</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>العدد (عدد الأشخاص)</label>
+                            <input type="number" id="cust-count" class="form-control" required min="1" value="1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-title"><i class="fa-solid fa-money-bill-transfer"></i> دفع العربون (ماستر كارد)</h2>
+                    <div class="price-box">
+                        <small>مبلغ العربون المطلوب لتأكيد الحجز</small>
+                        <span>25,000 د.ع</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #4b5563; font-weight: bold; margin-bottom: 10px;">يرجى تحويل مبلغ العربون إلى البطاقة التالية:</p>
+
+                    <div class="pay-card-box">
+                        <div class="cc-logo"><i class="fa-brands fa-cc-mastercard"></i> سوبر كي - Super Qi</div>
+                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin-top: 10px;">رقم البطاقة</div>
+                        <div class="cc-number-container">
+                            <div class="cc-number" id="card-number">9705581719</div>
+                            <button type="button" class="btn-copy" onclick="copyCardNumber()">
+                                <i class="fa-regular fa-copy"></i> نسخ
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="apps-container">
+                        <a href="https://apps.apple.com/us/app/qi-services/id1450654854" target="_blank" class="app-btn ios"><i class="fa-brands fa-apple" style="font-size: 1.2rem;"></i> الدفع بالايفون</a>
+                        <a href="intent://#Intent;package=com.qi.services;scheme=https;end;" target="_blank" class="app-btn android" onclick="fallbackAndroid(event)"><i class="fa-brands fa-android" style="font-size: 1.2rem;"></i> الدفع بالاندرويد</a>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label>بعد التحويل، يرجى إرفاق صورة الوصل (سكرين شوت) 📸</label>
+                        <div class="upload-area">
+                            <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                            <p class="upload-text">اضغطي هنا لاختيار صورة التحويل</p>
+                            <input type="file" id="receipt-file" accept="image/*" required>
+                            <div id="file-name" class="file-name-display">تم اختيار الصورة بنجاح <i class="fa-solid fa-check"></i></div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="submit-btn">
+                        <i class="fa-solid fa-receipt"></i> إصدار وصل الحجز الإلكتروني
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- شاشة التحميل -->
+        <div id="loading-screen" style="display: none; text-align: center; padding: 50px 0;">
+            <div class="loader"></div>
+            <h3 style="color: var(--brand-dark); font-family: 'Lemonada', cursive;">جاري إصدار الوصل...</h3>
+            <p style="color: #6b7280; font-size: 0.9rem;">يرجى الانتظار لحظات</p>
+        </div>
+
+        <!-- شاشة الوصل الإلكتروني (النتيجة) -->
+        <div id="receipt-screen">
+            <div style="text-align: center; margin-bottom: 15px;">
+                <div style="width: 70px; height: 70px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 10px; box-shadow: 0 5px 15px rgba(34, 197, 94, 0.3);">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h2 style="color: #22c55e; margin: 0; font-family: 'Lemonada', cursive;">تم تثبيت الحجز مبدئياً!</h2>
+                <p style="color: #4b5563; font-weight: bold; font-size: 0.9rem;">يرجى حفظ صورة الوصل وإرساله لنا عبر الواتساب لتأكيد موعدك.</p>
+            </div>
+
+            <!-- الكود الذي سيتم تحويله لصورة -->
+            <div class="receipt" id="receipt-card-to-save">
+                <div class="stamp">PAID</div>
+                <div class="receipt-header">
+                    <div class="receipt-logo"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <h2 class="receipt-title">Makeup by Asoo</h2>
+                    <p style="margin:0; font-size:0.8rem; color:#6b7280;">وصل حجز إلكتروني - Electronic Receipt</p>
+                </div>
+
+                <div class="receipt-row"><span>رقم الوصل:</span> <strong id="r-id" style="font-family: monospace;">---</strong></div>
+                <div class="receipt-row"><span>التاريخ والوقت:</span> <strong id="r-date" dir="ltr">---</strong></div>
+                <div class="receipt-row"><span>اسم الزبونة:</span> <strong id="r-name">---</strong></div>
+                <div class="receipt-row"><span>نوع الخدمة:</span> <strong id="r-service">---</strong></div>
+                <div class="receipt-row"><span>العدد:</span> <strong id="r-count">---</strong></div>
+                <div class="receipt-row"><span>طريقة الدفع:</span> <strong>تحويل ماستر (Super Qi)</strong></div>
+                
+                <div class="receipt-row bold"><span>العربون المدفوع:</span> <span>25,000 د.ع</span></div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <div style="font-family: 'Libre Barcode 39', cursive, monospace; font-size: 3rem; letter-spacing: -2px; color: #1f2937; overflow: hidden; height: 40px;">||| | || ||||| | ||| ||</div>
+                    <p style="font-size: 0.7rem; color: #9ca3af; margin: 5px 0 0 0;">صالون Asoo - لجمالك سحر خاص</p>
+                </div>
+            </div>
+
+            <!-- أزرار الحفظ والإرسال -->
+            <div class="actions-grid">
+                <button type="button" class="btn-save" id="save-btn-action" onclick="saveReceiptImage()">
+                    <i class="fa-solid fa-download"></i> 1. حفظ الوصل كصورة (سكرين شوت)
+                </button>
+
+                <a href="#" id="whatsapp-link" target="_blank" class="whatsapp-btn">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.5rem;"></i>
+                    2. إرسال الوصل للصالون (واتساب)
+                </a>
+            </div>
+            
+            <p style="text-align: center; font-size: 0.75rem; color: #6b7280; margin-top: 15px;">* اضغطي على زر الحفظ أولاً، ثم اضغطي على زر الواتساب وأرفقي الصورة المحفوظة في المحادثة.</p>
+        </div>
+
+    </div>
+
+    <script>
+        function copyCardNumber() {
+            const cardNumber = '9705581719';
+            const el = document.createElement('textarea');
+            el.value = cardNumber; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
+            const toast = document.getElementById('toast'); toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); }, 2500);
+        }
+
+        function fallbackAndroid(e) {
+            e.preventDefault();
+            const appUri = "intent://#Intent;package=com.qi.services;scheme=https;end;";
+            const storeUrl = "https://play.google.com/store/apps/details?id=com.qi.services";
+            window.location.replace(appUri); setTimeout(function () { window.location.replace(storeUrl); }, 1000);
+        }
+
+        document.getElementById('receipt-file').addEventListener('change', function(e) {
+            if(e.target.files.length > 0) { document.getElementById('file-name').style.display = 'block'; document.querySelector('.upload-text').innerText = 'تم تغيير الصورة بنجاح'; }
+        });
+
+        // دالة حفظ الوصل كصورة
+        function saveReceiptImage() {
+            const receiptElement = document.getElementById('receipt-card-to-save');
+            const saveBtn = document.getElementById('save-btn-action');
+            const originalText = saveBtn.innerHTML;
+            
+            saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الحفظ...';
+            saveBtn.style.opacity = '0.8';
+
+            // استخدام مكتبة html2canvas لالتقاط صورة للوصل
+            html2canvas(receiptElement, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
+                const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                const link = document.createElement('a');
+                link.download = 'ASOO_Receipt_' + document.getElementById('r-id').innerText + '.jpg';
+                link.href = imgData;
+                link.click();
+                
+                saveBtn.innerHTML = '<i class="fa-solid fa-check"></i> تم حفظ الصورة بنجاح!';
+                saveBtn.style.background = '#10b981';
+                saveBtn.style.opacity = '1';
+                
+                setTimeout(() => { 
+                    saveBtn.innerHTML = originalText; 
+                    saveBtn.style.background = '#1f2937';
+                }, 3000);
+            }).catch(err => {
+                alert('حدث خطأ أثناء حفظ الصورة. يمكنك أخذ لقطة شاشة (Screenshot) يدوياً.');
+                saveBtn.innerHTML = originalText;
+                saveBtn.style.opacity = '1';
+            });
+        }
+
+        document.getElementById('booking-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('cust-name').value;
+            const service = document.getElementById('cust-service').value;
+            const count = document.getElementById('cust-count').value;
+            
+            const receiptId = 'ASOO-' + Math.floor(100000 + Math.random() * 900000);
+            const date = new Date();
+            const dateString = date.toLocaleDateString('en-GB') + ' ' + date.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'});
+
+            document.getElementById('booking-screen').style.display = 'none';
+            document.getElementById('loading-screen').style.display = 'block';
+
+            setTimeout(() => {
+                document.getElementById('loading-screen').style.display = 'none';
+                document.getElementById('receipt-screen').style.display = 'block';
+                
+                document.getElementById('r-id').innerText = receiptId;
+                document.getElementById('r-date').innerText = dateString;
+                document.getElementById('r-name').innerText = name;
+                document.getElementById('r-service').innerText = service;
+                document.getElementById('r-count').innerText = count + ' أشخاص';
+
+                // =========================================
+                // ⚠️ ضعي رقم الواتساب الخاص بالصالون هنا ⚠️
+                // =========================================
+                const salonPhoneNumber = "9647700000000"; 
+                
+                const whatsappMessage = `مرحباً صالون Asoo 🌸\nلقد قمت بتحويل العربون وأود تأكيد حجزي.\n\nرقم الوصل: ${receiptId}\nالاسم: ${name}\nالخدمة: ${service}\nالعدد: ${count}\n\n(لقد قمت بحفظ صورة الوصل وسأقوم بإرفاقها لكِ الآن 📸)`;
+                const encodedMessage = encodeURIComponent(whatsappMessage);
+                
+                document.getElementById('whatsapp-link').href = `https://wa.me/${salonPhoneNumber}?text=${encodedMessage}`;
+                
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Makeup by Asoo</title>
+    <title>تأكيد الحجز والدفع | Makeup by Asoo</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Lemonada:wght@600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -132,6 +132,7 @@
                     <h2 class="section-title"><i class="fa-solid fa-money-bill-transfer"></i> دفع العربون (ماستر كارد)</h2>
                     <div class="price-box">
                         <small>مبلغ العربون المطلوب لتأكيد الحجز</small>
+                        <!-- تم التعديل هنا: 10,000 د.ع -->
                         <span>10,000 د.ع</span>
                     </div>
                     <p style="font-size: 0.85rem; color: #4b5563; font-weight: bold; margin-bottom: 10px;">يرجى تحويل مبلغ العربون إلى البطاقة التالية:</p>
@@ -148,10 +149,7 @@
                     </div>
 
                     <div class="apps-container">
-                        <!-- رابط الايفون الرسمي لتطبيق سوبر كي -->
                         <a href="https://apps.apple.com/iq/app/%D8%B3%D9%88%D8%A8%D8%B1-%D9%83%D9%8A/id6450545056?l=ar" target="_blank" class="app-btn ios"><i class="fa-brands fa-apple" style="font-size: 1.2rem;"></i> الدفع بالايفون</a>
-                        
-                        <!-- نظام الـ Intent المخصص للأندرويد لحزمة Iq.qicard.qipay.prod -->
                         <button type="button" class="app-btn android" onclick="fallbackAndroid(event)"><i class="fa-brands fa-android" style="font-size: 1.2rem;"></i> الدفع بالاندرويد</button>
                     </div>
 
@@ -202,7 +200,11 @@
                 <div class="receipt-row"><span>العدد:</span> <strong id="r-count">---</strong></div>
                 <div class="receipt-row"><span>طريقة الدفع:</span> <strong>تحويل ماستر (Super Qi)</strong></div>
                 
-                <div class="receipt-row bold"><span>العربون المدفوع:</span> <span>25,000 د.ع</span></div>
+                <div class="receipt-row bold">
+                    <span>العربون المدفوع:</span> 
+                    <!-- تم التعديل هنا: 10,000 د.ع -->
+                    <span>10,000 د.ع</span>
+                </div>
                 
                 <div style="text-align: center; margin-top: 30px;">
                     <div style="font-family: 'Libre Barcode 39', cursive, monospace; font-size: 3rem; letter-spacing: -2px; color: #1f2937; overflow: hidden; height: 40px;">||| | || ||||| | ||| ||</div>
@@ -236,7 +238,6 @@
 
         function fallbackAndroid(e) {
             e.preventDefault();
-            // استخدام الـ Package Name الدقيق الذي زودتني به للأندرويد
             const appUri = "intent://#Intent;package=Iq.qicard.qipay.prod;scheme=https;end;";
             const storeUrl = "https://play.google.com/store/apps/details?id=Iq.qicard.qipay.prod";
             window.location.replace(appUri); 
@@ -304,7 +305,7 @@
                 // =========================================
                 // ⚠️ ضعي رقم الواتساب الخاص بالصالون هنا ⚠️
                 // =========================================
-                const salonPhoneNumber = "9647729575707"; 
+                const salonPhoneNumber = "9647700000000"; 
                 
                 const whatsappMessage = `مرحباً صالون Asoo 🌸\nلقد قمت بتحويل العربون وأود تأكيد حجزي.\n\nرقم الوصل: ${receiptId}\nالاسم: ${name}\nالخدمة: ${service}\nالعدد: ${count}\n\n(لقد قمت بحفظ صورة الوصل وسأقوم بإرفاقها لكِ الآن مع صورة الحوالة 📸)`;
                 const encodedMessage = encodeURIComponent(whatsappMessage);

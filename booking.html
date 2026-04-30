@@ -119,13 +119,10 @@
                     
                     <div class="form-group">
                         <label>الخدمة الأساسية المطلوبة</label>
+                        <!-- القائمة الآن ستتغذى ديناميكياً من الأقسام التي تصنعينها -->
                         <select id="cust-service" class="form-control" required>
-                            <option value="" disabled selected>اختاري...</option>
-                            <option value="مكياج وتسريحة عرايس">مكياج وتسريحة عرايس</option>
-                            <option value="مكياج وتسريحة خطوبة">مكياج وتسريحة خطوبة</option>
-                            <option value="مكياج سهرة">مكياج سهرة</option>
-                            <option value="تسريحة شعر فقط">تسريحة شعر فقط</option>
-                            <option value="خدمات أخرى">خدمات أخرى</option>
+                            <option value="" disabled selected>جاري تحميل الأقسام...</option>
+                            <!-- سيتم وضع الأقسام هنا عبر الجافاسكربت -->
                         </select>
                     </div>
 
@@ -216,7 +213,7 @@
                 <div class="receipt-row"><span>التاريخ والوقت:</span> <strong id="r-date" dir="ltr">---</strong></div>
                 <div class="receipt-row"><span>اسم الزبونة:</span> <strong id="r-name">---</strong></div>
                 <div class="receipt-row"><span>رقم الهاتف:</span> <strong id="r-phone">---</strong></div>
-                <div class="receipt-row" style="border-top: 1px dashed #eee; padding-top: 10px;"><span>الخدمة الأساسية:</span> <strong id="r-service">---</strong></div>
+                <div class="receipt-row" style="border-top: 1px dashed #eee; padding-top: 10px;"><span>القسم المطلوب:</span> <strong id="r-service">---</strong></div>
                 <div class="receipt-row"><span>عدد المكياج:</span> <strong id="r-makeup">---</strong></div>
                 <div class="receipt-row"><span>عدد التسريحات:</span> <strong id="r-hair">---</strong></div>
                 <div class="receipt-row"><span>إجمالي الأشخاص:</span> <strong id="r-count">---</strong></div>
@@ -249,7 +246,45 @@
     </div>
 
     <script>
-        // حساب العربون تلقائياً بناءً على عدد الأشخاص
+        // ==========================================
+        // 🔥 استدعاء الأقسام ديناميكياً من الموقع 🔥
+        // ==========================================
+        async function loadDynamicServices() {
+            const serviceSelect = document.getElementById('cust-service');
+            try {
+                // جلب الداتا (الأقسام) من موقعك الحقيقي
+                const response = await fetch('./data.json?t=' + Date.now());
+                if (!response.ok) throw new Error('لا يمكن الوصول للبيانات');
+                
+                const data = await response.json();
+                
+                if (data.sections && data.sections.length > 0) {
+                    serviceSelect.innerHTML = '<option value="" disabled selected>اختاري القسم...</option>';
+                    
+                    data.sections.forEach(sec => {
+                        const option = document.createElement('option');
+                        option.value = sec.title;
+                        option.textContent = sec.icon + ' ' + sec.title;
+                        serviceSelect.appendChild(option);
+                    });
+                    
+                    // إضافة خيار إضافي للاحتياط
+                    const otherOption = document.createElement('option');
+                    otherOption.value = 'خدمات أخرى منوعة';
+                    otherOption.textContent = '✨ خدمات أخرى منوعة';
+                    serviceSelect.appendChild(otherOption);
+                }
+            } catch (error) {
+                // في حال فشل الجلب (مثلاً ملف الداتا لم يُنشأ بعد)
+                serviceSelect.innerHTML = '<option value="خدمات الصالون">خدمات الصالون</option>';
+            }
+        }
+
+        // تشغيل دالة جلب الأقسام عند فتح الصفحة
+        document.addEventListener('DOMContentLoaded', loadDynamicServices);
+
+        // ==========================================
+
         const countInput = document.getElementById('cust-count');
         const displayDeposit = document.getElementById('display-deposit');
         let currentTotalDeposit = 10000;
@@ -332,7 +367,7 @@
                 // =========================================
                 const salonPhoneNumber = "9647700000000"; 
                 
-                const whatsappMessage = `مرحباً صالون Asoo 🌸\nأود تأكيد حجزي (حولت العربون).\n\nرقم الوصل: ${receiptId}\nالاسم: ${name}\nالرقم: ${phone}\nالخدمة: ${service}\n(مكياج: ${makeupCount} | تسريحات: ${hairCount})\nإجمالي الأشخاص: ${count}\nالعربون المدفوع: ${currentTotalDeposit.toLocaleString()} دينار\n\n(سأرفق الآن صورة هذا الوصل مع صورة حوالة سوبر كي 📸)`;
+                const whatsappMessage = `مرحباً صالون Asoo 🌸\nأود تأكيد حجزي (حولت العربون).\n\nرقم الوصل: ${receiptId}\nالاسم: ${name}\nالرقم: ${phone}\nالقسم: ${service}\n(مكياج: ${makeupCount} | تسريحات: ${hairCount})\nإجمالي الأشخاص: ${count}\nالعربون المدفوع: ${currentTotalDeposit.toLocaleString()} دينار\n\n(سأرفق الآن صورة هذا الوصل مع صورة حوالة سوبر كي 📸)`;
                 const encodedMessage = encodeURIComponent(whatsappMessage);
                 
                 document.getElementById('whatsapp-link').href = `https://wa.me/${salonPhoneNumber}?text=${encodedMessage}`;

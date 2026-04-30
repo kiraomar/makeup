@@ -58,29 +58,7 @@
 
     <div id="section-modal" class="modal"><div class="modal-content"><div class="modal-header"><h3>إعداد القسم 🎀</h3><button onclick="closeModal('section-modal')" style="background:none; border:none; color:white; font-size:1.2rem;"><i class="fa-solid fa-xmark"></i></button></div><form id="section-form" class="modal-body"><input type="hidden" id="sec-old-id"><div><label>اسم القسم</label><input type="text" id="sec-name" required class="form-control"></div><div><label>الرابط (انجليزي)</label><input type="text" id="sec-id" required class="form-control" dir="ltr"></div><div><label>ايموجي</label><input type="text" id="sec-emoji" required class="form-control" style="font-size: 1.5rem;"></div><button type="submit" class="btn" style="background: #1f2937;">حفظ القسم</button></form></div></div>
     
-    <div id="item-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>إضافة ميديا ⚡</h3>
-                <button onclick="closeModal('item-modal')" style="background:none; border:none; color:white; font-size:1.2rem;"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <form id="item-form" class="modal-body">
-                <input type="hidden" id="item-file-name">
-                <input type="hidden" id="item-file-base64">
-                <input type="hidden" id="item-file-type">
-                <input type="hidden" id="item-file-thumb">
-                
-                <div>
-                    <label style="color:var(--brand);">اختر الملف (فيديو أو صورة)</label>
-                    <input type="file" id="item-file-input" accept="image/*,video/mp4,video/quicktime" required class="form-control">
-                    <img id="image-preview" style="width:100%; max-height:150px; object-fit:contain; margin-top:10px; border-radius:8px; display:none; background:#fff1f2; border:1px dashed #fb7185;">
-                    <video id="video-preview" style="width:100%; max-height:150px; object-fit:contain; margin-top:10px; border-radius:8px; display:none; background:#000;" controls></video>
-                </div>
-                <div><label>السعر (د.ع)</label><input type="text" id="item-price" required class="form-control"></div>
-                <button type="submit" class="btn" id="save-item-btn">رفع للموقع</button>
-            </form>
-        </div>
-    </div>
+    <div id="item-modal" class="modal"><div class="modal-content"><div class="modal-header"><h3>إضافة ميديا ⚡</h3><button onclick="closeModal('item-modal')" style="background:none; border:none; color:white; font-size:1.2rem;"><i class="fa-solid fa-xmark"></i></button></div><form id="item-form" class="modal-body"><input type="hidden" id="item-file-name"><input type="hidden" id="item-file-base64"><input type="hidden" id="item-file-type"><input type="hidden" id="item-file-thumb"><div><label style="color:var(--brand);">اختر الملف (فيديو أو صورة)</label><input type="file" id="item-file-input" accept="image/*,video/mp4,video/quicktime" required class="form-control"><img id="image-preview" style="width:100%; max-height:150px; object-fit:contain; margin-top:10px; border-radius:8px; display:none; background:#fff1f2; border:1px dashed #fb7185;"><video id="video-preview" style="width:100%; max-height:150px; object-fit:contain; margin-top:10px; border-radius:8px; display:none; background:#000;" controls></video></div><div><label>السعر (د.ع)</label><input type="text" id="item-price" required class="form-control"></div><button type="submit" class="btn" id="save-item-btn">رفع للموقع</button></form></div></div>
 
     <script>
         let ghConfig = null; let salonData = { sections: [], items: {} }; let currentSectionId = null; let dataFileSha = '';
@@ -130,7 +108,7 @@
         }
 
         // =========================================================================
-        // 🔥 القالب الجديد: حل مشكلة الـ 404 ومشاكل الصورة المكسورة 🔥
+        // 🔥 القالب الجديد: إضافة زر الحجز العائم + باقي التحديثات السابقة 🔥
         // =========================================================================
         function generatePageTemplate(sectionId, sectionTitle, sectionEmoji) {
             return `<!DOCTYPE html>
@@ -138,7 +116,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Lemonada:wght@600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-    :root{--brand:#fb7185;} body{margin:0; font-family:'Cairo',sans-serif; background:#fdf2f8;} 
+    :root{--brand:#fb7185;} body{margin:0; font-family:'Cairo',sans-serif; background:#fdf2f8; padding-bottom: 90px;} 
     .header{text-align:center; padding:20px; position: relative; z-index: 10;} 
     .card{background:white; border-radius:15px; margin:10px; padding:10px; box-shadow:0 4px 10px rgba(0,0,0,0.05); text-align:center; cursor:pointer; -webkit-tap-highlight-color: transparent; position: relative; z-index: 10;} 
     .card:active{transform:scale(0.98);}
@@ -165,9 +143,12 @@
     .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--brand); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; } 
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } 
     
-    /* أنميشن المكياج العائم */
     .bg-icon { position: fixed; font-size: 1.8rem; opacity: 0.15; z-index: 0; pointer-events: none; animation: float-up linear infinite; }
     @keyframes float-up { 0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.3; } 90% { opacity: 0.3; } 100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; } }
+
+    /* زر الحجز العائم */
+    .floating-book-btn { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: linear-gradient(45deg, #e11d48, #fb7185); color: white; padding: 15px 35px; border-radius: 30px; font-weight: bold; font-size: 1.1rem; text-decoration: none; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4); z-index: 80; border: 2px solid #fff; transition: 0.3s; width: 90%; max-width: 350px; justify-content: center; }
+    .floating-book-btn:active { transform: translate(-50%, 5px); }
 </style>
 </head><body>
     <div class="bg-icon" style="left: 10%; animation-duration: 12s;">💄</div><div class="bg-icon" style="left: 80%; animation-duration: 15s;">💋</div><div class="bg-icon" style="left: 40%; animation-duration: 10s;">💅</div><div class="bg-icon" style="left: 70%; animation-duration: 18s;">👑</div>
@@ -181,11 +162,15 @@
     
     <div id="grid" style="display:grid; grid-template-columns:1fr 1fr; padding:10px; max-width:500px; margin:0 auto; position:relative; z-index:10;"><div style="grid-column:1/-1; text-align:center; padding:30px;"><div class="loader"></div></div></div>
     
+    <!-- زر الحجز -->
+    <a href="booking.html" class="floating-book-btn"><i class="fa-solid fa-calendar-check"></i> احجزي موعدك الآن</a>
+
     <div id="viewer">
         <button onclick="history.back()" style="position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.2); border:none; color:white; font-size:1.5rem; width:45px; height:45px; border-radius:50%; z-index:110;"><i class="fa-solid fa-xmark"></i></button>
         <div class="v-media-box">
+            <div id="v-loader" style="display:none; position:absolute; z-index:50; flex-direction:column; align-items:center; color:white;"><div class="loader" style="margin-bottom:10px; border-top-color:white;"></div><span style="font-family:'Cairo'; font-size:0.8rem;">جاري التحميل...</span></div>
             <img id="v-img" class="v-media">
-            <video id="v-vid" class="v-media" playsinline controls preload="metadata"></video>
+            <video id="v-vid" class="v-media" playsinline controls preload="auto"></video>
             <div class="watermark"><span>ASOO</span></div>
         </div>
         <h3 id="v-price" style="color:#fb7185; margin-top:20px; font-size:1.5rem; background:rgba(255,255,255,0.1); padding:8px 25px; border-radius:12px; border:1px solid rgba(255,255,255,0.2);"></h3>
@@ -193,24 +178,15 @@
     
     <script>
         let viewed = JSON.parse(localStorage.getItem('v_asoo_${sectionId}')) || [];
-        
         fetch('./data.json?t='+Date.now()).then(r=>r.json()).then(d=>{
             const items = d.items['${sectionId}'] || [];
             if(!items.length) { document.getElementById('grid').innerHTML = '<p style="grid-column:1/-1; text-align:center; font-weight:bold; color:#9ca3af;">سيتم الإضافة قريباً 🌸</p>'; return; }
-            
             document.getElementById('grid').innerHTML = items.map(i => {
                 const isL = viewed.includes(i.id.toString());
-                
-                // الحل الذكي للصورة المكسورة: إذا لم يوجد thumb للفيديو، نضع صورة بديلة جميلة
-                let imgSrc = i.image;
-                if(i.type === 'video') {
-                    imgSrc = i.thumb ? i.thumb : 'https://placehold.co/400x400/fdf2f8/fb7185?text=Video+🎬';
-                }
-                
+                const imgSrc = i.thumb ? i.thumb : i.image;
                 const m = \`<img src="\${imgSrc}" class="media" loading="lazy">\`;
                 const playBtn = i.type === 'video' ? \`<div class="play-icon"><i class="fa-solid fa-play"></i></div>\` : '';
                 const l = isL ? \`<div class="lock-icon"><i class="fa-solid fa-lock"></i><span style="font-size:0.8rem; margin-top:5px; font-family:'Cairo';">تمت المشاهدة</span></div>\` : '';
-                
                 return \`<div id="c-\${i.id}" class="card \${isL?'locked':''}" \${isL?'':\`onclick="openV('\${i.id}','\${i.image}','\${i.price}','\${i.type}')"\`}>
                     <div class="media-box">\${m}\${playBtn}\${l}<div class="watermark"><span>ASOO</span></div></div>
                     <span class="price">\${i.price} د.ع</span>
@@ -222,42 +198,32 @@
             document.getElementById('v-price').innerText = price+' د.ع';
             const vVid = document.getElementById('v-vid');
             const vImg = document.getElementById('v-img');
+            const vLoader = document.getElementById('v-loader');
             
             document.getElementById('viewer').classList.add('show'); 
             window.location.hash='view_'+id;
 
             if(type==='video'){
-                vImg.style.display='none'; 
-                vVid.style.display='block';
-                vVid.src = src; // التوجيه المباشر للفيديو
+                vImg.style.display='none'; vVid.style.display='block'; vLoader.style.display='flex'; vVid.src = src;
+                vVid.oncanplay = () => { vLoader.style.display = 'none'; };
+                vVid.onwaiting = () => { vLoader.style.display = 'flex'; };
+                vVid.onplaying = () => { vLoader.style.display = 'none'; };
                 let playPromise = vVid.play();
-                if (playPromise !== undefined) { 
-                    playPromise.catch(error => { 
-                        console.log("الآيفون يمنع التشغيل التلقائي، يجب على المستخدم الضغط على Play."); 
-                    }); 
-                }
+                if (playPromise !== undefined) { playPromise.catch(error => { setTimeout(()=>{ vLoader.style.display='none'; }, 3000); }); }
             }
             else{
-                vVid.style.display='none'; 
-                vVid.pause();
-                vVid.src = '';
-                vImg.src=src; 
-                vImg.style.display='block';
+                vVid.style.display='none'; vVid.pause(); vVid.src = ''; vLoader.style.display='none'; vImg.src=src; vImg.style.display='block';
             }
         }
         
         window.addEventListener('hashchange', ()=>{
             if(!window.location.hash.includes('view')){
-                document.getElementById('viewer').classList.remove('show'); 
-                document.getElementById('v-vid').pause();
+                document.getElementById('viewer').classList.remove('show'); document.getElementById('v-vid').pause();
                 const id = window.lastId;
                 if(id && !viewed.includes(id)){ 
                     viewed.push(id); localStorage.setItem('v_asoo_${sectionId}', JSON.stringify(viewed)); 
                     const card = document.getElementById('c-'+id);
-                    if(card) {
-                        card.classList.add('locked'); card.onclick=null;
-                        card.querySelector('.media-box').innerHTML += '<div class="lock-icon"><i class="fa-solid fa-lock"></i><span style="font-size:0.8rem; margin-top:5px; font-family:\\'Cairo\\';">تمت المشاهدة</span></div>';
-                    }
+                    if(card) { card.classList.add('locked'); card.onclick=null; card.querySelector('.media-box').innerHTML += '<div class="lock-icon"><i class="fa-solid fa-lock"></i><span style="font-size:0.8rem; margin-top:5px; font-family:\\'Cairo\\';">تمت المشاهدة</span></div>'; }
                 }
             } else { window.lastId = window.location.hash.split('_')[1]; }
         });
@@ -276,13 +242,7 @@
             const url = `https://api.github.com/repos/${ghConfig.user}/${ghConfig.repo}/contents/${fileName}`;
             let sha = null; try { const check = await fetch(url, { headers: getHeaders(), cache:'no-cache' }); if(check.ok) sha = (await check.json()).sha; } catch(e){}
             const body = { message: commitMsg, content: base64Content }; if(sha) body.sha = sha;
-            
-            const res = await fetch(url, { method: 'PUT', headers: { ...getHeaders(), 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); 
-            if(!res.ok) {
-                const err = await res.json();
-                throw new Error(err.message || "فشل الرفع");
-            }
-            return res.ok;
+            const res = await fetch(url, { method: 'PUT', headers: { ...getHeaders(), 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); return res.ok;
         }
 
         function renderSections() {
@@ -339,7 +299,7 @@
             const items = salonData.items[currentSectionId] || [];
             if(!items.length) { body.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:20px; color:#999;">القسم فارغ</td></tr>'; return; }
             items.forEach(i => {
-                const mediaSrc = i.thumb ? i.thumb : (i.type === 'video' ? 'https://placehold.co/400x400/fdf2f8/fb7185?text=Video' : i.image);
+                const mediaSrc = i.thumb ? i.thumb : (i.type === 'video' ? 'https://placehold.co/400x400/fbcfe8/be185d?text=Video' : i.image);
                 const media = i.type === 'video' ? `<div style="position:relative; width:45px; height:45px;"><img src="${mediaSrc}" style="width:100%; height:100%; border-radius:8px; object-fit:cover;"><i class="fa-solid fa-play" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:white; background:rgba(0,0,0,0.5); padding:4px; border-radius:50%; font-size:0.6rem;"></i></div>` : `<img src="${mediaSrc}" style="width:45px; height:45px; border-radius:8px; object-fit:cover;">`;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${media}</td><td style="color:#e11d48; font-weight:bold;">${i.price}</td><td style="text-align:center;"><button onclick="deleteItem(${i.id})" style="background:none; border:none; color:#ef4444;"><i class="fa-solid fa-trash"></i></button></td>`;
@@ -355,34 +315,23 @@
             if(isV) {
                 document.getElementById('item-file-name').value = `v_${Date.now()}.mp4`;
                 const fileURL = URL.createObjectURL(file);
-                
                 const vidNode = document.createElement('video');
-                vidNode.src = fileURL;
-                vidNode.muted = true;
-                vidNode.playsInline = true;
-                vidNode.currentTime = 1; 
+                vidNode.src = fileURL; vidNode.muted = true; vidNode.playsInline = true; vidNode.currentTime = 1; 
                 
                 vidNode.addEventListener('loadeddata', function() {
                     try {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = 400; 
-                        canvas.height = (vidNode.videoHeight / vidNode.videoWidth) * 400;
+                        const canvas = document.createElement('canvas'); canvas.width = 400; canvas.height = (vidNode.videoHeight / vidNode.videoWidth) * 400;
                         const ctx = canvas.getContext('2d');
                         setTimeout(() => {
                             ctx.drawImage(vidNode, 0, 0, canvas.width, canvas.height);
                             const thumbBase64 = canvas.toDataURL('image/jpeg', 0.6);
                             document.getElementById('item-file-thumb').value = thumbBase64;
-                            document.getElementById('video-preview').style.display='none'; 
-                            document.getElementById('image-preview').src = thumbBase64; 
-                            document.getElementById('image-preview').style.display='block';
+                            document.getElementById('video-preview').style.display='none'; document.getElementById('image-preview').src = thumbBase64; document.getElementById('image-preview').style.display='block';
                         }, 500); 
-                    } catch(err) {
-                        console.log("لا يمكن استخراج صورة من الفيديو في هذا المتصفح.");
-                    }
+                    } catch(err) {}
                 });
 
                 const r = new FileReader(); r.onload = ev => { document.getElementById('item-file-base64').value = ev.target.result; }; r.readAsDataURL(file);
-
             } else {
                 document.getElementById('item-file-name').value = `img_${Date.now()}.jpg`;
                 const reader = new FileReader();
@@ -390,12 +339,10 @@
                     const img = new Image();
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 600; 
-                        let width = img.width; let height = img.height;
+                        const MAX_WIDTH = 600; let width = img.width; let height = img.height;
                         if(width > MAX_WIDTH) { height *= MAX_WIDTH/width; width = MAX_WIDTH; }
                         canvas.width = width; canvas.height = height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
+                        const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
                         const compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
                         
                         document.getElementById('item-file-base64').value = compressedBase64;
@@ -411,28 +358,14 @@
             e.preventDefault();
             const btn = document.getElementById('save-item-btn'); btn.innerText = 'جاري الرفع... ⏳'; btn.disabled = true;
             const fName = document.getElementById('item-file-name').value; const b64 = document.getElementById('item-file-base64').value.split(',')[1];
-            
             try {
                 await uploadFileToGithub(fName, b64, 'رفع ميديا');
-                
                 const thumb = document.getElementById('item-file-thumb').value;
-                salonData.items[currentSectionId].push({ 
-                    id: Date.now(), 
-                    image: fName, 
-                    type: document.getElementById('item-file-type').value, 
-                    price: document.getElementById('item-price').value,
-                    thumb: thumb || null 
-                });
-                
+                salonData.items[currentSectionId].push({ id: Date.now(), image: fName, type: document.getElementById('item-file-type').value, price: document.getElementById('item-price').value, thumb: thumb || null });
                 await uploadDataToGithub();
                 document.getElementById('item-modal').classList.remove('active'); renderItems(); btn.innerText = 'رفع للموقع'; btn.disabled = false;
-                
-                // تنبيه مهم لانتظار السيرفر
-                alert("تم الرفع بنجاح! \nملاحظة: إذا كان الملف كبيراً، يرجى الانتظار دقيقتين قبل فتح الموقع لكي يصل الملف إلى السيرفر بالكامل.");
-                
             } catch (err) {
-                alert("فشل الرفع! حجم الملف كبير جداً ويرفضه السيرفر. حاول ضغط الفيديو أو تقليل مدته.");
-                btn.innerText = 'رفع للموقع'; btn.disabled = false;
+                alert("فشل الرفع! تأكدي من الاتصال وحجم الملف."); btn.innerText = 'رفع للموقع'; btn.disabled = false;
             }
         };
 

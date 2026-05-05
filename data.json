@@ -37,15 +37,7 @@
     }
   ],
   "items": {
-    "makeup": [
-      {
-        "id": 1777222082235,
-        "image": "img_1777222045514.jpg",
-        "type": "image",
-        "price": "0",
-        "thumb": null
-      }
-    ],
+    "makeup": [],
     "bride": [],
     "hair": [],
     "graduated": [],

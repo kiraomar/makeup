@@ -1,11 +1,6 @@
 {
   "sections": [
     {
-      "id": "graduated",
-      "title": "خريجات ",
-      "icon": "👩🏻‍🎓"
-    },
-    {
       "id": "fullmakeup",
       "title": "مكياج كامل ",
       "icon": "✨"
@@ -17,7 +12,6 @@
     }
   ],
   "items": {
-    "graduated": [],
     "fullmakeup": [],
     "invited": []
   }

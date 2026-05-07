@@ -29,11 +29,6 @@
       "id": "invited",
       "title": "مدعوات",
       "icon": "🎀"
-    },
-    {
-      "id": "hairstyles",
-      "title": "تسريحات متنوعة",
-      "icon": "⚜️"
     }
   ],
   "items": {
@@ -42,7 +37,6 @@
     "hair": [],
     "graduated": [],
     "fullmakeup": [],
-    "invited": [],
-    "hairstyles": []
+    "invited": []
   }
 }

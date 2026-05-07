@@ -1,11 +1,6 @@
 {
   "sections": [
     {
-      "id": "hair",
-      "title": "تصفيف الشعر",
-      "icon": "💇🏻‍♀️"
-    },
-    {
       "id": "graduated",
       "title": "خريجات ",
       "icon": "👩🏻‍🎓"
@@ -22,7 +17,6 @@
     }
   ],
   "items": {
-    "hair": [],
     "graduated": [],
     "fullmakeup": [],
     "invited": []

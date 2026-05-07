@@ -1,11 +1,6 @@
 {
   "sections": [
     {
-      "id": "makeup",
-      "title": "مكياج عيون",
-      "icon": "💄"
-    },
-    {
       "id": "bride",
       "title": "العرائس ",
       "icon": "👑"
@@ -32,7 +27,6 @@
     }
   ],
   "items": {
-    "makeup": [],
     "bride": [],
     "hair": [],
     "graduated": [],

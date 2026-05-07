@@ -1,18 +1,12 @@
 {
   "sections": [
     {
-      "id": "fullmakeup",
-      "title": "مكياج كامل ",
-      "icon": "✨"
-    },
-    {
       "id": "invited",
       "title": "مدعوات",
       "icon": "🎀"
     }
   ],
   "items": {
-    "fullmakeup": [],
     "invited": []
   }
 }

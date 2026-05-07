@@ -1,11 +1,6 @@
 {
   "sections": [
     {
-      "id": "bride",
-      "title": "العرائس ",
-      "icon": "👑"
-    },
-    {
       "id": "hair",
       "title": "تصفيف الشعر",
       "icon": "💇🏻‍♀️"
@@ -27,7 +22,6 @@
     }
   ],
   "items": {
-    "bride": [],
     "hair": [],
     "graduated": [],
     "fullmakeup": [],

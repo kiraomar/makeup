@@ -1,12 +1,4 @@
 {
-  "sections": [
-    {
-      "id": "invited",
-      "title": "مدعوات",
-      "icon": "🎀"
-    }
-  ],
-  "items": {
-    "invited": []
-  }
+  "sections": [],
+  "items": {}
 }

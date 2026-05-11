@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -10,7 +11,6 @@
     <style>
         :root { --brand: #fb7185; --brand-dark: #e11d48; --brand-light: #ffe4e6; }
         html, body { overflow-x: hidden; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        /* تمت إضافة مساحة في الأسفل لكي لا يغطي زر الحجز على الفوتر */
         body { background: linear-gradient(-45deg, #fff1f2, #ffe4e6, #fce7f3, #fdf2f8); background-size: 400% 400%; animation: gradientBG 15s ease infinite; min-height: 100vh; display: flex; flex-direction: column; color: #1f2937; padding-bottom: 80px; }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         
@@ -21,9 +21,23 @@
         .whatsapp-btn:active { transform: scale(0.95); }
         .whatsapp-btn i { font-size: 1.2rem; }
 
-        .header { text-align: center; margin-bottom: 30px; width: 100%; display: flex; flex-direction: column; align-items: center; }
-        /* العنوان مضبوط الآن في المنتصف تماماً */
-        .title { font-family: 'Dancing Script', cursive; font-size: 4rem; font-weight: bold; background: linear-gradient(to right, var(--brand-dark), var(--brand), #ec4899); -webkit-background-clip: text; color: transparent; margin: 0; padding: 5px 0; text-align: center; width: 100%; }
+        .header { text-align: center; margin-bottom: 30px; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        
+        /* التعديل الجذري هنا: جعل الكلمة في سطر واحد ومتوسطة تماما */
+        .title { 
+            font-family: 'Dancing Script', cursive; 
+            font-size: clamp(2.5rem, 13vw, 4rem); /* يتصغر تلقائياً ليناسب الشاشة */
+            font-weight: bold; 
+            background: linear-gradient(to right, var(--brand-dark), var(--brand), #ec4899); 
+            -webkit-background-clip: text; 
+            color: transparent; 
+            margin: 0; 
+            padding: 5px 0; 
+            text-align: center; 
+            width: 100%; 
+            white-space: nowrap; /* يمنع انقسام الكلمة إلى سطرين */
+        }
+        
         .subtitle { margin-top: 5px; color: #4b5563; font-size: 0.9rem; font-weight: 600; text-align: center; }
         
         .sections-list { display: flex; flex-direction: column; gap: 15px; width: 100%; }
@@ -42,13 +56,11 @@
         
         .footer { padding: 20px; text-align: center; background: rgba(255,255,255,0.4); border-top: 1px solid rgba(255,255,255,0.5); backdrop-filter: blur(5px); font-size: 0.75rem; color: #4b5563; font-weight: bold; margin-top: auto; position: relative; z-index: 10; }
 
-        /* تنسيق زر الحجز العائم */
         .floating-book-btn { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: linear-gradient(45deg, #e11d48, #fb7185); color: white; padding: 15px 35px; border-radius: 30px; font-weight: bold; font-family: 'Cairo', sans-serif; font-size: 1.1rem; text-decoration: none; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4); z-index: 1000; border: 2px solid #fff; transition: 0.3s; width: max-content; min-width: 250px; justify-content: center; }
         .floating-book-btn:active { transform: translate(-50%, 5px); box-shadow: 0 5px 15px rgba(225, 29, 72, 0.4); }
     </style>
 </head>
 <body>
-    <!-- أيقونات الخلفية اللطيفة -->
     <div class="bg-icon" style="left: 10%; animation-duration: 12s;">💄</div>
     <div class="bg-icon" style="left: 80%; animation-duration: 15s;">💋</div>
     <div class="bg-icon" style="left: 40%; animation-duration: 10s;">💅</div>
@@ -56,8 +68,8 @@
 
     <main class="main-container">
         <header class="header">
-            <!-- تم إضافة dir="ltr" لتوسيط النص الإنجليزي بشكل مثالي داخل الصفحة العربية -->
-            <h1 class="title" dir="ltr">Makeup by Asoo</h1>
+            <!-- تم التعديل هنا لضمان التوسيط -->
+            <h1 class="title">makeup by Asoo</h1>
             <p class="subtitle">اكتشفي سحر جمالك مع خدماتنا المميزة 🌸</p>
         </header>
 
@@ -70,7 +82,6 @@
         &copy; 2026 <span style="font-family: 'Dancing Script', cursive; color: var(--brand); font-size: 0.9rem; margin: 0 5px;">Makeup by Asoo</span>. صُنع بحب ✨
     </footer>
 
-    <!-- زر الحجز العائم داخل الـ body في المكان الصحيح -->
     <a href="booking.html" class="floating-book-btn">
         <i class="fa-solid fa-calendar-check"></i> احجزي موعدك الآن
     </a>

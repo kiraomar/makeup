@@ -117,7 +117,6 @@
                         <input type="tel" id="cust-phone" class="form-control" required placeholder="07...">
                     </div>
 
-                    <!-- الفئة تم تعديلها لإخفاء الأسعار من القائمة -->
                     <div class="form-group">
                         <label>فئة الحجز</label>
                         <select id="cust-category" class="form-control" required>
@@ -129,13 +128,6 @@
                             <option value="مدعوة / مرافقة">مدعوة / مرافقة</option>
                             <option value="خريجة">خريجة</option>
                             <option value="اخرى..">اخرى..</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>الخدمة الأساسية المطلوبة</label>
-                        <select id="cust-service" class="form-control" required>
-                            <option value="" disabled selected>جاري تحميل الأقسام...</option>
                         </select>
                     </div>
 
@@ -228,7 +220,6 @@
                 <div class="receipt-row"><span>رقم الهاتف:</span> <strong id="r-phone">---</strong></div>
                 
                 <div class="receipt-row" style="border-top: 1px dashed #eee; padding-top: 10px;"><span>فئة الحجز:</span> <strong id="r-category" style="color: var(--brand-dark);">---</strong></div>
-                <div class="receipt-row"><span>القسم المطلوب:</span> <strong id="r-service">---</strong></div>
                 
                 <div class="receipt-row"><span>عدد المكياج:</span> <strong id="r-makeup">---</strong></div>
                 <div class="receipt-row"><span>عدد التسريحات:</span> <strong id="r-hair">---</strong></div>
@@ -261,34 +252,6 @@
     </div>
 
     <script>
-        // تحميل الأقسام
-        async function loadDynamicServices() {
-            const serviceSelect = document.getElementById('cust-service');
-            try {
-                const response = await fetch('./data.json?t=' + Date.now());
-                if (!response.ok) throw new Error('لا يمكن الوصول للبيانات');
-                
-                const data = await response.json();
-                
-                if (data.sections && data.sections.length > 0) {
-                    serviceSelect.innerHTML = '<option value="" disabled selected>اختاري القسم...</option>';
-                    data.sections.forEach(sec => {
-                        const option = document.createElement('option');
-                        option.value = sec.title;
-                        option.textContent = sec.icon + ' ' + sec.title;
-                        serviceSelect.appendChild(option);
-                    });
-                    const otherOption = document.createElement('option');
-                    otherOption.value = 'خدمات أخرى منوعة';
-                    otherOption.textContent = '✨ خدمات أخرى منوعة';
-                    serviceSelect.appendChild(otherOption);
-                }
-            } catch (error) {
-                serviceSelect.innerHTML = '<option value="خدمات الصالون">خدمات الصالون</option>';
-            }
-        }
-        document.addEventListener('DOMContentLoaded', loadDynamicServices);
-
         // ==========================================
         // 🔥 نظام حساب الأسعار الذكي بناءً على الفئة
         // ==========================================
@@ -371,7 +334,6 @@
             const name = document.getElementById('cust-name').value;
             const phone = document.getElementById('cust-phone').value;
             const category = document.getElementById('cust-category').value;
-            const service = document.getElementById('cust-service').value;
             const makeupCount = document.getElementById('cust-makeup').value || "0";
             const hairCount = document.getElementById('cust-hair').value || "0";
             const count = document.getElementById('cust-count').value;
@@ -392,7 +354,6 @@
                 document.getElementById('r-name').innerText = name;
                 document.getElementById('r-phone').innerText = phone;
                 document.getElementById('r-category').innerText = category;
-                document.getElementById('r-service').innerText = service;
                 document.getElementById('r-makeup').innerText = makeupCount;
                 document.getElementById('r-hair').innerText = hairCount;
                 document.getElementById('r-count').innerText = count + ' أشخاص';
@@ -403,7 +364,7 @@
                 // =========================================
                 const salonPhoneNumber = "9647771488299"; 
                 
-                const whatsappMessage = `مرحباً صالون Asoo 🌸\nأود تأكيد حجزي (حولت العربون).\n\nرقم الوصل: ${receiptId}\nالاسم: ${name}\nالرقم: ${phone}\nفئة الحجز: ${category}\nالقسم: ${service}\n(مكياج: ${makeupCount} | تسريحات: ${hairCount})\nإجمالي الأشخاص: ${count}\nالعربون المدفوع: ${currentTotalDeposit.toLocaleString()} دينار\n\n(سأرفق الآن صورة هذا الوصل مع صورة حوالة سوبر كي 📸)`;
+                const whatsappMessage = `مرحباً صالون Asoo 🌸\nأود تأكيد حجزي (حولت العربون).\n\nرقم الوصل: ${receiptId}\nالاسم: ${name}\nالرقم: ${phone}\nفئة الحجز: ${category}\n(مكياج: ${makeupCount} | تسريحات: ${hairCount})\nإجمالي الأشخاص: ${count}\nالعربون المدفوع: ${currentTotalDeposit.toLocaleString()} دينار\n\n(سأرفق الآن صورة هذا الوصل مع صورة حوالة سوبر كي 📸)`;
                 const encodedMessage = encodeURIComponent(whatsappMessage);
                 
                 document.getElementById('whatsapp-link').href = `https://wa.me/${salonPhoneNumber}?text=${encodedMessage}`;

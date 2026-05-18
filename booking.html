@@ -116,13 +116,26 @@
                         <label>رقم الهاتف</label>
                         <input type="tel" id="cust-phone" class="form-control" required placeholder="07...">
                     </div>
+
+                    <!-- الفئة تم تعديلها لإخفاء الأسعار من القائمة -->
+                    <div class="form-group">
+                        <label>فئة الحجز (تحدد مبلغ العربون تلقائياً)</label>
+                        <select id="cust-category" class="form-control" required>
+                            <option value="" disabled selected>اختاري الفئة...</option>
+                            <option value="عروس زواج">عروس زواج</option>
+                            <option value="عروس حنة">عروس حنة</option>
+                            <option value="عروس نيشان">عروس نيشان</option>
+                            <option value="عروس خطوبة">عروس خطوبة</option>
+                            <option value="مدعوة / مرافقة">مدعوة / مرافقة</option>
+                            <option value="خريجة">خريجة</option>
+                            <option value="اخرى..">اخرى..</option>
+                        </select>
+                    </div>
                     
                     <div class="form-group">
                         <label>الخدمة الأساسية المطلوبة</label>
-                        <!-- القائمة الآن ستتغذى ديناميكياً من الأقسام التي تصنعينها -->
                         <select id="cust-service" class="form-control" required>
                             <option value="" disabled selected>جاري تحميل الأقسام...</option>
-                            <!-- سيتم وضع الأقسام هنا عبر الجافاسكربت -->
                         </select>
                     </div>
 
@@ -138,7 +151,7 @@
                     </div>
                     
                     <div class="form-group" style="background: #fff1f2; padding: 10px; border-radius: 10px; border: 1px dashed var(--brand);">
-                        <label style="color: var(--brand-dark);">إجمالي عدد الأشخاص (لحساب العربون)</label>
+                        <label style="color: var(--brand-dark);">إجمالي عدد الأشخاص</label>
                         <input type="number" id="cust-count" class="form-control" required min="1" value="1" style="font-size: 1.2rem; text-align: center; font-weight: bold;">
                     </div>
                 </div>
@@ -147,8 +160,8 @@
                     <h2 class="section-title"><i class="fa-solid fa-money-bill-transfer"></i> دفع العربون (سوبر كي)</h2>
                     
                     <div class="price-box">
-                        <small>إجمالي مبلغ العربون المطلوب (10 ألف لكل شخص)</small>
-                        <span id="display-deposit">10,000 د.ع</span>
+                        <small>إجمالي مبلغ العربون المطلوب بناءً على اختيارك</small>
+                        <span id="display-deposit">يرجى اختيار الفئة أولاً</span>
                     </div>
                     
                     <p style="font-size: 0.85rem; color: #4b5563; font-weight: bold; margin-bottom: 10px;">يرجى تحويل المبلغ المذكور أعلاه إلى البطاقة التالية:</p>
@@ -213,7 +226,10 @@
                 <div class="receipt-row"><span>التاريخ والوقت:</span> <strong id="r-date" dir="ltr">---</strong></div>
                 <div class="receipt-row"><span>اسم الزبونة:</span> <strong id="r-name">---</strong></div>
                 <div class="receipt-row"><span>رقم الهاتف:</span> <strong id="r-phone">---</strong></div>
-                <div class="receipt-row" style="border-top: 1px dashed #eee; padding-top: 10px;"><span>القسم المطلوب:</span> <strong id="r-service">---</strong></div>
+                
+                <div class="receipt-row" style="border-top: 1px dashed #eee; padding-top: 10px;"><span>فئة الحجز:</span> <strong id="r-category" style="color: var(--brand-dark);">---</strong></div>
+                <div class="receipt-row"><span>القسم المطلوب:</span> <strong id="r-service">---</strong></div>
+                
                 <div class="receipt-row"><span>عدد المكياج:</span> <strong id="r-makeup">---</strong></div>
                 <div class="receipt-row"><span>عدد التسريحات:</span> <strong id="r-hair">---</strong></div>
                 <div class="receipt-row"><span>إجمالي الأشخاص:</span> <strong id="r-count">---</strong></div>
@@ -245,13 +261,10 @@
     </div>
 
     <script>
-        // ==========================================
-        // 🔥 استدعاء الأقسام ديناميكياً من الموقع 🔥
-        // ==========================================
+        // تحميل الأقسام
         async function loadDynamicServices() {
             const serviceSelect = document.getElementById('cust-service');
             try {
-                // جلب الداتا (الأقسام) من موقعك الحقيقي
                 const response = await fetch('./data.json?t=' + Date.now());
                 if (!response.ok) throw new Error('لا يمكن الوصول للبيانات');
                 
@@ -259,44 +272,66 @@
                 
                 if (data.sections && data.sections.length > 0) {
                     serviceSelect.innerHTML = '<option value="" disabled selected>اختاري القسم...</option>';
-                    
                     data.sections.forEach(sec => {
                         const option = document.createElement('option');
                         option.value = sec.title;
                         option.textContent = sec.icon + ' ' + sec.title;
                         serviceSelect.appendChild(option);
                     });
-                    
-                    // إضافة خيار إضافي للاحتياط
                     const otherOption = document.createElement('option');
                     otherOption.value = 'خدمات أخرى منوعة';
                     otherOption.textContent = '✨ خدمات أخرى منوعة';
                     serviceSelect.appendChild(otherOption);
                 }
             } catch (error) {
-                // في حال فشل الجلب (مثلاً ملف الداتا لم يُنشأ بعد)
                 serviceSelect.innerHTML = '<option value="خدمات الصالون">خدمات الصالون</option>';
             }
         }
-
-        // تشغيل دالة جلب الأقسام عند فتح الصفحة
         document.addEventListener('DOMContentLoaded', loadDynamicServices);
 
         // ==========================================
-
+        // 🔥 نظام حساب الأسعار الذكي بناءً على الفئة
+        // ==========================================
+        const categoryInput = document.getElementById('cust-category');
         const countInput = document.getElementById('cust-count');
         const displayDeposit = document.getElementById('display-deposit');
-        let currentTotalDeposit = 10000;
+        let currentTotalDeposit = 0;
 
-        countInput.addEventListener('input', function() {
-            let count = parseInt(this.value);
+        // قائمة الأسعار حسب الفئة
+        const depositPrices = {
+            "عروس زواج": 50000,
+            "عروس حنة": 25000,
+            "عروس نيشان": 25000,
+            "عروس خطوبة": 25000,
+            "مدعوة / مرافقة": 10000,
+            "خريجة": 10000,
+            "اخرى..": 10000
+        };
+
+        function calculateDeposit() {
+            const selectedCategory = categoryInput.value;
+            let count = parseInt(countInput.value);
             if(isNaN(count) || count < 1) count = 1;
-            currentTotalDeposit = count * 10000;
-            displayDeposit.innerText = currentTotalDeposit.toLocaleString() + ' د.ع';
-        });
+
+            // جلب السعر بناءً على الاختيار، وإذا لم يختار يكون 0
+            const basePrice = depositPrices[selectedCategory] || 0;
+            currentTotalDeposit = basePrice * count;
+
+            if (currentTotalDeposit > 0) {
+                displayDeposit.innerText = currentTotalDeposit.toLocaleString() + ' د.ع';
+            } else {
+                displayDeposit.innerText = 'يرجى اختيار الفئة أولاً';
+            }
+        }
+
+        // تحديث السعر تلقائياً عند تغيير الفئة أو العدد
+        categoryInput.addEventListener('change', calculateDeposit);
+        countInput.addEventListener('input', calculateDeposit);
+
+        // ==========================================
 
         function copyCardNumber() {
-            const cardNumber = '9705581719';
+            const cardNumber = '910140071903';
             const el = document.createElement('textarea');
             el.value = cardNumber; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
             const toast = document.getElementById('toast'); toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); }, 2500);
@@ -335,6 +370,7 @@
             
             const name = document.getElementById('cust-name').value;
             const phone = document.getElementById('cust-phone').value;
+            const category = document.getElementById('cust-category').value;
             const service = document.getElementById('cust-service').value;
             const makeupCount = document.getElementById('cust-makeup').value || "0";
             const hairCount = document.getElementById('cust-hair').value || "0";
@@ -355,6 +391,7 @@
                 document.getElementById('r-date').innerText = dateString;
                 document.getElementById('r-name').innerText = name;
                 document.getElementById('r-phone').innerText = phone;
+                document.getElementById('r-category').innerText = category;
                 document.getElementById('r-service').innerText = service;
                 document.getElementById('r-makeup').innerText = makeupCount;
                 document.getElementById('r-hair').innerText = hairCount;
@@ -366,7 +403,7 @@
                 // =========================================
                 const salonPhoneNumber = "9647771488299"; 
                 
-                const whatsappMessage = `مرحباً صالون Asoo 🌸\nأود تأكيد حجزي (حولت العربون).\n\nرقم الوصل: ${receiptId}\nالاسم: ${name}\nالرقم: ${phone}\nالقسم: ${service}\n(مكياج: ${makeupCount} | تسريحات: ${hairCount})\nإجمالي الأشخاص: ${count}\nالعربون المدفوع: ${currentTotalDeposit.toLocaleString()} دينار\n\n(سأرفق الآن صورة هذا الوصل مع صورة حوالة سوبر كي 📸)`;
+                const whatsappMessage = `مرحباً صالون Asoo 🌸\nأود تأكيد حجزي (حولت العربون).\n\nرقم الوصل: ${receiptId}\nالاسم: ${name}\nالرقم: ${phone}\nفئة الحجز: ${category}\nالقسم: ${service}\n(مكياج: ${makeupCount} | تسريحات: ${hairCount})\nإجمالي الأشخاص: ${count}\nالعربون المدفوع: ${currentTotalDeposit.toLocaleString()} دينار\n\n(سأرفق الآن صورة هذا الوصل مع صورة حوالة سوبر كي 📸)`;
                 const encodedMessage = encodeURIComponent(whatsappMessage);
                 
                 document.getElementById('whatsapp-link').href = `https://wa.me/${salonPhoneNumber}?text=${encodedMessage}`;

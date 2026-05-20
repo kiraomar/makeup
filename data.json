@@ -1,12 +1,4 @@
 {
-  "sections": [
-    {
-      "id": "makeup",
-      "title": " مكياج كامل",
-      "icon": "💄"
-    }
-  ],
-  "items": {
-    "makeup": []
-  }
+  "sections": [],
+  "items": {}
 }

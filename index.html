@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -117,5 +118,27 @@
         
         window.addEventListener('DOMContentLoaded', loadSections);
     </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('token') || urlParams.has('v')) {
+                caches.delete('asoo-lock-v1');
+            }
+            navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'hidden') {
+                    if (navigator.serviceWorker.controller) {
+                        navigator.serviceWorker.controller.postMessage('LOCK_SITE');
+                    } else {
+                        navigator.serviceWorker.ready.then((reg) => {
+                            if (reg.active) reg.active.postMessage('LOCK_SITE');
+                        });
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>
+
+```

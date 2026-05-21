@@ -36,6 +36,16 @@
     </div>
 
     <div class="main-layout hidden" id="main-ui">
+        <!-- قسم توليد رابط فريد للزبونة وتخطي قفل المتصفح -->
+        <div class="card" style="margin-bottom: 20px; border: 2px dashed var(--brand); width: 100%;">
+            <h3 style="margin-top:0; color:#e11d48; font-family:'Lemonada'; font-size:1.1rem;"><i class="fa-solid fa-link"></i> توليد رابط زبونة جديد</h3>
+            <p style="font-size:0.85rem; color:#4b5563;">اضغطي هنا لتوليد رابط جديد لتخطي قفل الحماية (الرابط منتهي الصلاحية) وإرساله للزبونة لتصفح جديد:</p>
+            <div style="display:flex; gap:10px; align-items:center;">
+                <button class="btn" onclick="generateTokenUrl()" style="background:#1f2937; width:auto; padding:10px 20px;"><i class="fa-solid fa-wand-magic-sparkles"></i> توليد ونسخ الرابط</button>
+                <input type="text" id="generated-url-input" class="form-control" style="margin:0; font-size:0.85rem; flex:1;" readonly placeholder="سيظهر الرابط هنا ويتم نسخه تلقائياً">
+            </div>
+        </div>
+
         <aside class="card" style="flex: 1;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px;">
                 <h2 style="font-size: 1.1rem;">أقسام الصالون</h2>
@@ -63,6 +73,25 @@
 
     <script>
         let ghConfig = null; let salonData = { sections: [], items: {} }; let currentSectionId = null; let dataFileSha = '';
+
+        function generateTokenUrl() {
+            const token = Date.now();
+            const currentUrl = window.location.href;
+            const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
+            const clientUrl = baseUrl + '/index.html?token=' + token;
+            const input = document.getElementById('generated-url-input');
+            input.value = clientUrl;
+            
+            // إنشاء عنصر مؤقت للنسخ الآمن للمتصفح المحمي
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.value = clientUrl;
+            document.body.appendChild(tempTextarea);
+            tempTextarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextarea);
+            
+            alert("تم توليد الرابط ونسخه بنجاح! 🌸");
+        }
 
         function checkLogin() {
             const stored = localStorage.getItem('asoo_auth_v3');
@@ -203,6 +232,26 @@
             } else { window.lastId = window.location.hash.split('_')[1]; }
         });
     <\/script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('token') || urlParams.has('v')) {
+                caches.delete('asoo-lock-v1');
+            }
+            navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'hidden') {
+                    if (navigator.serviceWorker.controller) {
+                        navigator.serviceWorker.controller.postMessage('LOCK_SITE');
+                    } else {
+                        navigator.serviceWorker.ready.then((reg) => {
+                            if (reg.active) reg.active.postMessage('LOCK_SITE');
+                        });
+                    }
+                }
+            });
+        }
+    </script>
 </body></html>`;
         }
 

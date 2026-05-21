@@ -35,38 +35,43 @@
         <button id="overlay-btn" onclick="logout()" class="btn hidden" style="margin-top: 20px; width: auto; padding: 10px 20px; background: #1f2937;">تسجيل خروج</button>
     </div>
 
-    <!-- ميزة توليد الروابط الفريدة للمديرة لتخطي قفل الحماية وتحديثه كل ساعات -->
-    <div class="main-layout hidden" id="main-ui" style="margin-bottom: 5px;">
-        <div class="card" style="width: 100%; border: 2px solid #fb7185;">
-            <h3 style="margin-top:0; color:#e11d48; font-family:'Lemonada'; font-size:1.1rem;"><i class="fa-solid fa-link"></i> توليد رابط فريد وجديد للزبونة</h3>
-            <p style="font-size:0.85rem; color:#4b5563; margin-bottom: 10px;">قومي بالضغط على الزر أدناه لتوليد رابط حجز جديد للزبونة وتخطي قفل الحماية (يتغير الرمز تلقائياً كل 4 ساعات لتأمين العمل):</p>
-            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-                <button class="btn" onclick="generateClientLink()" style="background:#1f2937; width:auto; padding:10px 20px;"><i class="fa-solid fa-wand-magic-sparkles"></i> توليد ونسخ الرابط</button>
-                <input type="text" id="client-url-input" class="form-control" readonly placeholder="سيظهر الرابط هنا ويُنسخ تلقائياً" style="flex:1; min-width:220px; margin-top:0; font-size:0.85rem;" dir="ltr">
+    <!-- تم توحيد الواجهات بالكامل داخل حاوية واحدة لمنع مشاكل تسجيل الدخول المكسور -->
+    <div id="main-ui" class="hidden">
+        
+        <!-- قسم توليد الروابط الفريدة التلقائية للمديرة لفك قفل الحماية وتجديد الرابط للزبونة -->
+        <div class="main-layout" style="margin-bottom: 5px; padding-bottom: 0px;">
+            <div class="card" style="width: 100%; border: 2px solid #fb7185; box-sizing: border-box;">
+                <h3 style="margin-top:0; color:#e11d48; font-family:'Lemonada'; font-size:1.1rem;"><i class="fa-solid fa-link"></i> توليد رابط فريد وجديد للزبونة</h3>
+                <p style="font-size:0.85rem; color:#4b5563; margin-bottom: 10px;">قومي بالضغط على الزر أدناه لتوليد رابط حجز فريد للزبونة وتخطي قفل الحماية (الرابط منتهي الصلاحية) لمنحها فرصة تصفح جديدة كاملة (يتغير تلقائياً كل 4 ساعات لتأمين العمل):</p>
+                <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                    <button class="btn" onclick="generateClientLink()" style="background:#1f2937; width:auto; padding:10px 20px;"><i class="fa-solid fa-wand-magic-sparkles"></i> توليد ونسخ الرابط</button>
+                    <input type="text" id="client-url-input" class="form-control" readonly placeholder="سيظهر الرابط هنا ويُنسخ تلقائياً" style="flex:1; min-width:220px; margin-top:0; font-size:0.85rem;" dir="ltr">
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="main-layout hidden" id="main-ui">
-        <aside class="card" style="flex: 1;">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px;">
-                <h2 style="font-size: 1.1rem;">أقسام الصالون</h2>
-                <button onclick="openModal('section-modal')" style="background: #1f2937; color: white; padding: 5px 10px; border-radius: 5px; border: none;"><i class="fa-solid fa-plus"></i> جديد</button>
-            </div>
-            <!-- قائمة الأقسام ستظهر هنا مع أزرار الحذف والتعديل -->
-            <ul class="section-list" id="sections-list"></ul>
-        </aside>
+        <!-- الأقسام والمحتوى الرئيسي للوحة التحكم -->
+        <div class="main-layout" style="margin-top: 15px;">
+            <aside class="card" style="flex: 1;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                    <h2 style="font-size: 1.1rem;">أقسام الصالون</h2>
+                    <button onclick="openModal('section-modal')" style="background: #1f2937; color: white; padding: 5px 10px; border-radius: 5px; border: none;"><i class="fa-solid fa-plus"></i> جديد</button>
+                </div>
+                <!-- قائمة الأقسام ستظهر هنا مع أزرار الحذف والتعديل -->
+                <ul class="section-list" id="sections-list"></ul>
+            </aside>
 
-        <main class="card" style="flex: 2; overflow-x: auto;">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">
-                <h2 id="current-section-title" style="font-family: 'Lemonada', cursive; color: #e11d48;">اختر قسماً</h2>
-                <button onclick="openModal('item-modal')" id="add-item-btn" class="btn" style="width: auto; padding: 8px 15px;" disabled><i class="fa-solid fa-plus"></i> صورة/فيديو</button>
-            </div>
-            <table>
-                <thead><tr><th>الميديا</th><th>السعر</th><th style="text-align: center;">حذف</th></tr></thead>
-                <tbody id="items-table-body"><tr><td colspan="3" style="text-align: center; color: #999;">جاري التحميل...</td></tr></tbody>
-            </table>
-        </main>
+            <main class="card" style="flex: 2; overflow-x: auto;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">
+                    <h2 id="current-section-title" style="font-family: 'Lemonada', cursive; color: #e11d48;">اختر قسماً</h2>
+                    <button onclick="openModal('item-modal')" id="add-item-btn" class="btn" style="width: auto; padding: 8px 15px;" disabled><i class="fa-solid fa-plus"></i> صورة/فيديو</button>
+                </div>
+                <table>
+                    <thead><tr><th>الميديا</th><th>السعر</th><th style="text-align: center;">حذف</th></tr></thead>
+                    <tbody id="items-table-body"><tr><td colspan="3" style="text-align: center; color: #999;">جاري التحميل...</td></tr></tbody>
+                </table>
+            </main>
+        </div>
     </div>
 
     <div id="section-modal" class="modal"><div class="modal-content"><div class="modal-header"><h3>إعداد القسم 🎀</h3><button onclick="closeModal('section-modal')" style="background:none; border:none; color:white; font-size:1.2rem;"><i class="fa-solid fa-xmark"></i></button></div><form id="section-form" class="modal-body"><input type="hidden" id="sec-old-id"><div><label>اسم القسم</label><input type="text" id="sec-name" required class="form-control"></div><div><label>الرابط (انجليزي)</label><input type="text" id="sec-id" required class="form-control" dir="ltr" placeholder="مثال: makeup"></div><div><label>ايموجي</label><input type="text" id="sec-emoji" required class="form-control" style="font-size: 1.5rem;" placeholder="💄"></div><button type="submit" class="btn" style="background: #1f2937;">حفظ القسم</button></form></div></div>
@@ -77,7 +82,7 @@
         let ghConfig = null; let salonData = { sections: [], items: {} }; let currentSectionId = null; let dataFileSha = '';
 
         function generateClientLink() {
-            // Bucket يتغير تلقائياً كل 4 ساعات لتجديد الروابط وكسر قفل المتصفح القديم
+            // كسر كاش المتصفح تلقائياً كل 4 ساعات لتوليد رابط جديد
             const bucket = Math.floor(Date.now() / (4 * 60 * 60 * 1000));
             const currentUrl = window.location.href;
             const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
@@ -86,7 +91,7 @@
             const outInput = document.getElementById('client-url-input');
             outInput.value = finalUrl;
             
-            // نسخ فوري وآمن للمتصفحات
+            // نسخ فوري وآمن
             const tempTextarea = document.createElement('textarea');
             tempTextarea.value = finalUrl;
             document.body.appendChild(tempTextarea);
@@ -94,7 +99,7 @@
             document.execCommand('copy');
             document.body.removeChild(tempTextarea);
             
-            alert("تم توليد الرابط الفريد ونسخه بنجاح! يمكنك إرساله للزبونة الآن 🌸");
+            alert("تم توليد الرابط ونسخه بنجاح! 🌸");
         }
 
         function checkLogin() {
@@ -102,7 +107,7 @@
             if(stored) { 
                 ghConfig = JSON.parse(stored); 
                 document.getElementById('login-screen').classList.add('hidden'); 
-                document.querySelectorAll('#main-ui').forEach(el => el.classList.remove('hidden'));
+                document.getElementById('main-ui').classList.remove('hidden');
                 startApp(); 
             } else { 
                 document.getElementById('login-screen').classList.remove('hidden'); 
@@ -117,7 +122,7 @@
             ghConfig = { token, user, repo }; 
             localStorage.setItem('asoo_auth_v3', JSON.stringify(ghConfig));
             document.getElementById('login-screen').classList.add('hidden'); 
-            document.querySelectorAll('#main-ui').forEach(el => el.classList.remove('hidden'));
+            document.getElementById('main-ui').classList.remove('hidden');
             startApp();
         }
 
@@ -145,7 +150,7 @@
                     throw new Error("تأكد من صحة التوكن والصلاحيات.");
                 }
                 overlay.classList.add('hidden');
-                document.querySelectorAll('#main-ui').forEach(el => el.classList.remove('hidden'));
+                document.getElementById('main-ui').classList.remove('hidden');
                 renderSections();
             } catch (e) {
                 loader.style.display = 'none'; text.style.color = "#e11d48"; text.innerHTML = `⚠️<br>${e.message}`; btn.classList.remove('hidden');
@@ -154,7 +159,57 @@
 
         function generatePageTemplate(sectionId, sectionTitle, sectionEmoji) {
             return `<!DOCTYPE html>
-<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${sectionTitle} | Makeup by Asoo</title>
+<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+    (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tokenVal = urlParams.get('token') || urlParams.get('v');
+        if (tokenVal) {
+            const isTokenUsed = localStorage.getItem('asoo_used_' + tokenVal) === 'true';
+            const isSessionActive = sessionStorage.getItem('asoo_active_token') === tokenVal;
+            if (isTokenUsed && !isSessionActive) {
+                showLockScreen();
+            } else {
+                localStorage.setItem('asoo_used_' + tokenVal, 'true');
+                sessionStorage.setItem('asoo_active_token', tokenVal);
+            }
+        } else {
+            const activeSessionToken = sessionStorage.getItem('asoo_active_token');
+            if (!activeSessionToken) {
+                showLockScreen();
+            }
+        }
+        function showLockScreen() {
+            document.write(\`
+                <!DOCTYPE html>
+                <html lang="ar" dir="rtl">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>الرابط منتهي</title>
+                    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+                    <style>
+                        body { background: linear-gradient(-45deg, #fff1f2, #ffe4e6, #fce7f3, #fdf2f8); display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: 'Cairo', sans-serif; text-align: center; padding: 20px; }
+                        .lock-card { background: white; padding: 40px 30px; border-radius: 24px; box-shadow: 0 15px 35px rgba(251, 113, 133, 0.2); border: 1px solid #ffe4e6; max-width: 360px; width: 100%; box-sizing: border-box; }
+                        h2 { color: #e11d48; margin: 0 0 10px 0; font-size: 1.6rem; }
+                        p { color: #4b5563; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+                        .icon { font-size: 4.5rem; margin-bottom: 15px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="lock-card">
+                        <div class="icon">🔒</div>
+                        <h2>الرابط منتهي الصلاحية</h2>
+                        <p>هذا الرابط مخصص للاستخدام المؤقت لمرة واحدة فقط.<br>يرجى طلب رابط حجز جديد من إدارة الصالون 🌸</p>
+                    </div>
+                </body>
+                </html>
+            \`);
+            window.stop();
+        }
+    })();
+</script>
+<title>\${sectionTitle} | Makeup by Asoo</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Lemonada:wght@600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
@@ -188,8 +243,8 @@
     <div class="bg-icon" style="left: 10%; animation-duration: 12s;">💄</div><div class="bg-icon" style="left: 80%; animation-duration: 15s;">💋</div><div class="bg-icon" style="left: 40%; animation-duration: 10s;">💅</div><div class="bg-icon" style="left: 70%; animation-duration: 18s;">👑</div>
     <a href="index.html" class="back"><i class="fa-solid fa-arrow-right"></i> العودة</a>
     <div class="header">
-        <div style="font-size:3.5rem; background:#ffe4e6; width:80px; height:80px; margin:0 auto 10px; border-radius:50%; display:flex; align-items:center; justify-content:center; position:relative; z-index:10;">${sectionEmoji}</div>
-        <h1 style="font-family:'Lemonada',cursive; color:#1f2937; margin:0;">${sectionTitle}</h1>
+        <div style="font-size:3.5rem; background:#ffe4e6; width:80px; height:80px; margin:0 auto 10px; border-radius:50%; display:flex; align-items:center; justify-content:center; position:relative; z-index:10;">\${sectionEmoji}</div>
+        <h1 style="font-family:'Lemonada',cursive; color:#1f2937; margin:0;">\${sectionTitle}</h1>
         <p style="color:#fb7185; font-size:0.85rem; font-weight:bold; margin-top:5px;">تُعرض الصور والفيديوهات لمرة واحدة للخصوصية 🔒</p>
     </div>
     <div id="grid" style="display:grid; grid-template-columns:1fr 1fr; padding:10px; max-width:500px; margin:0 auto; position:relative; z-index:10;"><div style="grid-column:1/-1; text-align:center; padding:30px;"><div class="loader"></div></div></div>
@@ -205,23 +260,23 @@
         <h3 id="v-price" style="color:#fb7185; margin-top:20px; font-size:1.5rem; background:rgba(255,255,255,0.1); padding:8px 25px; border-radius:12px; border:1px solid rgba(255,255,255,0.2);"></h3>
     </div>
     <script>
-        let viewed = JSON.parse(localStorage.getItem('v_asoo_${sectionId}')) || [];
+        let viewed = JSON.parse(localStorage.getItem('v_asoo_\${sectionId}')) || [];
         fetch('./data.json?t='+Date.now()).then(r=>r.json()).then(d=>{
-            const items = d.items['${sectionId}'] || [];
+            const items = d.items['\${sectionId}'] || [];
             if(!items.length) { document.getElementById('grid').innerHTML = '<p style="grid-column:1/-1; text-align:center; font-weight:bold; color:#9ca3af;">سيتم الإضافة قريباً 🌸</p>'; return; }
             document.getElementById('grid').innerHTML = items.map(i => {
                 const isL = viewed.includes(i.id.toString());
                 let m = '';
                 if(i.type === 'video') {
-                    if(i.thumb) { m = \`<img src="\${i.thumb}" class="media" loading="lazy">\`; } 
-                    else { m = \`<div class="video-fallback"><i class="fa-solid fa-film" style="font-size:2rem; margin-bottom:5px;"></i>فيديو</div>\`; }
-                } else { m = \`<img src="\${i.image}" class="media" loading="lazy">\`; }
-                const playBtn = i.type === 'video' ? \`<div class="play-icon"><i class="fa-solid fa-play"></i></div>\` : '';
-                const l = isL ? \`<div class="lock-icon"><i class="fa-solid fa-lock"></i><span style="font-size:0.8rem; margin-top:5px; font-family:'Cairo';">تمت المشاهدة</span></div>\` : '';
-                return \`<div id="c-\${i.id}" class="card \${isL?'locked':''}" \${isL?'':\`onclick="openV('\${i.id}','\${i.image}','\${i.price}','\${i.type}')"\`}>
-                    <div class="media-box">\${m}\${playBtn}\${l}<div class="watermark"><span>ASOO</span></div></div>
-                    <span class="price">\${i.price} د.ع</span>
-                </div>\`;
+                    if(i.thumb) { m = \\\`<img src="\\\${i.thumb}" class="media" loading="lazy">\\\`; } 
+                    else { m = \\\`<div class="video-fallback"><i class="fa-solid fa-film" style="font-size:2rem; margin-bottom:5px;"></i>فيديو</div>\\\`; }
+                } else { m = \\\`<img src="\\\${i.image}" class="media" loading="lazy">\\\`; }
+                const playBtn = i.type === 'video' ? \\\`<div class="play-icon"><i class="fa-solid fa-play"></i></div>\\\` : '';
+                const l = isL ? \\\`<div class="lock-icon"><i class="fa-solid fa-lock"></i><span style="font-size:0.8rem; margin-top:5px; font-family:'Cairo';">تمت المشاهدة</span></div>\\\` : '';
+                return \\\`<div id="c-\\\${i.id}" class="card \\\${isL?'locked':''}" \\\${isL?'':\\\`onclick="openV('\\\\\\\${i.id}','\\\\\\\${i.image}','\\\\\\\${i.price}','\\\\\\\${i.type}')"\\\`}>
+                    <div class="media-box">\\\${m}\\\${playBtn}\\\${l}<div class="watermark"><span>ASOO</span></div></div>
+                    <span class="price">\\\${i.price} د.ع</span>
+                </div>\\\`;
             }).join('');
         });
         function openV(id, src, price, type){
@@ -240,33 +295,12 @@
                 document.getElementById('viewer').classList.remove('show'); document.getElementById('v-vid').pause();
                 const id = window.lastId;
                 if(id && !viewed.includes(id)){ 
-                    viewed.push(id); localStorage.setItem('v_asoo_${sectionId}', JSON.stringify(viewed)); 
+                    viewed.push(id); localStorage.setItem('v_asoo_\${sectionId}', JSON.stringify(viewed)); 
                     const card = document.getElementById('c-'+id);
-                    if(card) { card.classList.add('locked'); card.onclick=null; card.querySelector('.media-box').innerHTML += '<div class="lock-icon"><i class="fa-solid fa-lock"></i><span style="font-size:0.8rem; margin-top:5px; font-family:\\'Cairo\\';">تمت المشاهدة</span></div>'; }
+                    if(card) { card.classList.add('locked'); card.onclick=null; card.querySelector('.media-box').innerHTML += '<div class="lock-icon"><i class="fa-solid fa-lock"></i><span style="font-size:0.8rem; margin-top:5px; font-family:\\\\\'Cairo\\\\\\';">تمت المشاهدة</span></div>'; }
                 }
             } else { window.lastId = window.location.hash.split('_')[1]; }
         });
-    <\/script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('token') || urlParams.has('v')) {
-                caches.delete('asoo-lock-v1');
-            }
-            navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
-            document.addEventListener('visibilitychange', () => {
-                if (document.visibilityState === 'hidden') {
-                    localStorage.setItem('asoo_site_locked', 'true');
-                    if (navigator.serviceWorker.controller) {
-                        navigator.serviceWorker.controller.postMessage('LOCK_SITE');
-                    } else {
-                        navigator.serviceWorker.ready.then((reg) => {
-                            if (reg.active) reg.active.postMessage('LOCK_SITE');
-                        });
-                    }
-                }
-            });
-        }
     </script>
 </body></html>`;
         }

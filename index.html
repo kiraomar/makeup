@@ -4,6 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Makeup by Asoo | الرئيسية</title>
+    
+    <!-- نظام الحماية الهجين الفوري قبل تحميل العناصر وتجنيب الزبونة تكرار الدخول -->
+    <script>
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const hasNewToken = urlParams.has('token') || urlParams.has('v');
+            
+            if (hasNewToken) {
+                // تفعيل الجلسة الجديدة فوراً وإزالة أي قفل سابق
+                sessionStorage.setItem('asoo_session_active', 'true');
+                localStorage.removeItem('asoo_site_locked');
+            } else {
+                // في حال عدم وجود بصمة تحقق، يتم فحص الجلسة الحالية
+                if (sessionStorage.getItem('asoo_session_active') !== 'true') {
+                    localStorage.setItem('asoo_site_locked', 'true');
+                }
+            }
+
+            // تفعيل واجهة الغلق الفوري في حال انتهاء الصلاحية لمنع التصفح تماماً
+            if (localStorage.getItem('asoo_site_locked') === 'true') {
+                document.write(`
+                    <!DOCTYPE html>
+                    <html lang="ar" dir="rtl">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>الرابط منتهي</title>
+                        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+                        <style>
+                            body { background: linear-gradient(-45deg, #fff1f2, #ffe4e6, #fce7f3, #fdf2f8); display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: 'Cairo', sans-serif; text-align: center; padding: 20px; }
+                            .lock-card { background: white; padding: 40px 30px; border-radius: 24px; box-shadow: 0 15px 35px rgba(251, 113, 133, 0.2); border: 1px solid #ffe4e6; max-width: 360px; width: 100%; box-sizing: border-box; }
+                            h2 { color: #e11d48; margin: 0 0 10px 0; font-size: 1.6rem; }
+                            p { color: #4b5563; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+                            .icon { font-size: 4.5rem; margin-bottom: 15px; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="lock-card">
+                            <div class="icon">🔒</div>
+                            <h2>الرابط منتهي الصلاحية</h2>
+                            <p>هذا الرابط مخصص للاستخدام المؤقت لمرة واحدة فقط.<br>يرجى طلب رابط حجز جديد من إدارة الصالون 🌸</p>
+                        </div>
+                    </body>
+                    </html>
+                `);
+                window.stop();
+            }
+        })();
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Dancing+Script:wght@700&family=Lemonada:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -119,19 +169,13 @@
     </script>
     <script>
         if ('serviceWorker' in navigator) {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('token') || urlParams.has('v')) {
-                caches.delete('asoo-lock-v1');
-            }
             navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
             document.addEventListener('visibilitychange', () => {
                 if (document.visibilityState === 'hidden') {
+                    // غلق فوري في الكاش وفي الجلسة لتعطيل الرابط تماماً بمجرد الخروج
+                    localStorage.setItem('asoo_site_locked', 'true');
                     if (navigator.serviceWorker.controller) {
                         navigator.serviceWorker.controller.postMessage('LOCK_SITE');
-                    } else {
-                        navigator.serviceWorker.ready.then((reg) => {
-                            if (reg.active) reg.active.postMessage('LOCK_SITE');
-                        });
                     }
                 }
             });

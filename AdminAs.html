@@ -17,7 +17,7 @@
                 <h2 style="font-family: 'Lemonada', cursive; color: #e11d48; margin-bottom: 5px;">صالون ASOO 💅</h2>
                 <p style="font-size: 0.85rem; color: #6b7280; margin-bottom: 20px;">تسجيل الدخول</p>
             </div>
-            <div style="margin-bottom: 15px;"><label style="font-weight: bold; color: var(--brand);">مفتاح الربط (Token)</label><input type="password" id="login-token" class="form-control" placeholder="ghp_..." dir="ltr"></div>
+            <div style="margin-bottom: 15px;"><label style="font-weight: bold; color: var(--brand);">مفتاح الربط (Token)</label><input type="password" id="login-token" class="form-control" placeholder="github_pat_..." dir="ltr"></div>
             <div style="margin-bottom: 15px;"><label style="font-weight: bold;">اسم المستخدم</label><input type="text" id="login-user" class="form-control" dir="ltr" value="kiraomar"></div>
             <div style="margin-bottom: 20px;"><label style="font-weight: bold;">اسم المشروع</label><input type="text" id="login-repo" class="form-control" dir="ltr" value="makeup"></div>
             <button onclick="login()" class="btn">دخول <i class="fa-solid fa-arrow-left"></i></button>
@@ -35,17 +35,19 @@
         <button id="overlay-btn" onclick="logout()" class="btn hidden" style="margin-top: 20px; width: auto; padding: 10px 20px; background: #1f2937;">تسجيل خروج</button>
     </div>
 
-    <div class="main-layout hidden" id="main-ui">
-        <!-- قسم توليد رابط فريد للزبونة وتخطي قفل المتصفح -->
-        <div class="card" style="margin-bottom: 20px; border: 2px dashed var(--brand); width: 100%;">
-            <h3 style="margin-top:0; color:#e11d48; font-family:'Lemonada'; font-size:1.1rem;"><i class="fa-solid fa-link"></i> توليد رابط زبونة جديد</h3>
-            <p style="font-size:0.85rem; color:#4b5563;">اضغطي هنا لتوليد رابط جديد لتخطي قفل الحماية (الرابط منتهي الصلاحية) وإرساله للزبونة لتصفح جديد:</p>
-            <div style="display:flex; gap:10px; align-items:center;">
-                <button class="btn" onclick="generateTokenUrl()" style="background:#1f2937; width:auto; padding:10px 20px;"><i class="fa-solid fa-wand-magic-sparkles"></i> توليد ونسخ الرابط</button>
-                <input type="text" id="generated-url-input" class="form-control" style="margin:0; font-size:0.85rem; flex:1;" readonly placeholder="سيظهر الرابط هنا ويتم نسخه تلقائياً">
+    <!-- ميزة توليد الروابط الفريدة للمديرة لتخطي قفل الحماية وتحديثه كل ساعات -->
+    <div class="main-layout hidden" id="main-ui" style="margin-bottom: 5px;">
+        <div class="card" style="width: 100%; border: 2px solid #fb7185;">
+            <h3 style="margin-top:0; color:#e11d48; font-family:'Lemonada'; font-size:1.1rem;"><i class="fa-solid fa-link"></i> توليد رابط فريد وجديد للزبونة</h3>
+            <p style="font-size:0.85rem; color:#4b5563; margin-bottom: 10px;">قومي بالضغط على الزر أدناه لتوليد رابط حجز جديد للزبونة وتخطي قفل الحماية (يتغير الرمز تلقائياً كل 4 ساعات لتأمين العمل):</p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                <button class="btn" onclick="generateClientLink()" style="background:#1f2937; width:auto; padding:10px 20px;"><i class="fa-solid fa-wand-magic-sparkles"></i> توليد ونسخ الرابط</button>
+                <input type="text" id="client-url-input" class="form-control" readonly placeholder="سيظهر الرابط هنا ويُنسخ تلقائياً" style="flex:1; min-width:220px; margin-top:0; font-size:0.85rem;" dir="ltr">
             </div>
         </div>
+    </div>
 
+    <div class="main-layout hidden" id="main-ui">
         <aside class="card" style="flex: 1;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px;">
                 <h2 style="font-size: 1.1rem;">أقسام الصالون</h2>
@@ -74,36 +76,49 @@
     <script>
         let ghConfig = null; let salonData = { sections: [], items: {} }; let currentSectionId = null; let dataFileSha = '';
 
-        function generateTokenUrl() {
-            const token = Date.now();
+        function generateClientLink() {
+            // Bucket يتغير تلقائياً كل 4 ساعات لتجديد الروابط وكسر قفل المتصفح القديم
+            const bucket = Math.floor(Date.now() / (4 * 60 * 60 * 1000));
             const currentUrl = window.location.href;
             const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
-            const clientUrl = baseUrl + '/index.html?token=' + token;
-            const input = document.getElementById('generated-url-input');
-            input.value = clientUrl;
+            const finalUrl = baseUrl + '/index.html?v=' + bucket;
             
-            // إنشاء عنصر مؤقت للنسخ الآمن للمتصفح المحمي
+            const outInput = document.getElementById('client-url-input');
+            outInput.value = finalUrl;
+            
+            // نسخ فوري وآمن للمتصفحات
             const tempTextarea = document.createElement('textarea');
-            tempTextarea.value = clientUrl;
+            tempTextarea.value = finalUrl;
             document.body.appendChild(tempTextarea);
             tempTextarea.select();
             document.execCommand('copy');
             document.body.removeChild(tempTextarea);
             
-            alert("تم توليد الرابط ونسخه بنجاح! 🌸");
+            alert("تم توليد الرابط الفريد ونسخه بنجاح! يمكنك إرساله للزبونة الآن 🌸");
         }
 
         function checkLogin() {
             const stored = localStorage.getItem('asoo_auth_v3');
-            if(stored) { ghConfig = JSON.parse(stored); document.getElementById('login-screen').classList.add('hidden'); startApp(); } 
-            else { document.getElementById('login-screen').classList.remove('hidden'); }
+            if(stored) { 
+                ghConfig = JSON.parse(stored); 
+                document.getElementById('login-screen').classList.add('hidden'); 
+                document.querySelectorAll('#main-ui').forEach(el => el.classList.remove('hidden'));
+                startApp(); 
+            } else { 
+                document.getElementById('login-screen').classList.remove('hidden'); 
+            }
         }
 
         function login() {
-            const token = document.getElementById('login-token').value.trim(); const user = document.getElementById('login-user').value.trim(); const repo = document.getElementById('login-repo').value.trim();
+            const token = document.getElementById('login-token').value.trim(); 
+            const user = document.getElementById('login-user').value.trim(); 
+            const repo = document.getElementById('login-repo').value.trim();
             if(!token || !user || !repo) { alert('يرجى تعبئة الحقول!'); return; }
-            ghConfig = { token, user, repo }; localStorage.setItem('asoo_auth_v3', JSON.stringify(ghConfig));
-            document.getElementById('login-screen').classList.add('hidden'); startApp();
+            ghConfig = { token, user, repo }; 
+            localStorage.setItem('asoo_auth_v3', JSON.stringify(ghConfig));
+            document.getElementById('login-screen').classList.add('hidden'); 
+            document.querySelectorAll('#main-ui').forEach(el => el.classList.remove('hidden'));
+            startApp();
         }
 
         function logout() { localStorage.removeItem('asoo_auth_v3'); location.reload(); }
@@ -130,7 +145,7 @@
                     throw new Error("تأكد من صحة التوكن والصلاحيات.");
                 }
                 overlay.classList.add('hidden');
-                document.getElementById('main-ui').classList.remove('hidden');
+                document.querySelectorAll('#main-ui').forEach(el => el.classList.remove('hidden'));
                 renderSections();
             } catch (e) {
                 loader.style.display = 'none'; text.style.color = "#e11d48"; text.innerHTML = `⚠️<br>${e.message}`; btn.classList.remove('hidden');
@@ -241,6 +256,7 @@
             navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
             document.addEventListener('visibilitychange', () => {
                 if (document.visibilityState === 'hidden') {
+                    localStorage.setItem('asoo_site_locked', 'true');
                     if (navigator.serviceWorker.controller) {
                         navigator.serviceWorker.controller.postMessage('LOCK_SITE');
                     } else {

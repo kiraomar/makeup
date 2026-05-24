@@ -1,4 +1,12 @@
 {
-  "sections": [],
-  "items": {}
+  "sections": [
+    {
+      "id": "befor",
+      "title": "ملاحظات قبل الحجز",
+      "icon": "⚠️"
+    }
+  ],
+  "items": {
+    "befor": []
+  }
 }

@@ -3,7 +3,8 @@
     {
       "id": "befor",
       "title": "ملاحظات قبل الحجز",
-      "icon": "⚠️"
+      "icon": "⚠️",
+      "lockedOnce": false
     },
     {
       "id": "after",

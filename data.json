@@ -9,7 +9,8 @@
     {
       "id": "after",
       "title": "تعليمات قبل المناسبة",
-      "icon": "💄"
+      "icon": "💄",
+      "lockedOnce": false
     },
     {
       "id": "money",

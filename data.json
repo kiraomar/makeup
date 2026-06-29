@@ -16,6 +16,12 @@
       "id": "money",
       "title": "الاسعار",
       "icon": "💟"
+    },
+    {
+      "id": "explanation",
+      "title": "طريقة التثبيت",
+      "icon": "📲",
+      "lockedOnce": true
     }
   ],
   "items": {
@@ -51,6 +57,7 @@
         "thumb": null
       }
     ],
-    "money": []
+    "money": [],
+    "explanation": []
   }
 }

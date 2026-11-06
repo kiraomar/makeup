@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Makeup by Asoo | الرئيسية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Dancing+Script:wght@700&family=Lemonada:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root { --brand: #fb7185; --brand-dark: #e11d48; --brand-light: #ffe4e6; }
+        html, body { overflow-x: hidden; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { background: linear-gradient(-45deg, #fff1f2, #ffe4e6, #fce7f3, #fdf2f8); background-size: 400% 400%; animation: gradientBG 15s ease infinite; min-height: 100vh; display: flex; flex-direction: column; color: #1f2937; padding-bottom: 90px; }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        /* ==========================================
+           شاشة الترحيب (تأثير فتح الباب)
+           ========================================== */
+        #salon-doors {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: auto; /* منع النقر أثناء الإغلاق */
+            overflow: hidden;
+        }
+        
+        .door-panel {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, #fff1f2, #fce7f3);
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+            z-index: 1;
+            display: flex;
+            align-items: center;
+        }
+        
+        .door-left {
+            left: 0;
+            border-right: 2px solid var(--brand-dark);
+            box-shadow: 5px 0 25px rgba(225, 29, 72, 0.15);
+            transform-origin: left;
+        }
+        
+        .door-right {
+            right: 0;
+            border-left: 2px solid var(--brand-dark);
+            box-shadow: -5px 0 25px rgba(225, 29, 72, 0.15);
+            transform-origin: right;
+        }
+
+        /* نقوش وزخارف المكياج على الباب (تأثير الحفر الأنيق) */
+        .door-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0; left: 0;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 50px 0;
+            box-sizing: border-box;
+            z-index: 0;
+        }
+        .door-left .door-pattern { align-items: flex-end; padding-right: 35px; }
+        .door-right .door-pattern { align-items: flex-start; padding-left: 35px; }
+        
+        .door-decor-icon {
+            font-size: 4.5rem;
+            color: transparent;
+            text-shadow: 0 0 0 var(--brand-dark);
+            opacity: 0.07; /* شفافية عالية لتبدو كنقش محفور وليست صورة مزعجة */
+            transform: rotate(-15deg);
+        }
+        .door-right .door-decor-icon { transform: rotate(15deg); }
+
+        /* مقابض الباب الوهمية لمزيد من الواقعية */
+        .door-handle {
+            width: 12px;
+            height: 90px;
+            background: linear-gradient(to bottom, #fde047, #eab308, #fde047); /* مقابض ذهبية فخمة */
+            border-radius: 10px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2), inset 0 0 8px rgba(255,255,255,0.7);
+            border: 1px solid #ca8a04;
+            z-index: 5;
+        }
+        .door-left .door-handle { right: 15px; }
+        .door-right .door-handle { left: 15px; }
+        
+        .door-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            transition: all 0.6s ease;
+            background: rgba(255,255,255,0.7);
+            padding: 30px 40px;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(251, 113, 133, 0.2);
+            backdrop-filter: blur(5px);
+            border: 2px solid #ffe4e6;
+        }
+        
+        .door-logo-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.2rem;
+            background: linear-gradient(to right, var(--brand-dark), var(--brand));
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 0;
+            line-height: 1;
+        }
+        .door-welcome {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            color: #4b5563;
+            font-size: 0.95rem;
+            margin-top: 10px;
+        }
+
+        /* رسالة تلميحية تظهر بعد ثانيتين */
+        #tap-hint {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            font-size: 0.85rem;
+            color: var(--brand);
+            margin-top: 15px;
+            font-weight: bold;
+            animation: pulseHint 1.5s infinite;
+            pointer-events: none;
+        }
+        @keyframes pulseHint {
+            0% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.6; }
+        }
+
+        /* فئة الأنميشن لفتح الباب */
+        .doors-open .door-left { transform: translateX(-100%); }
+        .doors-open .door-right { transform: translateX(100%); }
+        .doors-open .door-content { opacity: 0; transform: scale(0.8) translateY(-20px); }
+        /* ========================================== */
+
+        .main-container { flex-grow: 1; width: 100%; max-width: 450px; margin: 0 auto; padding: 20px 20px 40px; position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; }
+        
+        .header { text-align: center; margin-bottom: 30px; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        
+        .title { 
+            font-family: 'Dancing Script', cursive; 
+            font-size: clamp(2rem, 11vw, 3.5rem); 
+            font-weight: bold; 
+            background: linear-gradient(to right, var(--brand-dark), var(--brand), #ec4899); 
+            -webkit-background-clip: text; 
+            color: transparent; 
+            margin: 0 auto; 
+            padding: 5px 0; 
+            text-align: center; 
+            width: 100%; 
+            direction: ltr; 
+            display: block; 
+        }
+        
+        .subtitle { margin-top: 5px; color: #4b5563; font-size: 0.9rem; font-weight: 600; text-align: center; }
+        
+        .sections-list { display: flex; flex-direction: column; gap: 15px; width: 100%; box-sizing: border-box; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 10px 25px -5px rgba(251, 113, 133, 0.15); padding: 15px 20px; border-radius: 20px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: inherit; animation: fadeIn 0.6s ease forwards; animation-play-state: paused; opacity: 0; transition: transform 0.2s; cursor: pointer; }
+        .cards-ready .glass-card { animation-play-state: running; }
+        .glass-card:active { transform: scale(0.96); }
+        .card-icon { width: 60px; height: 60px; flex-shrink: 0; background: var(--brand-light); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+        .card-content { flex-grow: 1; display: flex; justify-content: space-between; align-items: center; }
+        .card-title { font-size: 1.2rem; font-weight: bold; font-family: 'Lemonada', cursive; margin: 0; color: #1f2937; }
+        
+        .bg-icon { position: fixed; font-size: 1.8rem; opacity: 0.15; z-index: 0; pointer-events: none; animation: float-up linear infinite; }
+        @keyframes float-up { 0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.3; } 90% { opacity: 0.3; } 100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--brand); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .footer { padding: 20px; text-align: center; background: rgba(255,255,255,0.4); border-top: 1px solid rgba(255,255,255,0.5); backdrop-filter: blur(5px); font-size: 0.8rem; color: #4b5563; font-weight: bold; margin-top: auto; position: relative; z-index: 10; }
+
+        .floating-book-btn { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: linear-gradient(45deg, #e11d48, #fb7185); color: white; padding: 15px 35px; border-radius: 30px; font-weight: bold; font-family: 'Cairo', sans-serif; font-size: 1.1rem; text-decoration: none; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4); z-index: 1000; border: 2px solid #fff; transition: 0.3s; width: max-content; min-width: 250px; justify-content: center; }
+        .floating-book-btn:active { transform: translate(-50%, 5px); box-shadow: 0 5px 15px rgba(225, 29, 72, 0.4); }
+    </style>
+</head>
+<body>
+    
+    <!-- شاشة الترحيب: باب الصالون -->
+    <div id="salon-doors">
+        <div class="door-panel door-left">
+            <div class="door-pattern">
+                <div class="door-decor-icon">💄</div>
+                <div class="door-decor-icon">✨</div>
+                <div class="door-decor-icon">🪞</div>
+            </div>
+            <div class="door-handle"></div>
+        </div>
+        <div class="door-panel door-right">
+            <div class="door-pattern">
+                <div class="door-decor-icon">🖌️</div>
+                <div class="door-decor-icon">💅</div>
+                <div class="door-decor-icon">🎀</div>
+            </div>
+            <div class="door-handle"></div>
+        </div>
+        
+        <div class="door-content">
+            <i class="fa-solid fa-wand-magic-sparkles" style="color: var(--brand); font-size: 2rem; margin-bottom: 10px;"></i>
+            <h1 class="door-logo-text" dir="ltr">Asoo</h1>
+            <div class="door-welcome">أهلاً بكِ في عالم الجمال ✨</div>
+            <div id="tap-hint">اضغطي على الشاشة للدخول</div>
+        </div>
+    </div>
+
+    <!-- الأيقونات العائمة في الخلفية -->
+    <div class="bg-icon" style="left: 10%; animation-duration: 12s;">💄</div>
+    <div class="bg-icon" style="left: 80%; animation-duration: 15s;">💋</div>
+    <div class="bg-icon" style="left: 40%; animation-duration: 10s;">💅</div>
+    <div class="bg-icon" style="left: 70%; animation-duration: 18s;">👑</div>
+
+    <main class="main-container">
+        <header class="header">
+            <h1 class="title" dir="ltr">makeup by Asoo</h1>
+            <p class="subtitle">اكتشفي سحر جمالك مع خدماتنا المميزة 🌸</p>
+        </header>
+
+        <div id="sections-container" class="sections-list">
+            <div style="text-align: center; padding: 40px 0;"><div class="loader"></div><p style="margin-top: 15px; color: var(--brand); font-weight: bold; font-size: 0.9rem;">جاري التحميل...</p></div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        &copy; 2026 <span style="font-family: 'Dancing Script', cursive; color: var(--brand); font-size: 0.9rem; margin: 0 5px;">Makeup by Asoo</span>. صُنع بحب ✨
+    </footer>
+
+    <a href="booking.html" class="floating-book-btn">
+        <i class="fa-solid fa-calendar-check"></i> احجزي موعدك الآن
+    </a>
+
+    <script>
+        // منع النسخ والنقر بزر الماوس الأيمن
+        document.addEventListener('copy', e => e.preventDefault()); 
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        
+        // التحكم في أنميشن فتح باب الصالون
+        window.addEventListener('load', () => {
+            const doors = document.getElementById('salon-doors');
+            const tapHint = document.getElementById('tap-hint');
+            let doorOpened = false;
+            let canClickToOpen = false;
+
+            const openDoors = () => {
+                if (doorOpened) return;
+                doorOpened = true;
+                doors.classList.add('doors-open');
+                
+                // تشغيل أنميشن ظهور الأقسام في نفس لحظة فتح الباب
+                document.getElementById('sections-container').classList.add('cards-ready');
+                
+                // إزالة الشاشة الترحيبية من الـ DOM بعد انتهاء الأنميشن (1.2 ثانية)
+                setTimeout(() => {
+                    doors.style.display = 'none';
+                }, 1200);
+            };
+
+            // تفعيل إمكانية النقر بعد ثانيتين وإظهار رسالة التلميح
+            setTimeout(() => {
+                if (!doorOpened) {
+                    canClickToOpen = true;
+                    tapHint.style.opacity = '1';
+                }
+            }, 2000);
+
+            // فتح الباب تلقائياً بعد 10 ثواني
+            const autoOpenTimer = setTimeout(() => {
+                openDoors();
+            }, 10000);
+
+            // فتح الباب عند النقر على الشاشة
+            doors.addEventListener('click', () => {
+                if (canClickToOpen) {
+                    clearTimeout(autoOpenTimer);
+                    openDoors();
+                }
+            });
+        });
+
+        // جلب الأقسام من ملف data.json
+        async function loadSections() {
+            const container = document.getElementById('sections-container');
+            try {
+                const res = await fetch('./data.json?t=' + new Date().getTime());
+                if(!res.ok) throw new Error();
+                const data = await res.json();
+                
+                if(!data.sections || data.sections.length === 0) {
+                    container.innerHTML = '<p style="text-align:center; font-weight:bold; color:#6b7280; margin-top:20px;">لم يتم إضافة أقسام بعد 🎀</p>';
+                    return;
+                }
+                
+                container.innerHTML = data.sections.map((sec, i) => {
+                    let displayEmoji = sec.icon;
+                    if(displayEmoji.startsWith('fa-')) displayEmoji = '✨';
+
+                    return `
+                    <a href="${sec.id}.html" class="glass-card" style="animation-delay: ${i * 0.1}s;">
+                        <div class="card-icon">${displayEmoji}</div>
+                        <div class="card-content">
+                            <h2 class="card-title">${sec.title}</h2>
+                            <i class="fa-solid fa-angle-left" style="color: #d1d5db;"></i>
+                        </div>
+                    </a>
+                `}).join('');
+            } catch (e) {
+                container.innerHTML = '<p style="text-align:center; font-weight:bold; color:#e11d48; margin-top:20px;">جاري تجهيز الأقسام، يرجى التحديث بعد قليل 🌸</p>';
+            }
+        }
+        
+        window.addEventListener('DOMContentLoaded', loadSections);
+    </script>
+</body>
+</html>
